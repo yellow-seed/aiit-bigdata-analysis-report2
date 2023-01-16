@@ -12,28 +12,31 @@ import io
 def get_webpage_content(url):
     # URLからデータ取得 (GET)
     print('URL # {}'.format(url), flush=True)
-    res = requests.get(url)
-    content_type = res.headers['Content-Type']
-    if 'text/html' in content_type:
-        soup = BeautifulSoup(res.content, 'html.parser')
-        main_txt = soup.main
-        # main_text == Noneならmainタグがない
-        if main_txt == None:
-            text = soup.get_text()
-            text.replace('\n', '').replace('\u3000', ' ')
-        else:
-            text = soup.main.get_text()
-            text.replace('\n', '').replace('\u3000', ' ')
-    elif 'application/pdf':
-        text2 = []
-        ext_text = extract_text(io.BytesIO(res.content))
-        
-        # 行ごとに分割してから不要な改行コードを削除
-        for l in ext_text.split('\n\n'):
-            text2.append(l.replace('\n', ''))
-        # その後もう一度結合し直す
-        text = ' '.join(text2)
-    return text
+    try:
+        res = requests.get(url)
+        content_type = res.headers['Content-Type']
+        if 'text/html' in content_type:
+            soup = BeautifulSoup(res.content, 'html.parser')
+            main_txt = soup.main
+            # main_text == Noneならmainタグがない
+            if main_txt == None:
+                text = soup.get_text()
+                text.replace('\n', '').replace('\u3000', ' ')
+            else:
+                text = soup.main.get_text()
+                text.replace('\n', '').replace('\u3000', ' ')
+        elif 'application/pdf':
+            text2 = []
+            ext_text = extract_text(io.BytesIO(res.content))
+            
+            # 行ごとに分割してから不要な改行コードを削除
+            for l in ext_text.split('\n\n'):
+                text2.append(l.replace('\n', ''))
+            # その後もう一度結合し直す
+            text = ' '.join(text2)
+        return text
+    except:
+        return ''
 
 def get_feeds(n, url):
     """
@@ -84,6 +87,10 @@ def get_feeds(n, url):
         # - body.strip(): 先頭、末尾の改行・空白文字を削除
 
         content = get_webpage_content(link)
+
+        # contentが空ならば追加しない
+        if content == '':
+            continue
 
         feeds.append([url, title, link, body.strip(), content])
 
