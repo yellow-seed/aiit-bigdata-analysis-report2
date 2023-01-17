@@ -38236,3 +38236,7887 @@ Ads info
     
 
 Something went wrong, but don’t fret — let’s give it another shot."
+https://news.ycombinator.com/rss,Show HN: Otterkit – COBOL compiler for .NET,https://github.com/otterkit/otterkit,Comments,"
+
+
+
+
+
+
+
+
+otterkit
+
+/
+
+otterkit
+
+Public
+
+
+
+
+ 
+
+Notifications
+
+
+
+ 
+
+Fork
+    1
+
+
+
+
+ 
+
+
+          Star
+ 32
+  
+
+
+
+
+
+
+
+
+
+        Otterkit COBOL Compiler
+      
+
+
+
+
+
+otterkit.com
+
+
+License
+
+
+
+
+
+     Apache-2.0 license
+    
+
+
+
+
+
+
+32
+          stars
+ 
+
+
+
+1
+          fork
+ 
+
+
+
+ 
+
+
+          Star
+
+  
+
+
+
+
+
+ 
+
+Notifications
+
+
+
+
+
+
+
+
+
+
+
+
+Code
+
+
+
+
+
+
+
+Issues
+1
+
+
+
+
+
+
+Pull requests
+0
+
+
+
+
+
+
+Discussions
+
+
+
+
+
+
+
+Actions
+
+
+
+
+
+
+
+Projects
+0
+
+
+
+
+
+
+Security
+
+
+
+
+
+
+
+Insights
+
+
+
+ 
+ 
+
+
+
+More
+
+
+ 
+
+
+                  Code
+ 
+
+
+                  Issues
+ 
+
+
+                  Pull requests
+ 
+
+
+                  Discussions
+ 
+
+
+                  Actions
+ 
+
+
+                  Projects
+ 
+
+
+                  Security
+ 
+
+
+                  Insights
+ 
+
+
+
+
+
+
+
+otterkit/otterkit
+
+
+
+
+
+
+
+
+
+This commit does not belong to any branch on this repository, and may belong to a fork outside of the repository.
+
+
+
+
+
+
+
+
+
+
+
+main
+
+
+
+
+
+Switch branches/tags
+
+
+
+
+
+
+
+
+
+
+Branches
+Tags
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+View all branches
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+View all tags
+
+
+
+
+
+
+
+
+
+
+
+
+
+Name already in use
+
+
+
+
+
+
+
+
+
+      A tag already exists with the provided branch name. Many Git commands accept both tag and branch names, so creating this branch may cause unexpected behavior. Are you sure you want to create this branch?
+
+
+
+    Cancel
+
+    Create
+
+
+
+
+
+
+
+
+4
+branches
+
+
+
+
+
+0
+tags
+
+
+
+
+
+
+
+    Code
+ 
+
+
+
+
+
+
+
+Local
+
+
+
+ Codespaces
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  Clone
+
+
+
+
+
+            HTTPS
+ 
+            GitHub CLI
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+        Use Git or checkout with SVN using the web URL.
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+      Work fast with our official CLI.
+      Learn more.
+    
+
+
+
+
+
+
+
+
+    Open with GitHub Desktop
+
+
+
+
+
+
+    Download ZIP
+
+
+
+ 
+Sign In Required
+
+                Please
+                sign in
+                to use Codespaces.
+              
+
+
+
+Launching GitHub Desktop
+
+    If nothing happens, download GitHub Desktop and try again.
+  
+
+
+
+
+Launching GitHub Desktop
+
+    If nothing happens, download GitHub Desktop and try again.
+  
+
+
+
+
+Launching Xcode
+
+    If nothing happens, download Xcode and try again.
+  
+
+
+
+
+
+Launching Visual Studio Code
+Your codespace will open once ready.
+There was a problem preparing your codespace, please try again.
+
+
+
+
+
+
+
+
+
+
+Latest commit
+
+
+
+
+
+
+ 
+
+
+
+
+KTSnowy
+
+[Update]: Added SourceId, LevelStack and FileIndex comments
+
+
+
+
+        …
+      
+
+
+
+
+        2365003
+      
+
+Jan 16, 2023
+
+
+
+
+
+[Update]: Added SourceId, LevelStack and FileIndex comments
+
+
+2365003
+
+
+
+Git stats
+
+
+
+
+
+
+
+175
+
+                      commits
+                    
+
+
+
+
+
+
+
+Files
+Permalink
+
+
+
+
+  
+    Failed to load latest commit information.
+
+
+  
+ 
+
+
+Type
+Name
+Latest commit message
+Commit time
+
+
+
+
+
+
+
+
+.github/ISSUE_TEMPLATE
+
+
+
+[Update]: Update issue templates and security policy notice
+
+
+
+Nov 19, 2022
+
+
+
+
+
+
+
+
+
+Assets
+
+
+
+[Update]: Added dotnet tool and project templates Nuget packages
+
+
+
+Dec 24, 2022
+
+
+
+
+
+
+
+
+
+OtterkitTemplatePack
+
+
+
+[Update]: Update Otterkit.Templates version number
+
+
+
+Dec 24, 2022
+
+
+
+
+
+
+
+
+
+libotterkit @ a0256a7
+
+
+
+[Update/Fix]: Apply Roslyn Analyzers fixes and change suggestions
+
+
+
+Jan 4, 2023
+
+
+
+
+
+
+
+
+
+src
+
+
+
+[Update]: Added SourceId, LevelStack and FileIndex comments
+
+
+
+Jan 16, 2023
+
+
+
+
+
+
+
+
+
+.gitattributes
+
+
+
+Create .gitattributes
+
+
+
+Oct 13, 2022
+
+
+
+
+
+
+
+
+
+.gitignore
+
+
+
+[Update]: Added dotnet tool and project templates Nuget packages
+
+
+
+Dec 24, 2022
+
+
+
+
+
+
+
+
+
+.gitmodules
+
+
+
+[Update]: Added libotterkit as a git submodule
+
+
+
+Nov 2, 2022
+
+
+
+
+
+
+
+
+
+LICENSE
+
+
+
+[Update]: Added year and name to the LICENSE file
+
+
+
+Dec 19, 2022
+
+
+
+
+
+
+
+
+
+README.md
+
+
+
+[Update]: Add project icon to the README header
+
+
+
+Jan 11, 2023
+
+
+
+
+
+
+
+
+
+SECURITY.md
+
+
+
+[Update]: Change ""runtime"" to ""compiler"" in the security policy
+
+
+
+Nov 19, 2022
+
+
+
+
+
+
+
+
+
+THIRD-PARTY-LICENSES
+
+
+
+[Update]: Added libmpdec license notice
+
+
+
+Oct 23, 2022
+
+
+
+
+    View code
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ Otterkit COBOL Compiler
+About
+Installation
+Quick Install
+Build from Source
+Standard Acknowledgement
+
+
+
+
+
+README.md
+
+
+
+
+ Otterkit COBOL Compiler
+Otterkit is a free and open source compiler for the COBOL Programming Language on the .NET platform.
+Warning: The project is currently in pre-release, so not all of the standard has been implemented.
+About
+COBOL was created in 1959 by the CODASYL Committee (With Rear Admiral Grace Hopper as a technical consultant to the committee), its design follows Grace Hopper's belief that programs should be written in a language that is close to English. It prioritizes readability, reliability, and long-term maintenance. The language has been implemented throughout the decades on many platforms with many dialects, and the Otterkit COBOL compiler is a free and open source implementation of the ISO COBOL 2022 Standard on the .NET platform.
+Installation
+Quick Install
+Otterkit is available to install on the Nuget package manager (.NET 7 is required). To install, type into the command line:
+dotnet tool install --global Otterkit --version 1.0.15-alpha
+
+Build from Source
+First, clone the git repo from https://github.com/otterkit/otterkit.git to get the source code. To access the libotterkit submodule inside, use the --recurse-submodules --remote-submodules flag on the clone command. To run, navigate into the src folder (for the compiler, not libotterkit) and then type dotnet run into the command line.
+Standard Acknowledgement
+Any organization interested in reproducing the COBOL standard and specifications in whole or in part,
+using ideas from this document as the basis for an instruction manual or for any other purpose, is free
+to do so. However, all such organizations are requested to reproduce the following acknowledgment
+paragraphs in their entirety as part of the preface to any such publication (any organization using a
+short passage from this document, such as in a book review, is requested to mention ""COBOL"" in
+acknowledgment of the source, but need not quote the acknowledgment):
+COBOL is an industry language and is not the property of any company or group of companies, or of any
+organization or group of organizations.
+No warranty, expressed or implied, is made by any contributor or by the CODASYL COBOL Committee
+as to the accuracy and functioning of the programming system and language. Moreover, no
+responsibility is assumed by any contributor, or by the committee, in connection therewith.
+The authors and copyright holders of the copyrighted materials used herein:
+
+FLOW-MATIC® (trademark of Sperry Rand Corporation), Programming for the 'UNIVAC® I and
+II, Data Automation Systems copyrighted 1958,1959, by Sperry Rand Corporation;
+IBM Commercial Translator Form No F 28-8013, copyrighted 1959 by IBM;
+FACT, DSI 27A5260-2760, copyrighted 1960 by Minneapolis-Honeywell
+
+Have specifically authorized the use of this material in whole or in part, in the COBOL specifications.
+Such authorization extends to the reproduction and use of COBOL specifications in programming
+manuals or similar publications.
+
+
+
+
+
+
+
+
+
+About
+
+      Otterkit COBOL Compiler
+    
+
+
+
+
+
+otterkit.com
+
+
+Topics
+
+
+
+  compiler
+
+
+  dotnet
+
+
+  cobol
+
+
+
+Resources
+
+
+
+
+
+      Readme
+ 
+License
+
+
+
+
+
+     Apache-2.0 license
+    
+
+Security policy
+
+
+
+
+
+      Security policy
+    
+
+
+
+Stars
+
+
+
+
+
+32
+    stars
+
+Watchers
+
+
+
+
+
+2
+    watching
+
+Forks
+
+
+
+
+
+1
+    fork
+
+
+
+
+
+
+
+    Releases
+
+No releases published
+
+
+
+
+
+
+    Contributors 3
+
+
+
+
+
+
+
+
+KTSnowy
+Gabriel Gonçalves
+
+ 
+
+
+
+
+
+
+TriAttack238
+Sean Vo
+
+ 
+
+
+
+
+
+
+gabrielesilinic
+Gabriele Silingardi
+
+ 
+
+
+
+
+
+Languages
+
+
+
+
+
+
+
+
+
+
+C#
+100.0%
+
+
+
+
+
+
+
+
+
+
+
+"
+https://news.ycombinator.com/rss,Pretty Good House,https://www.prettygoodhouse.org,Comments,"
+
+
+
+
+
+
+Pretty Good House
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+the Pretty Good House
+
+
+
+the Pretty Good House
+
+
+Read More
+
+
+PGH 2.0
+
+
+Certificates
+
+
+links
+
+
+the BS*+Beer Show
+
+
+
+
+
+
+
+
+
+
+
+the Pretty Good House
+
+
+
+the Pretty Good House/
+Read More/
+PGH 2.0/
+Certificates/
+links/
+the BS*+Beer Show/
+
+
+
+
+
+
+
+
+
+
+
+
+
+the Pretty Good House
+A Guide to Creating Better Homes
+
+
+
+The Pretty Good House Approach to Building
+How to Design and Build a Pretty (darn) Good House or Renovation
+
+
+
+
+
+
+
+the Pretty Good House
+
+
+
+the Pretty Good House/
+Read More/
+PGH 2.0/
+Certificates/
+links/
+the BS*+Beer Show/
+
+
+
+
+
+
+
+
+
+
+
+
+Pretty Good House provides a framework and guidelines to focus on the core issues that should be front and center when designing and building a high quality home or renovation.
+ 
+About the name…. In southern Maine, there’s a small group of building professionals that get together monthly to discuss building science.  It sounds boring, I know, but truly it isn’t.  Food is brought in, beer is consumed, a blackboard is present and a topic is brought up for discussion.  (topics  like, high performance windows, venting cathedral ceilings, moisture migration in wall assemblies, slab on grade details, etc.) Since we are all peers, and colleagues (with egos, attitude, and a good sense of humor) the conversation is usually lively, informal and frankly all over the place.  There’s usually a moderator to keep everyone reined in and on topic.  Every once in a while I have the pleasure of being that moderator, but that is only when builder, Dan Kolbert can’t attend.  Dan while on a rant once, expressed frustration with the status quo, and even more frustration with the various rating systems that had him jumping through many hoops to prove that his work was in fact “green” and energy efficient.  As many can attest, these systems can be very costly in time and money, and in the case of many green projects, they aren’t doing anything to advance the project.  Rather they are simply certifying them.  So Dan simply stated, “I just want to build a pretty good house.”- Chris Briley
+ 
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+We’ve been talking about it for some time, but now the Pretty Good House book is real!It is available directly through the Taunton store, local bookshops, and on Amazon. The link below allows you to order the book.Updates on the book, cover, and release will be all over our social media channels. We do not plan to make an email list with updates at this time.Click HERE to order your copy!Meet the authors this fall:Midwest Building Science Symposium Kansas City - Sept 14th & 15th - Mike & EmilyCommon Ground FairUnity, ME Sept 23-25th - Dan & MikeSoutheast Building Science SymposiumChattanooga, TN - Oct 12th - 13th - Emily The Entre Architect Community Annual MeetingAustin, TX - Nov 1-3rd - Mike & Emily South Bend City Housing SymposiumSouth Bend, IN - Dates TBD (Late Nov / Early Dec) Dan & Chris
+ 
+Guidelines for Designing and Building a Pretty Good HouseBuilding a house or doing a major renovation is a daunting task.  This diagram shows how the PGH pros think about things!  Scroll down a little bit further for explanation of the main points. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Featured
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Economics
+
+
+
+
+
+
+Key to the PGH approach is balancing expenditures and gains. Where other programs use specific energy-use targets or other criteria, and the building code establishes a baseline (“the worst house you can legally build”), a PGH goes above code until it stops making financial sense. read more....
+Read More →
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+The Team Approach
+
+
+
+
+
+
+Choosing the right team members can make a big difference on project going smoothly.read more….
+Read More →
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Climate - Where are you?
+
+
+
+
+
+
+Where you live plays an important part in the design of a PGH.read more…
+Read More →
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Design
+
+
+
+
+
+
+Design is much more than floor plans and making pretty things. The whole process of construction is designed as well.read more…
+Read More →
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+The Building Shell - Envelope basics
+
+
+
+
+
+
+Every house needs to keep rain and cold (or hot) air out, and conditioned air inside. In a Pretty Good House it’s easiest and best to identify dedicated control layersread more….
+Read More →
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Envelope Details
+
+
+
+
+
+
+Basic physics. This is where the rubber meets the road. A PGH builder or architect is also something of a science geek.read more….
+Read More →
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Windows and Doors
+
+
+
+
+
+
+Even the best windows and doors on the market perform much worse than even an average wall, but they can also allow solar energy into the house, and of course light and views are important. Selection of specific brands and models of windows and doors comes into the conversation very early in the process.read more…
+Read More →
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Materials
+
+
+
+
+
+
+Local is good. While we can get materials from nearly anywhere on earth, buying locally supports the local economy, typically keeps the carbon footprint smaller, and makes a house a product of its environment instead of a cookie-cutter house that could be anywhere. read more…
+Read More →
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Mechanical Systems
+
+
+
+
+
+
+Mechanical systems include the equipment needed to heat, cool and control humidity in a house, and also the plumbing system. The primary reason for mechanical systems is occupant comfort. A PGH allows mechanicals to be smaller, less expensive and generally simpler.read more…
+Read More →
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Electrical and Lighting
+
+
+
+
+
+
+Lighting can be divided into two categories: natural and artificial. Daylighting, using windows and other glazing, reduces the need for artificial lighting during the day. Wiring in a PGH must include a well thought out strategy for sealing all penetrations in the building shell.read more…
+Read More →
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Verification
+
+
+
+
+
+
+There are many ways to check your results. Third party verification systems such as Energy Star or Passive house may influence bank financing but are not the focus of a Pretty Good House.read more….
+Read More →
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Owner / Occupant
+
+
+
+
+
+
+Occupants can be creative in the ways they break the rules so it’s important for them to be educated on how to operate their Pretty Good home.read more…
+Read More →
+
+
+
+
+
+
+
+
+
+
+
+
+If you feel that you have designed and built a Pretty Good House, please feel free to download, fill out and display a Pretty Good Certificate, signed by the Pretty Good House authors—available in two flavors, plain and fancy! Just click on the image and you can download a PDF. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Relevant organizations and references the BS* + Beer Show a weekly (for now) Zoom based meeting of building science nerds from around the country - links to local chapters coming soonTo watch previous episodes of The BS* and Beer Show - Find the YouTube Channel HEREGreen Building Advisor - This is where many of us initially heard the term “Pretty Good House”  The original article is HEREBuilding Science Corporation provides training, research and can provide a deep dive into building scienceFine Homebuilding The original magazine that we all know and love has a ton of information on high performance building including some great podcastsJournal of Light Construction has really stepped up to the plate with lots of informationPro Trade Craft - Best practices and great videos. This is a great place for builders to learn.E3 Podcast - Emily Mottram interviews various people with a focus on Energy and EfficiencyGreen Architects’ Lounge - A podcast covering many topics relevant to Green Building, high performance building and Pretty Good House infoBuilding Green - industry watchdog and long time provider of product vetting and technical expertise to the profession.NESEA the Northeast Sustainable Energy Association is a resource for builders and homeowners - they put on symposiums in Boston and NYC, builder training, home tours etc.Maine Indoor Air Quality Council - information, links and training.  The quality of the air inside a Pretty Good House is paramount!
+ 
+Mike Maines and Robert Swinburne presented the Pretty Good House at the 2020 Fine Homebuilding Summit
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+    Contact site administation
+  
+
+
+Terms and ConditionsThe Pretty Good House website copyright 2019 by the Pretty Good House Crew
+
+
+
+ 
+
+
+ 
+
+
+
+
+
+
+ 
+
+
+
+
+"
+https://news.ycombinator.com/rss,MSI's (in)Secure Boot,https://dawidpotocki.com/en/2023/01/13/msi-insecure-boot/,Comments,"
+
+MSI's (in)Secure Boot
+
+
+      posted on 2023-01-13 (UTC)
+    
+
+I guess I have found a reason to write my first blog post.
+Before we start, maybe I will quickly explain what Secure Boot is. It is
+a security feature, which allows our computer to decline booting
+operating systems that have not been signed by a key that the firmware
+trusts.
+On 2022-12-11, I decided to setup Secure Boot on my new desktop with a
+help of sbctl. Unfortunately I have
+found that my firmware was… accepting every OS image I gave it, no
+matter if it was trusted or not. It wasn't the first time that I have
+been self-signing Secure Boot, I wasn't doing it wrong.
+As I have later discovered on 2022-12-16, it wasn't just broken
+firmware, MSI had changed their Secure Boot defaults to allow booting on
+security violations(!!).
+This can be changed by going to the place where the settings are for
+Secure Boot on your motherboard. In my case it's in Security\Secure Boot. From this place, we can see a menu called ""Image Execution
+Policy"", which is the culprit.
+
+When we enter the menu, we can see the disappointing default settings.
+It's doing no verification. It's useless. It's just there to satisfy
+Windows 11 requirements. OS has no idea that Secure Boot is doing
+nothing, it just knows that it's ""enabled"".
+
+To change the settings to something saner, we have to change ""Always
+Execute"" to ""Deny Execute"" for ""Removable Media"" and ""Fixed Media"".
+What's funny is that ""Allow Execute"" and ""Query User"" options
+are breaking UEFI specification,
+though I'm not really sure what's the difference between ""Allow Execute""
+and ""Always Execute"".
+We can also change ""Option ROM"", about which you can read more about
+here:
+
+https://github.com/Foxboron/sbctl/wiki/FAQ#option-rom
+https://learn.microsoft.com/en-us/windows-hardware/manufacture/desktop/uefi-validation-option-rom-validation-guidance
+
+
+Case closed, everyone can move on, right?
+Well, not really. I needed to figure out if this is only affecting my
+motherboard or also other models and maybe even other vendors. And also
+we need to document this, because even if I know this, there is probably
+a lot of people that are not aware about this issue.
+I had asked 2 users of B450 TOMAHAWK MAX (thanks Sage Hane and Daniel
+Nathan Gray) to check their firmware and what? Unsurprisingly, it's also
+there. We were able to determine that version 7C02v3C from 2022-01-18
+introduced this issue.
+EDIT: I have noticed that some websites have misreported about this
+issue because they have not fully read my article. This firmware version
+only affects B450 TOMAHAWK MAX, other motherboards have different
+versions. 7C02 in the version is the codename for B450 TOMAHAWK MAX.
+More information is available down below.
+Is it mentioned in the changelog? Hah, nope.
+
+I have also received information from a user of B550-A PRO (CEC) (thanks
+Joseph Richey) that they have this issue from 7C56vH1 (2021-12-20)
+onwards.
+While I was able to extrapolate this information to guess which versions
+for other boards have introduced this issue, that isn't really enough.
+We need to go deeper.
+I have tried extracting some information from MSI's binary firmware
+files, but to no avail. I tried using binwalk, UEFITool and others, but
+I didn't really find what I wanted. Until one day I have found out that
+UEFI has a thing called ""UEFI Internal Form Representation"" or in short
+""IFR"". It's a way to describe firmware configuration options. This is
+exactly what I need to look for! Now, what do I do with this knowledge?
+Once we extract files from the firmware using UEFIExtract from
+UEFITool project, we can find a
+file called
+Section_PE32_image_899407D7-99FE-43D8-9A21-79EC328CAC21_Setup_body.bin.
+It contains most of UEFI GUI stuff and seems to be available on all
+firmware from all major desktop motherboard makers, though ASUS decided
+to remove ""Setup"" from the name for some reason or maybe it has to do
+something to do with the UEFIExtract, not sure.
+Now once we have this file, we have to extract IFR data from it, to do
+it we can use IFRExtractor RS.
+Funnily enough, it's made by the same people as UEFITool. Thanks guys
+for your hard work, otherwise I would have to do it myself ;p.
+Now with IFR extracted, we have what we wanted. We can see all the
+UEFI settings available, including ""Image Execution Policy"".
+Form FormId: 0x2A79, Title: ""Image Execution Policy""
+	Text Prompt: ""Internal FV"", Help: """", Text: ""Always Execute""
+	OneOf Prompt: ""Option ROM"", Help: ""Image Execution Policy on Security Violation per Device Path"", QuestionFlags: 0x10, QuestionId: 0x1116, VarStoreId: 0x28, VarOffset: 0x4, Flags: 0x10, Size: 8, Min: 0x0, Max: 0x5, Step: 0x0
+		Default DefaultId: 0x0 Value: 0
+		OneOfOption Option: ""Always Execute"" Value: 0
+		OneOfOption Option: ""Always Deny"" Value: 1
+		OneOfOption Option: ""Allow Execute"" Value: 2
+		OneOfOption Option: ""Defer Execute"" Value: 3
+		OneOfOption Option: ""Deny Execute"" Value: 4
+		OneOfOption Option: ""Query User"" Value: 5
+	End
+	OneOf Prompt: ""Removable Media"", Help: ""Image Execution Policy on Security Violation per Device Path"", QuestionFlags: 0x10, QuestionId: 0x1117, VarStoreId: 0x28, VarOffset: 0x5, Flags: 0x10, Size: 8, Min: 0x0, Max: 0x5, Step: 0x0
+		Default DefaultId: 0x0 Value: 0
+		OneOfOption Option: ""Always Execute"" Value: 0
+		OneOfOption Option: ""Always Deny"" Value: 1
+		OneOfOption Option: ""Allow Execute"" Value: 2
+		OneOfOption Option: ""Defer Execute"" Value: 3
+		OneOfOption Option: ""Deny Execute"" Value: 4
+		OneOfOption Option: ""Query User"" Value: 5
+	End
+	OneOf Prompt: ""Fixed Media"", Help: ""Image Execution Policy on Security Violation per Device Path"", QuestionFlags: 0x10, QuestionId: 0x1118, VarStoreId: 0x28, VarOffset: 0x6, Flags: 0x10, Size: 8, Min: 0x0, Max: 0x5, Step: 0x0
+		Default DefaultId: 0x0 Value: 0
+		OneOfOption Option: ""Always Execute"" Value: 0
+		OneOfOption Option: ""Always Deny"" Value: 1
+		OneOfOption Option: ""Allow Execute"" Value: 2
+		OneOfOption Option: ""Defer Execute"" Value: 3
+		OneOfOption Option: ""Deny Execute"" Value: 4
+		OneOfOption Option: ""Query User"" Value: 5
+	End
+End
+I have checked if other vendors (ASRock, ASUS, Biostar, EVGA, Gigabyte
+and NZXT) have the same thing and I wasn't able to find anything like
+that in their IFR. Also MSI's laptops are not affected by this issue.
+I'm gonna assume that they figured that Microsoft wouldn't approve it
+and/or that they had less tickets from people about Secure Boot related
+issues for their laptops.
+Now, doing this manually would be kinda annoying, so I made a small
+little shell script which checks if ""Image Execution Policy"" menu is
+available and if any of the three options are set to ""Always Execute"".
+#!/bin/sh
+
+if [ ! -d ""$1"" ]; then
+	[ ! -f ""$1.zip"" ] && curl ""https://download.msi.com/bos_exe/mb/$1.zip"" -O -#
+	bsdtar xf ""$1.zip""
+fi
+
+cd ""$1"" || exit
+UEFIExtract ./*MS.* unpack 1>/dev/null
+ifrextractor ./*.dump/Section_PE32_image_899407D7-99FE-43D8-9A21-79EC328CAC21_Setup_body.bin 1>/dev/null
+output=""$(grep -A1 -E 'OneOf Prompt: ""(Option ROM|Removable Media|Fixed Media)"", Help: ""Image Execution Policy' ./*.dump/Section_PE32_image_899407D7-99FE-43D8-9A21-79EC328CAC21_Setup_body.bin.*ifr.txt)""
+clear
+
+if echo ""$output"" | grep -q ""DefaultId: 0x0""; then
+	printf ""\033[1;31m%s: Bad\033[0m\n"" ""$1""
+else
+	printf ""\033[1;32m%s: Good\033[0m\n"" ""$1""
+fi
+Now this is where the fun part ends. Now I had to check firmware for
+MSI's somewhat recent boards.
+While we can get most of the firmware just by going to motherboard's
+support page, MSI usually only lists stable firmware and the newest
+beta. The problem is that I need to figure out the earliest affected
+version of the firmware for each board, which means that I have to guess
+what the betas were called (if they even existed). At least MSI doesn't
+remove most of its beta firmware from their servers, so they are still
+accessible if you know the link.
+For some AMD boards, I have found a list of beta firmware on some German
+forum. Thankfully, I didn't have to read any German, because contrary to
+the popular belief, I don't know German or Russian, I'm Polish.
+This… took forever. I checked every motherboard for:
+
+AMD: TRX40, X399, X670, X570, X470, X370, B650, B550, B450, B350, A520, A320
+Intel: X299, Z790, Z690, Z590, Z490, Z390, Z370, B760, B660, B560, B460, B360, H670, H510, H410, H370, H310
+
+It's… a lot of motherboards. For a full list of affected motherboards
+and their firmware versions, visit
+sbctl#181.
+And now it's time for some ""fun"" statistic:
+# The amount of times I ran the script
+$ history 0 | grep ""  msi "" | wc -l
+1989
+According to Wikipedia in 1989:
+
+The first commercial Internet service providers surfaced in this year,
+as well as the first written proposal for the World Wide Web and New
+Zealand, Japan and Australia's first Internet connections.
+
+Well, that was a mistake.
+You could ask me, why didn't I automate it? The reason is… well… some of
+it is not really easy to as some beta names have arbitrary suffixes
+which was faster for me to guess than having a script bruteforce its way
+in. Also some boards weren't listed on their motherboard list page.
+Now, after doing all the work for MSI, I think I should bill them, that
+or they should give me a lifetime supply of their motherboards.
+If you are curious, yes, I have tried contacting MSI about this issue,
+but they ignored my emails and other forms of communication I have
+tried.
+
+Conclusion
+
+Don't trust that whatever security features you enabled are working,
+TEST THEM! Somehow I was the first person to document this, even though
+it has been first introduced somewhere in 2021 Q3.
+
+Quiz time!
+
+What's the difference between these 3 boards:
+
+MSI B360 GAMING ARCTIC
+MSI B360 GAMING PLUS
+MSI B360-A PRO
+
+Heatsink and PCB colours! They are the same board and share the same
+firmware! But hey, the red and white one is only for gamers but black is
+only suitable for ""professionals"".
+
+"
+https://news.ycombinator.com/rss,Programmer salaries in the age of LLMs,https://milkyeggs.com/?p=303,Comments,"
+
+
+
+Milky Eggs  » Blog Archive   » Programmer salaries in the age of LLMs
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+Milky Eggs
+
+
+
+
+
+
+Home
+About
+All Posts
+Links
+
+
+
+
+Programmer salaries in the age of LLMs
+
+What happens to the distribution of programmer salaries in the age of LLMs? I argue they will separate bimodally, much like what happened to lawyers’ salaries in the 1990s due to the rise of the Internet.
+Dan Luu has previously written about lawyers’ salaries. I will paste some graphs from his article. First, lawyers in 1991:
+
+
+Next, lawyers in 2000:
+
+
+What happened? Well, if you’re an elite lawyer in the modern age, you probably command a large team of lower-tier lawyers, cheap paralegals, and so on, who are very good at using the Internet to look up case law and draft your opinions and so on. In contrast, if you’re an elite lawyer in the year 1990, it’s much more valuable for you specifically to have an encyclopedic knowledge of all the relevant case law, and it’s much harder for you to delegate modular pieces of work off to less competent people.
+Indeed Cowen makes a similar point about lawyers in Who gains and loses from the new AI? where he writes:
+
+The returns to factual knowledge are falling, continuing a trend that started with databases, search engines and Wikipedia. It is no longer so profitable to be a lawyer who knows a large amount of accumulated case law. Instead, the skills of synthesis and persuasion are more critical for success.
+
+I claim that the trend which AI/ML continues for lawyers is one that it starts for programmers. Just like how a partner at Cravath likely sketches an outline of how they want to approach a particular case and swarms of largely replaceable lawyers fill in the details, we are perhaps converging to a future where a FAANG L7 can just sketch out architectural details and the programmer equivalent of paralegals will simply query the latest LLM and clean up the output. Note that querying LLMs and making the outputted code conform to specifications is probably a lot easier than writing the code yourself ー and other LLMs can also help you fix up the code and integrate the different modules together!
+More generally, the farther such technologies advance, the more existing technical professions will undergo a sort of “paralegalization” and bifurcation of the talent distribution.
+Somewhat-above-average programmers (including myself) had a decent run of it, but it may be over for us before too long.
+
+January 16th, 2023  | Posted in Technology
+
+
+
+Leave a Reply
+
+
+Name (required)
+
+Mail (will not be published) (required)
+
+Website
+
+
+
+
+
+Δ
+
+
+
+
+
+
+
+
+
+
+
+
+			 Subscribe to Milky Eggs via RSS here.
+		
+
+
+
+
+"
+https://news.ycombinator.com/rss,"Show HN: Vento, a screen recorder that lets you rewind and record over mistakes",https://vento.so,Comments,"ventoNew RecordingLog inStress-free Screen Recording Constantly restarting your screen recordings? With Vento, just pause, rewind, and carry on instead - keeping calm helps too :)Come back on a desktop computer to try us out!Install Chrome ExtensionStart Recording“To record great videos, one must first rewind.” - Ghandi, probably.Video Not Availablevento© 2023 Vento. All rights reserved.Say hello! We don’t bite. Well, maybe one of us does.hello@vento.so"
+https://news.ycombinator.com/rss,Legit Startups – AI Generated Startup Websites,https://legit-startups.com/,Comments,"
+
+503 Service Unavailable
+
+Service Unavailable
+The server is temporarily unable to service your
+request due to maintenance downtime or capacity
+problems. Please try again later.
+
+"
+https://news.ycombinator.com/rss,Scaling Bevy Game Engine Development,https://bevyengine.org/news/scaling-bevy-development/,Comments,"
+
+
+
+    Scaling Bevy Development
+  
+Posted on January 14, 2023 by Carter Anderson
+    
+    
+      (
+      
+      
+@cart
+
+
+@cart_cart
+
+
+
+cartdev
+
+      
+      )
+    
+
+
+
+
+The Bevy community has grown a lot over the past couple of years. We've had over 3,642 pull requests, 599 contributors, 357,917 downloads, and 21,200 github stars. Together we've built the most popular, most used Rust game engine on the market and the second most popular game engine on GitHub. Up until now, in the interest of maintaining a consistent vision and quality bar, I've kept our decision making process as small and centralized as possible. And I scaled out our leadership roles as slowly as possible. I believe this was the right call for Bevy's early days, but we are overdue for changes that bias toward more trust and development agility.
+The Current State Of Things
+#
+
+I have been slowly delegating responsibility over time, and each time I placed trust in someone it yielded massive benefits to both the project and my personal well being. We now have 3 more fantastic Maintainers: Alice (@alice-i-cecile), François (@mockersf), and Rob (@superdump). And their scope has grown over time.
+But even today, I must personally approve every ""controversial"" change to Bevy, where ""controversial"" is basically anything that meaningfully expands our features, user experience, or scope. With the volume of controversial changes we're seeing now, and the number of things I would still like to personally design and build, this is untenable. I have long since reached the limits of my bandwidth and the community has felt those limits for long enough.
+When Bevy was younger and the community was newer, this level of conservativeness made sense. I knew what I wanted to build, how the pieces fit together, and what my capabilities were. What I didn't know as well was what everyone else wanted to build, what their capabilities were, and how that all fit into my personal vision.
+I can now happily report that the situation has changed. We have proven technical experts in a variety of areas. They regularly design and build huge pieces of Bevy in a way that aligns with our collective vision for the future. Sometimes we have different ideas about what the future should look like, but we almost always reach consensus eventually. They have done outstanding technical work, built trust, and made Bevy amazing. They deserve a seat at the table.
+With that preamble out of the way, I am excited to announce two major changes to the Bevy Organization.
+A New Role: Subject Matter Expert
+#
+
+Subject Matter Experts (SME for short) are Bevy developers that have consistently demonstrated technical expertise and synchronized vision within a given ""subject area"" (ex: Rendering, ECS, Reflection, Animation). They must have contributed and reviewed significant pieces of Bevy within their area. These people have the ability to vote on controversial pull requests in their subject area (both code changes and RFCs). SMEs are also great people to reach out to if you have questions about a given subject area in Bevy.
+If two SMEs within a given subject area approve a ""controversial"" PR, a maintainer can now merge it. We are intentionally keeping the number of SMEs within a subject area small to make establishing consensus and enforcing a consistent vision easier. For now, 2 SMEs is the bare minimum to allow voting to occur, 3 is the ""sweet spot"", and 4 will be allowed under some circumstances, but is the ""upper limit"".
+As Project Lead, I can still merge controversial PRs. Consider 2 SME approvals as equivalent to a Project Lead approval. As a last line of defense for cohesion, the Project Lead maintains final say on changes. While I will by default defer to the SMEs, if they approve a PR that I firmly believe is the wrong direction for Bevy, I will still block or revert the change. Preserving consistent vision and quality is critically important to me. But I intend to bias toward trust and consensus as much as possible.
+It is the job of SMEs to strive for consensus amongst themselves, the wider Bevy community, and Project Leads. They can merge controversial changes without me, but they still must do their best to anticipate my reaction to those changes (and discuss the changes with me ahead of time when that feels relevant). Likewise, I will try to establish consensus with SMEs and the wider community before making changes myself.
+We are rolling out SMEs slowly so we can tweak the process over time and avoid changing too much too quickly. We've largely started with subject areas that have the most activity and the clearest subject matter experts. Join me in welcoming our initial set of SMEs!
+
+Rendering: @superdump (Rob Swain), @robtfm (Rob Macdonald)
+ECS: @BoxyUwU (Boxy), @james7132 (James Liu), @maniwani (Joy)
+Reflection: @MrGVSV (Gino Valente), @jakobhellermann (Jakob Hellermann)
+Animation: @james7132 (James Liu), @mockersf (François Mockers)
+
+Hopefully there aren't too many surprises here. These people have been building fantastic things in their areas for a long time now.
+We will be rolling out more subject areas (and the SMEs inside them) as SMEs prove themselves within the Bevy project and express interest. New areas are largely defined by the experts doing work inside them. We expect areas like UI, Editor, and Audio to be populated in reasonably short order.
+We have also left spots open in each of the subject areas above. If you believe you meet our SME criteria for any current or proposed subject area and have interest in the role, don't hesitate to reach out to myself or any of the other maintainers. We will consider new candidates regularly. Just because you weren't included in this first batch doesn't mean we don't think you would be a good fit!
+A New Maintainer
+#
+
+We also want to improve our velocity for merging uncontroversial pull requests. And there will be new maintainership load associated with facilitating the SME process. The current maintainers and I have unanimously agreed that it is time to bring on one more maintainer.
+Join me in welcoming James Liu (@james7132) as our latest maintainer! James has proven themselves to be a technical expert across many of Bevy's systems (especially ECS, animation, parallelization / task scheduling, and optimization). You may have noticed that they also have the SME role for ECS and Animation. They have contributed huge volumes of code changes, provided solid reviews, are easy to work with, and have a vision for Bevy's future that aligns with ours.
+A New Bevy Organization Document
+#
+
+We have a new Bevy Organization Document, which describes how the Bevy Organization will work going forward. It outlines the functionality of each role, as well as the expectations we have for them. The previously existing roles (Project Lead, Maintainer) still work the same way, but their definition and scope have been made much clearer.
+The biggest changes to the organization are the new SME role and an initial description of ""role rotation"":
+Roles like Project Lead, Maintainer, and SME are intentionally kept in limited supply to ensure a cohesive project vision. However these roles can be taxing, sometimes other aspects of life need to take priority, and qualified motivated people deserve a chance to lead. To resolve these issues, we plan on building in ""role rotation"". What this looks like hasn't yet been determined (as this issue hasn't come up yet and we are still in the process of scaling out our team), but we will try to appropriately balance the needs and desires of both current and future leaders, while also ensuring consistent vision and continuity for Bevy.
+The Bevy People Page
+#
+
+Bevy is a community-driven project. It makes sense for the people behind Bevy and the roles they fill to be easily discoverable.
+To make that happen, François (@mockersf) and I built a new Bevy People page. ""Bevy people"" can opt-in to listing their name and/or pseudonym, their social information (GitHub, Discord, Mastodon, Twitter, personal website, itch.io, etc), a sponsorship link, and a personal bio describing who they are and what they work on.
+It also displays the current Bevy Organization roles these people occupy. You could call it an ""org chart"" if you wanted to, but my anti-bureaucracy reflexes prevent me from doing so. The Bevy community will always be as flat and ""people first"" as possible.
+It is open to anyone (both Bevy Organization members and the wider Bevy community). If you would like to see yourself on this page, create a pull request here.
+This is what it looks like!
+
+Looking Forward
+#
+
+The next Bevy release (Bevy 0.10) is roughly a month away and I'm very excited for the changes we have in the pipeline. I can't guarantee all of these will make it in, but they're all shaping up nicely:
+
+The New ""Stageless"" ECS Scheduler: We've fully rebuilt our scheduler to be more flexible. We no longer need ""stages"" to handle ""exclusive system scheduling"". Any system of any type can be ordered relative to any other system (even if they have exclusive access to the ECS World. Many scheduling APIs are now cleaner and easier to use. And we've taken the chance to improve related APIs like States as well.
+Depth and Normal Prepass: This will give rendering feature developers access to the depth buffer and normals during the main render phase, which enables a variety of render features and optimizations.
+Screen Space Ambient Occlusion: This is a popular, relatively cheap illumination technique that can make scenes look much more natural. It builds on the Depth Prepass work.
+Asset Preprocessing: We're reworking our asset system to allow for pre processing assets into more efficient forms, which can make deployed games faster to load, prettier, and faster. This is a full asset system rework that improves a good portion of our asset APIs.
+Windows as Entities: Windows are now ECS Entities instead of Resources, which makes them more natural to construct and query, more extensible, and opens the doors to including them in Bevy Scenes.
+UI Style Split: Breaks the monolithic UI style type out into smaller pieces, embracing a less centralized and more extensible pattern.
+
+See you in about a month!
+
+
+
+"
+https://news.ycombinator.com/rss,Blaze: A high-performance C++ math library,https://bitbucket.org/blaze-lib/blaze/src/master/,Comments,"
+
+
+Bitbucket
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+"
+https://news.ycombinator.com/rss,Scissors NOT Gate [video],https://www.youtube.com/watch?v=uVS7YGSKmJM,Comments,Scissors NOT gate - YouTubeAboutPressCopyrightContact usCreatorsAdvertiseDevelopersTermsPrivacyPolicy & SafetyHow YouTube worksTest new features© 2023 Google LLC
+https://news.ycombinator.com/rss,Intel Core i9-13900T CPU benchmarks show faster than 12900K 125W performance,https://wccftech.com/intel-core-i9-13900t-cpu-benchmarks-show-faster-than-12900k-125w-performance-at-35w/,Comments,"
+
+HardwareReport
+Intel Core i9-13900T CPU Benchmarks Show Faster Than 12900K 125W Performance at 35W
+
+Hassan Mujtaba •
+Jan 14, 2023 02:44 PM EST
+
+•
+Copy Shortlink
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Intel recently introduced brand new 13th Gen T-series chips which feature the Core i9-13900T that operates at a 35W TDP. The new chip has been benchmarked within Geekbench 5 and showcases impressive performance given its limited power budget.
+Intel's 13th Gen Core i9-13900T 35W CPU Beats The 125W Core i9-12900K In Geekbench 5 Benchmark
+Starting with the specifications, the Intel Core i9-13900T is a variation of the Core i9-13900 series that comes with a limited TDP design. While the standard chips boast 125W TDP in the unlocked and 65W TDP on the Non-K SKUs, the T-series chip is limited to a 35W TDP.  The Unlocked CPU is rated at up to 253W, the Non-K is rated at up to 219W while the T-series chip is rated at up to 106 Watts which is less than half the power budget of its higher-end siblings.
+Related StoryHassan MujtabaIntel Core i9-13900KS, World’s First 6 GHz CPU, Now Available For $699 USThe Intel Core i9-13900T retains the same core configuration with 24 cores that are made up of 8 P-Cores and 16 E-Cores with 32 threads, a base clock of 1.10 GHz, a boost of up to 5.30 GHz & 68 MB of cache (L2+L3). The CPU also comes at a slightly lower price point of $549.00 US. Now the CPU is tested within the Geekbench 5 benchmark using an ASUS TUF Gaming B660M-PLUS WIFI board and coupled with 64 GB of DDR5 memory.
+
+The CPU scored 2178 points in the single-core and 17339 points in the multi-core tests. We used the Intel Core i9-12900K for comparison which scores 1901 points in single-core and 17272 points in multi-core tests. This puts the Intel Core i9-13900T up to 15% faster in single-core and slightly faster in multi-threaded tests which is very impressive considering the Core i9-12900K also has a higher 125W base TDP (3.58x higher) and a peak TDP rating of 241W (2.27x higher).
+
+Intel Core i9-13900KS Single-Thread CPU Benchmark (Geekbench 5)
+
+Single-Core
+
+
+050010001500200025003000
+
+
+
+
+050010001500200025003000
+
+
+
+
+
+Core i9-13900KS
+
+2.3k
+
+
+Core i9-13900K
+
+2.2k
+
+
+Ryzen 9 7900X
+
+2.2k
+
+
+Ryzen 9 7950X
+
+2.2k
+
+
+Ryzen 7 7700X
+
+2.2k
+
+
+Core i9-13900T
+
+2.2k
+
+
+Ryzen 5 7600X
+
+2.2k
+
+
+Ryzen 9 7900
+
+2.1k
+
+
+Core i9-13900
+
+2.1k
+
+
+Ryzen 7 7700
+
+2.1k
+
+
+Core i9-12900KS
+
+2.1k
+
+
+Core i9-13900HX
+
+2k
+
+
+Ryzen 5 7600
+
+2k
+
+
+Core i7-13700K
+
+2k
+
+
+Core i5-13600K
+
+1.9k
+
+
+Core i9-12900K
+
+1.9k
+
+
+Core i7-12700K
+
+1.9k
+
+
+M2 Max
+
+1.9k
+
+
+M1 Max
+
+1.8k
+
+
+Core i5-12600K
+
+1.7k
+
+
+Ryzen 9 5950X
+
+1.7k
+
+
+Ryzen 7 5800X
+
+1.7k
+
+
+Ryzen 9 5900X
+
+1.7k
+
+
+Ryzen 5 5600X
+
+1.6k
+
+
+
+
+
+
+
+Intel Core i9-13900KS Multi-Thread CPU Benchmark (Geekbench 5)
+
+Multi-Core
+
+
+050001000015000200002500030000
+
+
+
+
+050001000015000200002500030000
+
+
+
+
+
+Core i9-13900KS
+
+26.8k
+
+
+Core i9-13900K
+
+24.3k
+
+
+Ryzen 9 7950X
+
+24.4k
+
+
+Core i9-13900HX
+
+20.9k
+
+
+Core i9-13900
+
+20.1k
+
+
+Core i7-13700K
+
+19.8k
+
+
+Ryzen 9 7900X
+
+19.3k
+
+
+Core i9-12900KS
+
+19k
+
+
+Ryzen 9 7900
+
+18.6k
+
+
+Core i9-13900T
+
+17.3k
+
+
+Core i9-12900K
+
+17.3k
+
+
+Ryzen 9 5950X
+
+16.5k
+
+
+Core i5-13600K
+
+16.1k
+
+
+M2 Max
+
+14.6k
+
+
+Core i7-12700K
+
+14.1k
+
+
+Ryzen 7 7700X
+
+14.1k
+
+
+Ryzen 9 5900X
+
+14k
+
+
+Ryzen 7 7700
+
+12.7k
+
+
+M1 Max
+
+12.3k
+
+
+Core i5-12600K
+
+11.6k
+
+
+Ryzen 5 7600X
+
+11.4k
+
+
+Ryzen 5 7600
+
+11.3k
+
+
+Ryzen 7 5800X
+
+10.3k
+
+
+Ryzen 5 5600X
+
+8.2k
+
+
+
+
+
+
+This goes off to show the immense efficiency that Intel's 10nm ESF process node and the new hybrid architecture packs and we will also get to see some similar results with the mobility lineup, especially the 13th Gen HX parts which are going to ship in enthusiast-grade gaming laptops in the coming months. AMD also introduced its brand new 65W Ryzen 7000 Non-X CPUs which have been showcasing some impressive efficiency feats on their own with the Zen 4 core architecture.
+News Source: Benchleaks
+				
+				Share this story
+				 Facebook
+ Twitter
+
+
+
+
+
+
+Deal of the Day
+
+
+
+
+
+
+
+
+
+
+
+Further Reading
+
+
+
+
+ AMD Ryzen 9 7950X3D CPU Shown To Beat Intel Core i9-13900K In Games With Up To 24% Lead
+
+
+ Intel Core i9-13980HX CPU Powered MSI Raider GE78HX Laptop Matches High-End Desktop CPUs In Performance
+
+
+ Intel Core i9-13980HX Flagship Raptor Lake-HX CPU Spotted In ASUS’s Next-Gen ROG STRIX Laptop
+
+
+ It’s Over 9000! Intel Core i9-13900KS Becomes The First CPU To Achieve 9 GHz Frequency World Record
+
+
+
+
+
+
+
+
+
+
+
+
+
+Comments
+
+
+
+
+Please enable JavaScript to view the comments.
+
+
+
+
+
+
+
+
+
+
+Trending Stories
+
+
+NASA Captures Star Eaten By Black Hole 300 Million Light Years Away
+
+
+
+				109 Active Readers
+
+
+
+SpaceX’s Rockets Split Up In Mid Air For Rare & Stunning Views At 5,000 Km/h+
+
+
+
+				71 Active Readers
+
+
+
+PlayStation 5 Vertical Orientation Issue Clarified by Technician; Issue Happens on “Unopened” Consoles
+
+
+
+				40 Active Readers
+
+
+
+ARK Survival Evolved Unreal Engine 5 Remaster Teased By Studio Wildcard; UE5 Fan Imagining Released
+
+
+
+				22 Active Readers
+
+
+
+Intel Core i9-13900T CPU Benchmarks Show Faster Than 12900K 125W Performance at 35W
+
+
+
+				16 Active Readers
+
+
+
+
+
+
+
+
+Popular Discussions
+
+
+AMD Radeon RX 7900 XTX Failure Rates Reportedly At 11%, RMA’s Piling Up But Users Not Receiving Cards
+
+
+
+				3100 Comments
+
+
+
+AMD Radeon RX 6000 GPUs Mysteriously Start Dying, German Repair Shop Receives 48 Cards With Cracked Chips
+
+
+
+				3019 Comments
+
+
+
+Intel Lunar Lake To Feature A Brand New CPU Architecture Built From The Ground-Up, Perf/Watt Focused at Mobile
+
+
+
+				2757 Comments
+
+
+
+AMD To Give The Love of 3D V-Cache This Valentines With Its Ryzen 7000 X3D CPUs Launch
+
+
+
+				2021 Comments
+
+
+
+Intel Arc A770 Performs Above AMD & NVIDIA In DirectStorage 1.1 Performance Benchmark
+
+
+
+				1802 Comments
+
+
+
+
+
+
+
+
+	 
+
+
+
+
+
+
+
+"
+https://news.ycombinator.com/rss,Show HN: Sketch – AI code-writing assistant that understands data content,https://github.com/approximatelabs/sketch,Comments,"
+
+
+
+
+
+
+
+
+approximatelabs
+
+/
+
+sketch
+
+Public
+
+
+
+
+ 
+
+Notifications
+
+
+
+ 
+
+Fork
+    13
+
+
+
+
+ 
+
+
+          Star
+ 393
+  
+
+
+
+
+
+
+
+
+
+        AI code-writing assistant that understands data content
+      
+
+
+
+
+
+393
+          stars
+ 
+
+
+
+13
+          forks
+ 
+
+
+
+ 
+
+
+          Star
+
+  
+
+
+
+
+
+ 
+
+Notifications
+
+
+
+
+
+
+
+
+
+
+
+
+Code
+
+
+
+
+
+
+
+Issues
+0
+
+
+
+
+
+
+Pull requests
+0
+
+
+
+
+
+
+Actions
+
+
+
+
+
+
+
+Projects
+0
+
+
+
+
+
+
+Security
+
+
+
+
+
+
+
+Insights
+
+
+
+ 
+ 
+
+
+
+More
+
+
+ 
+
+
+                  Code
+ 
+
+
+                  Issues
+ 
+
+
+                  Pull requests
+ 
+
+
+                  Actions
+ 
+
+
+                  Projects
+ 
+
+
+                  Security
+ 
+
+
+                  Insights
+ 
+
+
+
+
+
+
+
+approximatelabs/sketch
+
+
+
+
+
+
+
+
+
+This commit does not belong to any branch on this repository, and may belong to a fork outside of the repository.
+
+
+
+
+
+
+
+
+
+
+
+main
+
+
+
+
+
+Switch branches/tags
+
+
+
+
+
+
+
+
+
+
+Branches
+Tags
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+View all branches
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+View all tags
+
+
+
+
+
+
+
+
+
+
+
+
+
+Name already in use
+
+
+
+
+
+
+
+
+
+      A tag already exists with the provided branch name. Many Git commands accept both tag and branch names, so creating this branch may cause unexpected behavior. Are you sure you want to create this branch?
+
+
+
+    Cancel
+
+    Create
+
+
+
+
+
+
+
+
+1
+branch
+
+
+
+
+
+6
+tags
+
+
+
+
+
+
+
+    Code
+ 
+
+
+
+
+
+
+
+Local
+
+
+
+ Codespaces
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  Clone
+
+
+
+
+
+            HTTPS
+ 
+            GitHub CLI
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+        Use Git or checkout with SVN using the web URL.
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+      Work fast with our official CLI.
+      Learn more.
+    
+
+
+
+
+
+
+
+
+    Open with GitHub Desktop
+
+
+
+
+
+
+    Download ZIP
+
+
+
+ 
+Sign In Required
+
+                Please
+                sign in
+                to use Codespaces.
+              
+
+
+
+Launching GitHub Desktop
+
+    If nothing happens, download GitHub Desktop and try again.
+  
+
+
+
+
+Launching GitHub Desktop
+
+    If nothing happens, download GitHub Desktop and try again.
+  
+
+
+
+
+Launching Xcode
+
+    If nothing happens, download Xcode and try again.
+  
+
+
+
+
+
+Launching Visual Studio Code
+Your codespace will open once ready.
+There was a problem preparing your codespace, please try again.
+
+
+
+
+
+
+
+
+
+
+Latest commit
+
+
+
+
+
+
+ 
+
+
+
+
+bluecoconut
+
+update readme wording
+
+
+
+
+        …
+      
+
+
+
+
+        9d567ec
+      
+
+Jan 16, 2023
+
+
+
+
+
+update readme wording
+
+
+9d567ec
+
+
+
+Git stats
+
+
+
+
+
+
+
+133
+
+                      commits
+                    
+
+
+
+
+
+
+
+Files
+Permalink
+
+
+
+
+  
+    Failed to load latest commit information.
+
+
+  
+ 
+
+
+Type
+Name
+Latest commit message
+Commit time
+
+
+
+
+
+
+
+
+.github/workflows
+
+
+
+remove python 3.7, add tests, remove uneeded code
+
+
+
+Dec 15, 2022
+
+
+
+
+
+
+
+
+
+sketch
+
+
+
+some bug fix and copy addition
+
+
+
+Jan 16, 2023
+
+
+
+
+
+
+
+
+
+tests
+
+
+
+remove python 3.7, add tests, remove uneeded code
+
+
+
+Dec 15, 2022
+
+
+
+
+
+
+
+
+
+.gitignore
+
+
+
+update with edit and work on text2sql
+
+
+
+Oct 13, 2022
+
+
+
+
+
+
+
+
+
+README.md
+
+
+
+update readme wording
+
+
+
+Jan 16, 2023
+
+
+
+
+
+
+
+
+
+dev-requirements.txt
+
+
+
+starting to rebuild sketch
+
+
+
+Dec 15, 2022
+
+
+
+
+
+
+
+
+
+pyproject.toml
+
+
+
+rename to pandas extension, add missing requirement, use base64 encoding
+
+
+
+Jan 11, 2023
+
+
+
+
+
+
+
+
+
+setup.py
+
+
+
+starting to rebuild sketch
+
+
+
+Dec 15, 2022
+
+
+
+
+    View code
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+sketch
+Demo
+How to use
+.sketch.ask
+.sketch.howto
+.sketch.apply
+Sketch currently uses prompts.approx.dev to help run with minimal setup
+How it works
+
+
+
+
+
+README.md
+
+
+
+
+sketch
+Sketch is an AI code-writing assistant for pandas users that understands the context of your data, greatly improving the relevance of suggestions. Sketch is usable in seconds and doesn't require adding a plugin to your IDE.
+pip install sketch
+Demo
+Here we follow a ""standard"" (hypothetical) data-analysis workflow, showing a Natural Language interace that successfully navigates many tasks in the data stack landscape.
+
+Data Catalogging:
+
+General tagging (eg. PII identification)
+Metadata generation (names and descriptions)
+
+
+Data Engineering:
+
+Data cleaning and masking (compliance)
+Derived feature creation and extraction
+
+
+Data Analysis:
+
+Data questions
+Data visualization
+
+
+
+
+
+
+
+
+sketch-demo.mp4
+
+
+
+
+
+Try it out in colab: 
+How to use
+It's as simple as importing sketch, and then using the .sketch extension on any pandas dataframe.
+import sketch
+Now, any pandas dataframe you have will have an extension registered to it. Access this new extension with your dataframes name .sketch
+.sketch.ask
+Ask is a basic question-answer system on sketch, this will return an answer in text that is based off of the summary statistics and description of the data.
+Use ask to get an understanding of the data, get better column names, ask hypotheticals (how would I go about doing X with this data), and more.
+df.sketch.ask(""Which columns are integer type?"")
+.sketch.howto
+Howto is the basic ""code-writing"" prompt in sketch. This will return a code-block you should be able to copy paste and use as a starting point (or possibly ending!) for any question you have to ask of the data. Ask this how to clean the data, normalize, create new features, plot, and even build models!
+df.sketch.howto(""Plot the sales versus time"")
+.sketch.apply
+apply is a more advanced prompt that is more useful for data generation. Use it to parse fields, generate new features, and more. This is built directly on lambdaprompt. In order to use this, you will need to set up a free account with OpenAI, and set an environment variable with your API key. OPENAI_API_KEY=YOUR_API_KEY
+df['review_keywords'] = df.sketch.apply(""Keywords for the review [{{ review_text }}] of product [{{ product_name }}] (comma separated):"")
+df['capitol'] = pd.DataFrame({'State': ['Colorado', 'Kansas', 'California', 'New York']}).sketch.apply(""What is the capitol of [{{ State }}]?"")
+Sketch currently uses prompts.approx.dev to help run with minimal setup
+In the future, we plan to update the prompts at this endpoint with our own custom foundation model, built to answer questions more accurately than GPT-3 can with its minimal data context.
+You can also directly call OpenAI directly (and not use our endpoint) by using your own API key. To do this, set 2 environment variables.
+(1) SKETCH_USE_REMOTE_LAMBDAPROMPT=False
+(2) OPENAI_API_KEY=YOUR_API_KEY
+How it works
+Sketch uses efficient approximation algorithms (data sketches) to quickly summarize your data, and feed that information into language models. Right now it does this by summarizing the columns and writing these summary statistics as additional context to be used by the code-writing prompt. In the future we hope to feed these sketches directly into custom made ""data + language"" foundation models to get more accurate results.
+
+
+
+
+
+
+
+
+
+About
+
+      AI code-writing assistant that understands data content
+    
+Topics
+
+
+
+  python
+
+
+  data-science
+
+
+  data
+
+
+  ai
+
+
+  tabular-data
+
+
+  pandas
+
+
+  df
+
+
+  sketches
+
+
+  dataframe
+
+
+  copilot
+
+
+  codex
+
+
+  ds
+
+
+  datasketches
+
+
+  gpt3
+
+
+  lambdaprompt
+
+
+  datasketch
+
+
+
+Resources
+
+
+
+
+
+      Readme
+ 
+
+
+Stars
+
+
+
+
+
+393
+    stars
+
+Watchers
+
+
+
+
+
+4
+    watching
+
+Forks
+
+
+
+
+
+13
+    forks
+
+
+
+
+
+
+
+    Releases
+
+
+
+
+
+6
+tags
+
+
+
+
+
+
+
+    Packages 0
+
+
+        No packages published 
+
+
+
+
+
+
+
+        Used by 22
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            + 14
+          
+
+
+
+
+
+
+
+    Contributors 2
+
+
+
+
+
+
+
+
+bluecoconut
+Justin Waugh
+
+ 
+
+
+
+
+
+
+jmbiven
+Mike Biven
+
+ 
+
+
+
+
+
+Languages
+
+
+
+
+
+
+
+
+
+
+Python
+100.0%
+
+
+
+
+
+
+
+
+
+
+
+"
+https://news.ycombinator.com/rss,Boris Yeltsin's visit to a suburban Houston supermarket in 1989,http://beelineblogger.blogspot.com/2016/01/how-supermarket-visit-brought-down.html,Comments,"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+BeeLine: How A Supermarket Visit Brought Down The Soviet Union
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+BeeLine
+
+
+
+
+The Shortest Route To What You Need To Know
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Scott Beeken
+
+
+
+
+
+BeeLine
+
+
+
+View my complete profile
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Tuesday, January 5, 2016
+
+
+
+
+
+
+
+
+How A Supermarket Visit Brought Down The Soviet Union
+
+
+
+
+
+Many point to the fact that the Soviet Union collapse occurred as the Soviets were baited into trying to compete with the defense build-up instituted by Ronald Reagan.
+
+The Soviets just did not have the financial resources to match the United States in defense spending while also tending to the needs of its citizenry. The Soviets spent money on guns rather than butter. Something had to give and the Soviet people were the ones that suffered.
+
+However, a little known visit to a suburban Houston supermarket in 1989 by Boris Yeltsin appears to have been the catalyst that ended up bringing down the Soviet Union.
+
+Yeltsin visited the Johnson Space Center in Houston in September, 1989 to tour mission control and to view a model of the planned International Space Station.
+
+After visiting the Space Center, Yeltsin made an unplanned stop at a local Randall's grocery store that was close by before heading to the airport.
+
+That visit changed the course of history.
+
+At the time, Yeltsin was a newly elected member of the Soviet Parliament and the Supreme Soviet and had been a key ally of the General Secretary of the Communist Party Mikhail Gorbachev, who was initiating reforms but the pace of which was too slow for Yeltsin.
+
+Houston Chronicle reporter Stephanie Asin was with Yeltsin on the visit to the grocery store that day.
+
+
+Yeltsin, then 58, “roamed the aisles of Randall’s nodding his head in amazement,” wrote Asin. He told his fellow Russians in his entourage that if their people, who often must wait in line for most goods, saw the conditions of U.S. supermarkets, “there would be a revolution.”
+
+“Even the Politburo doesn’t have this choice. Not even Mr. Gorbachev,” he said.
+
+The fact that stores like these were on nearly every street corner in America amazed him. They even offered free cheese samples. According to Asin, Yeltsin didn’t leave empty-handed, as he was given a small bag of goodies to enjoy on his trip.
+
+This is a picture of Yeltsin touring the grocery store.
+
+
+
+Credit: Houston Chronicle
+
+
+This Houston Chronicle story from 2014 fills in the rest of the story.
+
+
+About a year after the Russian leader left office, a Yeltsin biographer later wrote that on the plane ride to Yeltsin’s next destination, Miami, he was despondent. He couldn’t stop thinking about the plentiful food at the grocery store and what his countrymen had to subsist on in Russia.
+
+In Yeltsin’s own autobiography, he wrote about the experience at Randall’s, which shattered his view of communism, according to pundits. Two years later, he left the Communist Party and began making reforms to turn the economic tide in Russia. 
+
+“When I saw those shelves crammed with hundreds, thousands of cans, cartons and goods of every possible sort, for the first time I felt quite frankly sick with despair for the Soviet people,” Yeltsin wrote. “That such a potentially super-rich country as ours has been brought to a state of such poverty! It is terrible to think of it.”
+
+To give you some perspective on what was available in the Soviet Union at that time, here is a picture of a Russian store from that era.
+
+
+
+
+Credit: Gennady Galperin/Reuters
+
+
+An aide to Yeltsin later reported that in that visit to the grocery store in Houston “the last vestige of Bolshevism collapsed” inside his boss.
+
+Two years later Yeltsin was elected to the newly created office of President of the Russian Federation after the collapse of the Soviet Union with Gorbachev.
+
+Yeltsin immediately began dismantling the socialist economic system and introducing capitalism to the Russians. In the process he attempted to convert the world's largest command economy into a free-market one. 
+
+The results of that transition were rocky in large part to cronyism in the break-up of many of the large state-owned businesses. In the process, many Russian oligarchs were created and Yeltsin eventually resigned his office in 1999 haunted by charges of corruption and incompetence.
+
+His successor?
+
+Vladimir Putin.
+
+The falling price of oil has put a similar squeeze on Putin and the Russians today. Putin has been popular with the Russian people based on his macho style and nationalistic bombast. However, potential trouble lurks for Putin because of the Russian economy.
+
+The Russian consumer is being squeezed with annual inflation of almost 20% and the average Russian spends about 50% of their income on food.
+
+By comparison, the average American spends only 8% of income on groceries.
+
+Will groceries once again determine the future of Russia?
+
+
+
+
+
+
+Posted by
+
+
+
+BeeLine
+
+
+
+
+at
+
+8:21 PM
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Email ThisBlogThis!Share to TwitterShare to FacebookShare to Pinterest
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+42 comments:
+
+
+
+
+andreSeptember 14, 2017 at 4:52 AMobat viagraviagra asliReplyDeleteRepliesUnknownOctober 29, 2021 at 10:14 AMGreat Article Artificial Intelligence Projects Project Center in Chennai JavaScript Training in Chennai JavaScript Training in Chennai Project Centers in Chennai DeleteRepliesReplyReplychegekhanMarch 28, 2018 at 8:11 AMUseful Information, your blog is sharing unique information....Thanks for sharing!!! buy bakery products online south-cbuy branded food online in panganiReplyDeleteRepliesReplyUnknownSeptember 27, 2018 at 7:24 AMThank you for your post. This is excellent information. It is amazing and wonderful to visit your site.buy bakery products online south-c ReplyDeleteRepliesReplyYK AgencyDecember 25, 2018 at 11:30 AMSupermarket in Dubai Great article. Cool.ReplyDeleteRepliesReplyLuck CityFebruary 11, 2019 at 3:50 AMWithin this webpage, you'll see the page, you need to understand this data. https://digitalglobal.comReplyDeleteRepliesReplyjames brownNovember 22, 2019 at 6:45 AMAwesome blog. I enjoyed reading your articles. This is truly a read for me. I have bookmarked it and I am looking forward to reading new articles. Keep up the good work!Kroger customer surveyReplyDeleteRepliesReplyKroger experienceDecember 10, 2019 at 8:05 AMPlease share more like that.Kroger experienceReplyDeleteRepliesReplyAnonymousDecember 30, 2019 at 7:47 PMGreat article! Yeltsin revealed as a realist! I never knew this ...ReplyDeleteRepliesReplyDavid Grant Stewart, Sr., EgyptologistJanuary 1, 2020 at 3:17 PMWho paid you to write this drivel? You are either incredibly gullible or on the take from the USSR propaganda machine. You look and say the Soviet civilian economy is bad. There is no civilian economy in the USSR. The country does not have a war machine. The country is a war machine.ReplyDeleteRepliesReplyNeha UppalJanuary 9, 2020 at 3:33 AMThanks for sharing such beautiful information with us. I hope you will share some more information about best grocery shopping app. Please keep sharing.ReplyDeleteRepliesReplyjames brownFebruary 13, 2020 at 1:15 PMHey There. I found your blog using This is a very well written article. I’ll be sure to bookmark it and come back to read more of your useful info. Thanks for the post. I’ll definitely return.https://krogerexperiencee.com/ReplyDeleteRepliesReplyjames brownFebruary 18, 2020 at 7:24 AMGreat post I would like to thank you for the efforts you have made in writing this interesting and knowledgeable article.https://tellthebelll.usReplyDeleteRepliesReplysurvey monkey usaFebruary 19, 2020 at 7:45 AMGreat things you’ve always with us. Just keep writing this kind of posts.The time which was wasted in traveling for tuition now it can be used for studies.Thankssurvey monkey usaReplyDeleteRepliesReplydanielwilsonnFebruary 19, 2020 at 3:43 PM Thank you again for all the knowledge u distribute,Good post. I was very interested in the article, it's quite inspiring I should admit. I like visiting you site since I always come across interesting articles like this one.Great Job, I greatly appreciate that.Do Keep sharing! Regards,https://krogerfeeedback.us/ReplyDeleteRepliesReplydahliaApril 23, 2020 at 3:21 AM Thanks for sharing this information. I really like your post very much. You have really shared an informative and interesting post with people  TellTheBell ReplyDeleteRepliesReplypatronsurveysApril 24, 2020 at 8:23 AMAfter Kroger and Walmart, I prefer to go to Tesco supermarket. Do you know what? there is quality in products with an extraordinary service tescoviews com offers a platform to complete the Tesco customer satisfaction survey to win £1000 Gift Card & 25 Club Points. Survey site is giving a lot of store surveys at one place to complete.ReplyDeleteRepliesReplyjames brownJuly 14, 2020 at 3:24 AMThis comment has been removed by the author.ReplyDeleteRepliesReplyjames brownJuly 14, 2020 at 3:25 AMIts a great pleasure reading your post.Its full of information I am looking for and I love to post a comment that ""The content of your post is awesome"" Great work.https://krogerexperiencee.com/greatpeople-me-kroger-employee-login-portal/ReplyDeleteRepliesReplyNFL FanSeptember 20, 2020 at 4:46 PMThe official source for NFL news, video highlights, fantasy football, game-day coverage, schedules, stats, scores and more. Ravens FootballReplyDeleteRepliesReplytellthebellSeptember 22, 2020 at 11:42 AM Excellent website you have  so much cool information!..tellthebellReplyDeleteRepliesReplydgcustomerfirstJune 25, 2021 at 6:49 AMTo take an interest in the Dollar general super market survey, it is important to arrange a few things at one of its Branches initially. Visit the authority survey site of Dollar General survey at Dgcustomerfirst.Com and Win A $100 gift voucher. Then, at that point, you need to save the receipt of the store. Then, at that point, go to the authority survey site of dollar general. The Dg survey is accessible in both English or Spanish.ReplyDeleteRepliesReplymybkexperienceAugust 3, 2021 at 2:30 AMDollar general survey is an online platform that collects customers' most recent shopping experiences and overall customer satisfaction. Participate in the survey and be the lucky person to get enlisted in dg customer first winners. ReplyDeleteRepliesReplyarnavharperAugust 30, 2021 at 12:33 PMRemote for Fire TV is designed specifically to control Fire TV, Fire TV Cube and Fire TV Stick. Just connect mobile device and a TV or media player to the Firestick Remote.ReplyDeleteRepliesReplySEOOctober 12, 2021 at 3:37 AMdelta international recruitment agency in pakistanReplyDeleteRepliesReplyHealthandBeautyTipsNovember 6, 2021 at 5:24 PMEmployees can Perform Kroger E-Schedule Login at the Feed Kroger Login Portal once their Schedule Credentials are verified. If you are unable to sign in to Kroger Login then you need to contact the branch manager.Feed KrogerReplyDeleteRepliesReplyUnknownJanuary 27, 2022 at 5:48 AMThe NASA dark Brant IX sounding rocket conveyed the payload to an apogee of 177 miles prior to plunging by parachute and arriving at White Sands. Dgcustomerfirst.com Survey ReplyDeleteRepliesReplydgcustomerfirst.comMay 19, 2022 at 3:35 AMThe dgcustomerfirst.com criticism review permits customers to enter the Dollar General Sweepstakes of Cash $100 in the wake of finishing the overview.dgcustomerfirstwin.shop Survey  ReplyDeleteRepliesReplywww.DGCustomerFirst.comJune 6, 2022 at 10:50 AMDollar general survey is an online platform that collects customers' most recent shopping experiences and overall customer satisfaction. https://idgcustomerfirst.org/ReplyDeleteRepliesReplydgcustomerfirsts.shopJune 10, 2022 at 6:07 AMAlso, you have a superb opportunity to partake in the client criticism overview. DGCustomerFirst 2022 or Dollar General Survey is a study led by Dollar General's authorities for all United States inhabitants.dgcustomerfirsts executed a connected with the WWW review to take an arrangement about dgcustomerfirsts Helpline notwithstanding your support level thereafter visiting service  Click here dgcustomerfirsts ReplyDeleteRepliesReplySteveJune 16, 2022 at 9:58 AMGreat Article, it was very informative. That was such thought-provoking content. I enjoyed reading your content. Every week, I look forward to your column. In my opinion, this one is one of the best articles you have written so far.How to Change Instagram PasswordChange Windows 10 PasswordSubwaylistensHome Depot SurveyDQFanFeedback.com ReplyDeleteRepliesReplyUmairJune 30, 2022 at 6:44 AMirescopk.comReplyDeleteRepliesReplyDgcustomerfirstscom.shopJuly 9, 2022 at 6:51 AMFormerly referred to as J L Turner, Dollar General has numerous subsidiaries viz Dollar General Market, Dollar General Financial, Dollar General Global Sourcing, and lots extra.dgcustomerfirstscom executed a connected with the WWW review to take an arrangement about dgcustomerfirstscom Helpline notwithstanding your support level thereafter visiting service  Click here dgcustomerfirstscom ReplyDeleteRepliesReplyAnonymousJuly 19, 2022 at 1:35 PMLiveTheOrangeLife – Official Portal www.LiveTheOrangeLife.comWalmartOne Login - Walmartone.com Login Guidemyaccountaccess.comonevanillaJCP Associate KioskReplyDeleteRepliesReplySmith AdomJuly 30, 2022 at 12:03 PMTalkToWendys executed a connected with the WWW review to take an arrangement about TalkToWendys Helpline notwithstanding your support level thereafter visiting service  Click here TalkToWendys  It is mandatory to make a purchase at Wendy’s once before being a participant in this survey.ReplyDeleteRepliesReplyInformTarget.comAugust 10, 2022 at 3:38 AMRules are guidelines, and they are set to be accompanied. If you want to participate within the survey effectively, you need to adhere to the rules and policies set apart via the informtarget.Com remarks survey.informtargets executed a connected with the WWW review to take an arrangement about informtargets Helpline notwithstanding your support level thereafter visiting service  Click here informtargets.shop ReplyDeleteRepliesReplyTellBaskinRobbinsAugust 19, 2022 at 5:39 AMThere are some basic rules and requirements of this Baskin Robbins Customer Satisfaction Survey which I even have furnished in this newsletter. tellbaskinrobbins executed a connected with the WWW review to take an arrangement about tellbaskinrobbins Helpline notwithstanding your support level thereafter visiting service  Click here tellbaskinrobbins ReplyDeleteRepliesReplyTalktofoodlionAugust 20, 2022 at 2:37 AMTalktofoodlion The company's full name is general Dollar, and it is offering a $100 incentive to customers who take the time to participate in this little survey. visit here Talktofoodlion ReplyDeleteRepliesReplyFaiz IsrailiAugust 21, 2022 at 5:02 AMThe procedure is requesting information from individuals using a questionnaire, which may be completed offline or online. New technologies, however, are frequently disseminated via digital channels like social media, email, QR codes, or URLs. dgcustomerfirstReplyDeleteRepliesReplyTellBaskinRobbinsSeptember 8, 2022 at 7:11 AMTellBaskinRobbins After responding to the feedback questions, participants are expected to rate their experience shopping at Baskin Robbins.The feedback survey is sponsored by Baskin Robbins in order to better understand its service quality TellBaskinRobbinsReplyDeleteRepliesReplyNikithaOctober 8, 2022 at 1:31 AMmybkexperience customer satisfaction survey which is an online platform to get timely feedback from their customers about the food and services. This can improve their services according to customer’s needs and at the same time, rewards their customer for their time and loyalty towards the restaurant. So you can answer the questions and eat delicious food for free at the same time. Now you might be wondering about how to participate in the survey or what are the requirements and much more.ReplyDeleteRepliesReplySEOOctober 14, 2022 at 5:59 AMtop recruitment agencies in pakistan for saudi arabiaReplyDeleteRepliesReplyAdd commentLoad more...
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Newer Post
+
+
+Older Post
+
+Home
+
+
+
+
+Subscribe to:
+Post Comments (Atom)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+BeeLine Email Subscription
+
+Get new posts by email:  Subscribe
+
+
+
+
+Follow @BeeLineBlog
+
+
+
+
+Followers
+
+
+
+
+
+
+
+
+
+
+
+Blog Archive
+
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+2023
+
+(5)
+
+
+
+
+
+        ► 
+      
+
+
+
+January
+
+(5)
+
+
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+2022
+
+(139)
+
+
+
+
+
+        ► 
+      
+
+
+
+December
+
+(11)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+November
+
+(10)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+October
+
+(12)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+September
+
+(12)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+August
+
+(13)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+July
+
+(11)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+June
+
+(12)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+May
+
+(12)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+April
+
+(12)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+March
+
+(12)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+February
+
+(10)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+January
+
+(12)
+
+
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+2021
+
+(131)
+
+
+
+
+
+        ► 
+      
+
+
+
+December
+
+(15)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+November
+
+(12)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+October
+
+(9)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+September
+
+(13)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+August
+
+(14)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+July
+
+(11)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+June
+
+(10)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+May
+
+(6)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+April
+
+(10)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+March
+
+(11)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+February
+
+(7)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+January
+
+(13)
+
+
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+2020
+
+(154)
+
+
+
+
+
+        ► 
+      
+
+
+
+December
+
+(11)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+November
+
+(12)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+October
+
+(14)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+September
+
+(11)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+August
+
+(12)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+July
+
+(13)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+June
+
+(14)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+May
+
+(12)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+April
+
+(16)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+March
+
+(16)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+February
+
+(10)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+January
+
+(13)
+
+
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+2019
+
+(145)
+
+
+
+
+
+        ► 
+      
+
+
+
+December
+
+(14)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+November
+
+(11)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+October
+
+(9)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+September
+
+(12)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+August
+
+(13)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+July
+
+(12)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+June
+
+(12)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+May
+
+(14)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+April
+
+(13)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+March
+
+(12)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+February
+
+(10)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+January
+
+(13)
+
+
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+2018
+
+(139)
+
+
+
+
+
+        ► 
+      
+
+
+
+December
+
+(11)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+November
+
+(10)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+October
+
+(10)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+September
+
+(10)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+August
+
+(12)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+July
+
+(13)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+June
+
+(12)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+May
+
+(12)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+April
+
+(13)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+March
+
+(12)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+February
+
+(9)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+January
+
+(15)
+
+
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+2017
+
+(132)
+
+
+
+
+
+        ► 
+      
+
+
+
+December
+
+(9)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+November
+
+(10)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+October
+
+(15)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+September
+
+(9)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+August
+
+(13)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+July
+
+(12)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+June
+
+(9)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+May
+
+(13)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+April
+
+(12)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+March
+
+(10)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+February
+
+(10)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+January
+
+(10)
+
+
+
+
+
+
+
+
+
+        ▼ 
+      
+
+
+
+2016
+
+(119)
+
+
+
+
+
+        ► 
+      
+
+
+
+December
+
+(11)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+November
+
+(15)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+October
+
+(15)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+September
+
+(10)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+August
+
+(2)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+July
+
+(9)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+June
+
+(11)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+May
+
+(6)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+April
+
+(9)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+March
+
+(11)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+February
+
+(12)
+
+
+
+
+
+
+
+        ▼ 
+      
+
+
+
+January
+
+(8)
+
+In the Middle of 5th Avenue
+Risky Business
+That's for the Birds
+An Inconvenient Truth +10
+Citizen Cruz
+Context on Guns
+How A Supermarket Visit Brought Down The Soviet Union
+A Humble Servant?
+
+
+
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+2015
+
+(71)
+
+
+
+
+
+        ► 
+      
+
+
+
+December
+
+(9)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+November
+
+(5)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+October
+
+(2)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+September
+
+(2)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+August
+
+(9)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+July
+
+(7)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+June
+
+(6)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+May
+
+(3)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+April
+
+(10)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+March
+
+(6)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+February
+
+(4)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+January
+
+(8)
+
+
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+2014
+
+(88)
+
+
+
+
+
+        ► 
+      
+
+
+
+December
+
+(5)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+November
+
+(7)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+October
+
+(10)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+September
+
+(9)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+August
+
+(5)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+July
+
+(8)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+June
+
+(7)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+May
+
+(9)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+April
+
+(7)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+March
+
+(6)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+February
+
+(5)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+January
+
+(10)
+
+
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+2013
+
+(115)
+
+
+
+
+
+        ► 
+      
+
+
+
+December
+
+(8)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+November
+
+(5)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+October
+
+(13)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+September
+
+(9)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+August
+
+(7)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+July
+
+(10)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+June
+
+(10)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+May
+
+(9)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+April
+
+(13)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+March
+
+(10)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+February
+
+(7)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+January
+
+(14)
+
+
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+2012
+
+(139)
+
+
+
+
+
+        ► 
+      
+
+
+
+December
+
+(6)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+November
+
+(16)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+October
+
+(16)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+September
+
+(9)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+August
+
+(14)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+July
+
+(13)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+June
+
+(8)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+May
+
+(11)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+April
+
+(9)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+March
+
+(9)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+February
+
+(11)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+January
+
+(17)
+
+
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+2011
+
+(188)
+
+
+
+
+
+        ► 
+      
+
+
+
+December
+
+(12)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+November
+
+(10)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+October
+
+(10)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+September
+
+(10)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+August
+
+(17)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+July
+
+(18)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+June
+
+(11)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+May
+
+(3)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+April
+
+(16)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+March
+
+(19)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+February
+
+(25)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+January
+
+(37)
+
+
+
+
+
+
+
+
+
+About Me
+
+
+
+
+
+BeeLine
+
+
+Scott Beeken has practiced as an attorney, CPA and has been an officer with two Fortune 500 companies overseeing diverse functions such as Taxation, Employee Benefits, Human Resources, Real Estate Facilities, Risk Management, Corporate Communications, Marketing and Advertising. In addition to writing BeeLine, he is a Keynote Speaker, Author  and Strategic Consultant.
+
+View my complete profile
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Total Pageviews
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Theme images by luoman. Powered by Blogger.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+"
+https://news.ycombinator.com/rss,Show HN: Cross-Platform GitHub Action,https://github.com/marketplace/actions/cross-platform-action,Comments,"
+
+
+
+
+
+Marketplace
+Actions
+Cross Platform Action
+
+
+
+
+
+
+play-circle
+
+
+
+
+
+GitHub Action
+Cross Platform Action
+
+
+
+
+v0.9.0
+Latest version
+
+
+
+
+
+
+
+    Use latest version
+ 
+
+
+
+
+
+
+
+
+
+play-circle
+
+
+
+
+
+
+Cross Platform Action
+Provides cross platform runner
+
+
+Installation
+Copy and paste the following snippet into your .yml file.
+
+
+
+
+
+
+
+
+
+
+
+
+- name: Cross Platform Action
+  uses: cross-platform-actions/action@v0.9.0
+
+
+
+          Learn more about this action in cross-platform-actions/action
+
+
+
+
+
+
+
+
+
+
+
+
+Choose a version
+
+
+
+
+
+
+
+v0.9.0
+
+                Cross Platform Action 0.9.0
+              
+
+ 
+
+
+
+
+v0.8.0
+
+                Cross Platform Action 0.8.0
+              
+
+ 
+
+
+
+
+v0.7.0
+
+                Cross Platform Action 0.7.0
+              
+
+ 
+
+
+
+
+v0.6.2
+
+                Cross Platform Action 0.6.2
+              
+
+ 
+
+
+
+
+v0.6.1
+
+                Cross Platform Action 0.6.1
+              
+
+ 
+
+
+
+
+v0.6.0
+
+                Cross Platform Action 0.6.0
+              
+
+ 
+
+
+
+
+v0.5.0
+
+                Cross Platform Action 0.5.0
+              
+
+ 
+
+
+
+
+v0.4.0
+
+                Cross Platform Action 0.4.0
+              
+
+ 
+
+
+
+
+v0.3.1
+
+                Cross Platform Action 0.3.1
+              
+
+ 
+
+
+
+
+v0.3.0
+
+                Cross Platform Action 0.3.0
+              
+
+ 
+
+
+
+
+
+
+
+
+Cross-Platform GitHub Action
+This project provides a GitHub action for running GitHub Action workflows on
+multiple platforms. This includes platforms that GitHub Actions doesn't
+currently natively support.
+Features
+Some of the features that are supported include:
+
+Multiple operating system with one single action
+Multiple versions of each operating system
+Allows to use default shell or Bash shell
+Low boot overhead
+Fast execution
+
+Usage
+Here's a sample workflow file which will setup a matrix resulting in four jobs.
+One which will run on FreeBSD 13.1, one which runs OpenBSD 7.2, one which runs
+NetBSD 9.2 and one which runs OpenBSD 7.2 on ARM64.
+name: CI
+
+on: [push]
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os.host }}
+    strategy:
+      matrix:
+        os:
+          - name: freebsd
+            architecture: x86-64
+            version: '13.1'
+            host: macos-12
+
+          - name: openbsd
+            architecture: x86-64
+            version: '7.2'
+            host: macos-12
+
+          - name: openbsd
+            architecture: arm64
+            version: '7.2'
+            host: ubuntu-latest
+
+          - name: netbsd
+            architecture: x86-64
+            version: '9.2'
+            host: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Test on ${{ matrix.os.name }}
+        uses: cross-platform-actions/action@v0.9.0
+        env:
+          MY_ENV1: MY_ENV1
+          MY_ENV2: MY_ENV2
+        with:
+          environment_variables: MY_ENV1 MY_ENV2
+          operating_system: ${{ matrix.os.name }}
+          architecture: ${{ matrix.os.architecture }}
+          version: ${{ matrix.os.version }}
+          shell: bash
+          run: |
+            uname -a
+            echo $SHELL
+            pwd
+            ls -lah
+            whoami
+            env | sort
+Different platforms need to run on different runners, see the
+Runners section below.
+Inputs
+This section lists the available inputs for the action.
+
+
+
+Input
+Required
+Default Value
+Description
+
+
+
+
+run
+✓
+✗
+Runs command-line programs using the operating system's shell. This will be executed inside the virtual machine.
+
+
+operating_system
+✓
+✗
+The type of operating system to run the job on. See Supported Platforms.
+
+
+version
+✓
+✗
+The version of the operating system to use. See Supported Platforms.
+
+
+shell
+✗
+default
+The shell to use to execute the commands. Defaults to the default shell for the given operating system. Allowed values are: default, sh and bash
+
+
+environment_variables
+✗
+""""
+A list of environment variables to forward to the virtual machine. The list should be separated with spaces.
+
+
+
+All inputs are expected to be strings. It's important that especially the
+version is explicitly specified as a string, using single or double quotes.
+Otherwise YAML might interpet the value as a numeric value instead of a string.
+This might lead to some unexpected behavior. If the version is specified as
+version: 13.0, YAML will interpet 13.0 as a floating point number, drop the
+fraction part (because 13 and 13.0 are the same) and the GitHub action will
+only see 13 instead of 13.0. The solution is to explicitly state that a
+string is required by using quotes: version: '13.0'.
+Supported Platforms
+This sections lists the currently supported platforms by operating system. Each
+operating system will list which versions are supported.
+OpenBSD (openbsd)
+
+
+
+Version
+x86-64
+arm64
+
+
+
+
+7.2
+✓
+✓
+
+
+7.1
+✓
+✓
+
+
+6.9
+✓
+✓
+
+
+6.8
+✓
+✗
+
+
+
+FreeBSD (freebsd)
+
+
+
+Version
+x86-64
+
+
+
+
+13.1
+✓
+
+
+13.0
+✓
+
+
+12.4
+✓
+
+
+12.2
+✓
+
+
+
+NetBSD (netbsd)
+
+
+
+Version
+x86-64
+
+
+
+
+9.2
+✓
+
+
+
+Runners
+This section list the different combinations of platforms and on which runners
+they can run.
+
+
+
+Runner
+OpenBSD
+FreeBSD
+NetBSD
+
+
+
+
+Linux
+✓
+✓
+✓
+
+
+macos-10.15, macos-11, macos-12
+✓
+✓
+✗
+
+
+
+Under the Hood
+GitHub Actions currently only support the following platforms: macOS, Linux and
+Windows. To be able to run other platforms, this GitHub action runs the
+commands inside a virtual machine (VM). If the host platform is macOS the
+hypervisor can take advantage of nested virtualization.
+The FreeBSD and OpenBSD VMs run on the xhyve hypervisor (on a macOS
+host), while the other platforms run on the QEMU hypervisor (on a Linux
+host). xhyve is built on top of Apple's Hypervisor
+framework. The Hypervisor framework allows to implement hypervisors with
+support for hardware acceleration without the need for kernel extensions. xhyve
+is a lightweight hypervisor that boots the guest operating systems quickly and
+requires no dependencies outside of what's provided by the system. QEMU is a
+more general purpose hypervisor that runs on most host platforms and supports
+most guest systems. It's a bit slower than xhyve because it's general purpose
+and it cannot use nested virtualization on the Linux hosts provided by GitHub.
+The VM images running inside the hypervisor are built using Packer.
+It's a tool for automatically creating VM images, installing the guest
+operating system and doing any final provisioning.
+The GitHub action uses SSH to communicate and execute commands inside the VM.
+It uses rsync to share files between the guest VM and the host. xhyve
+does not have any native support for sharing files. To authenticate the SSH
+connection a unique key pair is used. This pair is generated each time the
+action is run. The public key is added to the VM image and the private key is
+stored on the host. Since xhyve does not support file sharing, a secondar hard
+drive, which is backed by a file, is created. The public key is stored on this
+hard drive, which is then mounted by the VM. At boot time, the secondary hard
+drive will be identified and the public key will be copied to the appropriate
+location.
+To reduce the time it takes for the GitHub action to start executing the
+commands specified by the user, it aims to boot the guest operating systems as
+fast as possible. This is achieved in a couple of ways:
+
+
+By downloading resources, like the hypervisor and a few other
+tools, instead of installing them through a package manager
+
+
+No compression is used for the resources that are downloaded. The size is
+small enough anyway and it's faster to download the uncompressed data than
+it is to download compressed data and then uncompress it.
+
+
+It leverages async/await to perform tasks asynchronously. Like
+downloading the VM image and other resources at the same time
+
+
+It performs as much as possible of the setup ahead of time when the VM image
+is provisioned
+
+
+Local Development
+Prerequisites
+
+NodeJS
+npm
+git
+
+Instructions
+
+
+Install the above prerequisites
+
+
+Clone the repository by running:
+git clone https://github.com/cross-platform-actions/action
+
+
+
+Navigate to the newly cloned repository: cd action
+
+
+Install the dependencies by running: npm install
+
+
+Run any of the below npm commands
+
+
+npm Commands
+The following npm commands are available:
+
+build - Build the GitHub action
+format - Reformat the code
+lint - Lint the code
+package - Package the GitHub action for distribution and end to end testing
+test - Run unit tests
+all - Will run all of the above commands
+
+Running End to End Tests
+The end to end tests can be run locally by running it through Act. By
+default, resources and VM images will be downloaded from github.com. By running
+a local HTTP server it's possible to point the GitHub action to local resources.
+Prerequisites
+
+Docker
+Act
+
+Instructions
+
+
+Install the above prerequisites
+
+
+Copy test/workflows/ci.yml.example to
+test/workflows/ci.yml
+
+
+Make any changes you like to test/workflows/ci.yml, this is file ignored by
+Git
+
+
+Build the GitHub action by running: npm run build
+
+
+Package the GitHub action by running: npm run package
+
+
+Run the GitHub action by running: act --privileged -W test/workflows
+
+
+Providing Resources Locally
+The GitHub action includes a development dependency on a HTTP server. The
+test/http directory contains a skeleton of a directory structure
+which matches the URLs that the GitHub action uses to download resources. All
+files within the test/http are ignore by Git.
+
+
+Add resources as necessary to the test/http directory
+
+
+In one shell, run the following command to start the HTTP server:
+./node_modules/http-server/bin/http-server test/http -a 127.0.0.1
+
+The -a flag configures the HTTP server to only listen for incoming
+connections from localhost, no external computers will be able to connect.
+
+
+In another shell, run the GitHub action by running:
+act --privileged -W test/workflows --env CPA_RESOURCE_URL=<url>
+
+Where <url> is the URL inside Docker that points to localhost of the host
+machine, for macOS, this is http://host.docker.internal:8080. By default,
+the HTTP server is listening on port 8080.
+
+
+
+
+
+
+Stars
+
+ 
+
+
+          Star
+ 47
+  
+
+
+
+
+
+Contributors
+
+
+
+ 
+
+ 
+
+
+Categories
+
+
+  Continuous integration
+
+
+  Testing
+
+
+
+
+Links
+
+
+
+cross-platform-actions/action
+    
+
+
+
+Open issues
+        1
+
+
+
+
+Pull requests
+      1
+
+
+
+
+Report abuse
+ 
+
+Cross Platform Action is not certified by GitHub. It is provided by a third-party and is governed by separate terms of service, privacy policy, and support documentation.
+    
+
+
+
+
+"
+https://news.ycombinator.com/rss,Microsoft returns to the Altair,https://hackaday.com/2023/01/15/microsoft-returns-to-the-altair/,Comments,"
+
+
+Microsoft Returns To The Altair
+
+
+                18 Comments            
+
+by:
+Al Williams
+
+
+
+January 15, 2023
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Title:
+
+
+Copy
+
+Short Link:
+
+
+Copy
+
+
+
+
+
+
+The Altair 8800 arguably launched Microsoft. Now [Dave Glover] from Microsoft offers an emulated and potentially cloud-based Altair emulation with CP/M and Microsoft Basic. You can see a video of the project below. One thing that makes it a bit odd compared to other Altair clones we’ve seen is that the emulator runs in a Docker environment and is fully cloud-enabled. You can interact with it via a PCB front panel, or a terminal running in a web browser.
+The core emulator is MIT-licensed and seems like it would run nearly everywhere. We were a little surprised there wasn’t an instance in the Azure cloud that you could spin up to test drive. Surely a few hundred Altairs running at once wouldn’t even make a dent in a modern CPU.
+
+There are plenty of Altair emulators and even replicas with authentic CPUs out there. But we have to admit the Wiki documentation on this one is uncommonly well done. Even if you don’t want to use this emulator, you might find the collection of data about the Altair useful.
+Don’t know how to use a computer front panel? Learn on the Altair or a PDP/8, even if you don’t have a real one. For simulated hardware, the project that turns an Arduino Due into an Altair works well. If you just want to play Zork, you can do that in your browser, for sure.
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Posted in RetrocomputingTagged altair 8800 
+
+
+Post navigation
+
+← A Number Maze For Younger HackersA Flex Sensor For A Glove Controller Using An LDR → 
+
+
+
+
+
+
+            18 thoughts on “Microsoft Returns To The Altair”        
+
+
+
+
+
+paulvdh says: 
+
+
+
+							January 15, 2023 at 1:24 am						
+
+
+
+
+@05:42 “I don’t have the source code for CP/M, I’m not even sure it exists anymore.
+https://hackaday.com/2014/10/06/cpm-source-code-released/
+This video is apparently only made as entertainment, just some guys blabbing and not caring about facts, That may be all right for some, it makes me wonder what else is off and  I lost interest.
+
+
+Report comment 
+Reply 
+
+
+
+
+
+MG says: 
+
+
+
+							January 15, 2023 at 1:51 am						
+
+
+
+
+Even just off the top of my head, the fact that it’s MIT-licensed is nothing special; the entire core of MAME and a significant number of machine drivers are all MIT/3-clause BSD, which includes the Intel 8080A core that one would need to spin up an Altair 8800 emulator as well.
+
+
+Report comment 
+Reply 
+
+
+
+
+
+stappers says: 
+
+
+
+							January 15, 2023 at 3:59 am						
+
+
+
+
+Thanks for the click bait warning.
+
+
+Report comment 
+Reply 
+
+
+
+
+
+me says: 
+
+
+
+							January 16, 2023 at 2:33 am						
+
+
+
+
+fortunately i read here, so i re-read witho more attention the initial post, so I avoid to lose some minutes of my life looking at another-not-wanted-at-all-cliclbite video. Thanks yo you, dude!
+
+
+Report comment 
+Reply 
+
+
+
+
+
+
+
+Joshua says: 
+
+
+
+							January 15, 2023 at 1:58 pm						
+
+
+
+
+What’s also kind of forgotten:
+CP/M was thoroughly understood.
+It was cloned and derived a dozen times, if not more.
+People who worked with assembly language could literally “read” how CP/M worked and flowed through the system.
+My father, among many others, wrote his own floppy controller routines for CP/M.
+It’s kind of sad to see how incompetent the matter is being handled these days. Such a blunder. *sigh*
+Back in the 70s and 80s, it was just natural to know about the internals of the Z-80 and/or CP/M. 
+There were hundreds of books being written about all the deepest mechanisms of them.
+
+
+Report comment 
+Reply 
+
+
+
+
+
+bruceeifler@gmail.com says: 
+
+
+
+							January 15, 2023 at 6:15 pm						
+
+
+
+
+“How to program the z80.  Roger Zaks
+
+
+Report comment 
+Reply 
+
+
+
+
+
+Mr Name Required says: 
+
+
+
+							January 15, 2023 at 11:14 pm						
+
+
+
+
+Rodnay Zaks, with the ‘a’. A well-thumbed book for me.
+
+
+Report comment 
+Reply 
+
+
+
+
+
+
+
+
+
+
+
+daveboltman says: 
+
+
+
+							January 15, 2023 at 4:50 am						
+
+
+
+
+Has Bill Gates really got over himself now?
+https://en.wikipedia.org/wiki/An_Open_Letter_to_Hobbyists
+
+
+Report comment 
+Reply 
+
+
+
+
+
+Ken says: 
+
+
+
+							January 15, 2023 at 7:37 am						
+
+
+
+
+You must not have been involved in the hobby “back in the day” – the copying of commercial products like Microsoft BASIC was rampant, almost celebrated in the community.
+This was before Microsoft had even started licensing ROM BASIC to the major home/personal computer manufacturers, so stolen paper tapes were a serious hit to MS revenues.
+
+
+Report comment 
+Reply 
+
+
+
+
+
+stappers says: 
+
+
+
+							January 15, 2023 at 7:53 am						
+
+
+
+
+And the problem of lack of wallet-voting still exists.  Might be because of the same word for libre and gratuit.
+Where I do agree with https://justforfunnoreally.dev/  I also do agree with young Bill Gates that people should do some kind of payment for what they want.
+
+
+Report comment 
+Reply 
+
+
+
+
+
+
+
+Joshua says: 
+
+
+
+							January 15, 2023 at 1:48 pm						
+
+
+
+
+Out of context. 
+I’m no expert of American copyright law, but as far as I understand:
+Material released before 1977 was considered Public Domain, unless the copyright is/was explicitly expressed.
+I assume this covers material/works of engineers, students, universities etc. which didn’t mention the copyright in their papers. 
+Go double check yourself, if you wish. I’m lazy right now. 😁
+
+
+Report comment 
+Reply 
+
+
+
+
+
+The Commenter Formerly Known As Ren says: 
+
+
+
+							January 15, 2023 at 4:29 pm						
+
+
+
+
+No, he hasn’t, he is now a James Bond level super villain.
+
+
+Report comment 
+Reply 
+
+
+
+
+
+
+
+Sok Puppette says: 
+
+
+
+							January 15, 2023 at 6:39 am						
+
+
+
+
+If it cannot play tunes on an AM radio, it is not a satisfying Altair emulator
+
+
+Report comment 
+Reply 
+
+
+
+
+
+Ken says: 
+
+
+
+							January 15, 2023 at 8:13 am						
+
+
+
+
+Neat project, I too am impressed by the level of documentation. While I’m not too interested in running weather/climate change analysis programs on an emulated 50 year-old system, I realize it was important to inject some cloud activity to jazz up the project.
+Interesting to note that you need to install Linux on a windows machine to run the code.
+Neat how the sense hat reduces the need for ‘blinkin lights’ to its most basic elements, like the computer prop in the bat cave or any 1960s sci-fi movie/tv show…
+
+
+Report comment 
+Reply 
+
+
+
+
+
+paulvdh says: 
+
+
+
+							January 15, 2023 at 9:25 am						
+
+
+
+
+At 5:42 he says he does not know whether the CP/M source code still exists…
+He clearly has not checked Hackaday lately…
+https://hackaday.com/2014/10/06/cpm-source-code-released/
+
+
+Report comment 
+Reply 
+
+
+
+
+
+Joshua says: 
+
+
+
+							January 15, 2023 at 1:51 pm						
+
+
+
+
+Not just CP/M, also MP/M, the power user version of CP/M. The real thing, so to say. :)
+
+
+Report comment 
+Reply 
+
+
+
+
+
+
+
+SayWhat? says: 
+
+
+
+							January 15, 2023 at 12:16 pm						
+
+
+
+
+I remember hacking “protected” MS Basic programs back in the day. All it took was finding the one byte in memory  that set the code to be not listable LOL.
+
+
+Report comment 
+Reply 
+
+
+
+
+
+demon256 says: 
+
+
+
+							January 15, 2023 at 3:45 pm						
+
+
+
+
+Heh, my first computer ran CP/M.
+
+
+Report comment 
+Reply 
+
+
+
+Leave a Reply					Cancel reply
+
+
+
+
+
+
+
+
+
+
+Please be kind and respectful to help make the comments section excellent. (Comment Policy)This site uses Akismet to reduce spam. Learn how your comment data is processed.
+
+
+
+
+
+
+
+Search
+
+Search for:
+
+
+
+Never miss a hack
+Follow on facebook
+Follow on twitter
+Follow on youtube
+Follow on rss
+Contact us
+Subscribe
+
+
+
+
+
+
+
+
+
+
+If you missed it
+
+
+
+
+
+
+
+AI-Controlled Twitch V-Tuber Has More Followers Than You
+
+
+ 39 Comments				
+
+
+
+
+
+
+
+
+Ask Hackaday: What’s Your Worst Repair Win?
+
+
+ 173 Comments				
+
+
+
+
+
+
+
+
+The Surprisingly Simple Way To Steal Cryptocurrency
+
+
+ 65 Comments				
+
+
+
+
+
+
+
+
+Excuse Me, Your Tie Is Unzipped
+
+
+ 101 Comments				
+
+
+
+
+
+
+
+
+All About USB-C: Resistors And Emarkers
+
+
+ 16 Comments				
+
+
+
+More from this category
+
+
+
+
+
+Our Columns
+
+
+
+
+
+
+
+2022 FPV Contest: Congratulations To The Winners!
+
+
+ 2 Comments				
+
+
+
+
+
+
+
+
+Machining With Electricity Hack Chat
+
+
+ 6 Comments				
+
+
+
+
+
+
+
+
+Hackaday Links: January 15, 2023
+
+
+ 16 Comments				
+
+
+
+
+
+
+
+
+Too Many Pixels
+
+
+ 35 Comments				
+
+
+
+
+
+
+
+
+Hackaday Podcast 201: Faking A Transmission, Making Nuclear Fuel, And A Slidepot With A Twist
+
+
+ 2 Comments				
+
+
+
+More from this category
+
+"
