@@ -57987,3 +57987,5519 @@ SAVE & ACCEPT
 
 
 "
+https://news.ycombinator.com/rss,We Need to Know LR and Recursive Descent Parsing Techniques,https://tratt.net/laurie/blog/2023/why_we_need_to_know_lr_and_recursive_descent_parsing_techniques.html,Comments,"
+
+
+
+
+
+
+    Laurence Tratt: Why We Need to Know LR and Recursive Descent Parsing Techniques
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Home
+        > Blog
+
+
+
+≡
+
+  Home
+> Blog
+
+
+
+
+
+
+email  
+Mastodon  
+Twitter  
+
+
+Mastodon  
+Twitter
+
+
+
+
+
+
+
+
+Why We Need to Know LR and Recursive Descent Parsing Techniques
+
+       January 17 2023
+
+
+
+
+Blog archive
+ 
+Last 10 blog posts
+Why We Need to Know LR and Recursive Descent Parsing Techniques
+Compiled and Interpreted Languages: Two Ways of Saying Tomato
+Software Security Research Position
+How Might Generative AI Change Programming?
+pizauth: differentiating transient from permanent errors
+November Links
+More Evidence for Problems in VM Warmup
+What is a Research Summer School?
+October Links
+pizauth: another alpha release
+ 
+
+
+
+
+
+
+A couple of people have asked me for my thoughts on part an article from Tiark Rompf
+called (roughly) ""Just
+Write the Parser"" which advocates the use of recursive descent parsing over
+more ""formal"" approaches to parsing, at least in the context of teaching
+compilers. I'm fairly sure I read this article a
+couple of years ago, but it may have been updated, or simply have been
+discovered anew. Either way, since I admire both Tiark and his work
+a great deal, it was useful for me to engage with his ideas and
+compare them to my own.
+
+In this post, I'm going to summarise Tiark's argument as I see it, and try
+to explain where I agree and disagree with that summary. I will inevitably
+rehash many of the arguments from my 2020 ""Which Parsing
+Approach?"" post, but I'm going to try to focus on some factors which I now
+realise were at best buried, and at worst inadequately explained, in that
+previous post.
+
+
+Summarising the argument
+In essence I believe Tiark is making two points:
+
+
+Making parsing a major component of teaching compilers is misguided.
+Context-free grammars, and their associated parsing techniques, don't align
+well with real-world compilers, and thus we should deemphasise CFGs (Context-Free
+Grammars) and their associated parsing algorithms.
+
+
+I agree with the first point. Learning has to involve prioritisation: we can't
+learn the underlying theory of everything. Parsing seems to me to be
+one of those topics where a fairly superficial understanding of the underlying
+theory is sufficient for most people to use it effectively. Personally I would
+rather spend the time that a deep understanding of the underlying theory of parsing
+requires elsewhere: there are many other parts of compilers that better reward
+a deeper understanding [1].
+
+However, I disagree with the second point — or, at least, I disagree
+with part of it. It is true that many real-world languages' syntaxes are not compatible
+with LR parsing (and the like) and must be parsed using
+recursive descent parsing.
+Without wishing to put words in his mouth, I suspect that Tiark sees this as a virtue of
+recursive descent parsing.
+
+In contrast, I have come, over time, to see
+languages that require recursive descent parsing as reflecting
+a flaw in our approach to language design [2].
+I believe it has led us to design languages
+that are not just hard to parse, that don't just tend to have buggy parsers,
+but which are harder than necessary to understand.
+
+
+Differentiating LR and recursive descent parsing
+Let's start with some basic definitions. A grammar is a
+specification of the valid sentences in a language. Note that grammars need not
+be executable — indeed, they may be specified formally or informally,
+explicitly or implicitly. A parser is an implementation of a grammar, which
+checks whether an input is valid with respect to that grammar or not. Grammars
+are ambiguous (e.g. a grammar such as E: E ""+"" E | E ""-""
+E is ambiguous because 2+3*4 can be parsed as equivalent to
+either (2+3)*4 or 2+(3*4) with it) or unambiguous.
+
+For example, all of us share a common understanding of the grammar for basic
+arithmetic expressions. We can then implement an LR or a recursive descent
+parser which takes arithmetic expressions as inputs and checks whether they
+conform to the arithmetic grammar.
+
+In practise, grammars and parsers are often closer in nature than their
+abstract definitions suggest. In one direction, we can automatically derive
+parsers from some grammars (e.g. those written to conform to the LR subset of
+CFGs). In the other direction, a parser implicitly defines a grammar [3]. There is
+a subtle corollary to this: if I manually create a parser from the
+specification of a grammar, I may introduce bugs, which means that the parser's
+implicit grammar may not quite match the explicit grammar I thought I was
+implementing!
+
+There are various ways of implementing parsers, but for me there are
+generally only two which we really need to consider: LR parsing and recursive
+descent parsing.
+
+LR parsing defines a subset of CFGs: every grammar in the LR subset is
+guaranteed to be unambiguous [4]. From an LR
+grammar we can automatically derive an LR parser (e.g. using a tool like YACC
+or lrpar). A challenge with LR
+parsing is that some grammars are difficult to express unambiguously (e.g.
+arithmetic expressions): some are impossible to express unambiguously (e.g.
+many real-world programming languages).
+
+In practise, a recursive descent parser can be thought of as meaning ""a
+hand-written written parser"": unless you go out of your way to do otherwise,
+nearly all hand-written parsers are recursive descent parsers. As this suggests,
+recursive descent parsers are easy to write. Since they're also just normal
+programs, we can use them to parse any language we can conceive of.
+
+Presented like this there there doesn't seem to be much of a choice
+between the two. Recursive descent parsing is easier and more flexible,
+so let's just use that!
+
+However, recursive descent parsing has an inherent consequence: it produces
+parsers which resolve ambiguities in the underlying grammar without telling you
+that they have been resolved. For example, a recursive descent parser for
+arithmetic expressions will parse 2+3*4 as equivalent to either
+(2+3)*4 or 2+(3*4), but not both. However, since a
+recursive descent parser is just a normal program, you might not even realise
+that you have written your parser in such a way that it has chosen to parse
+just one of the possibilities — hopefully you chose to parse it as
+equivalent to 2+(3*4)!
+
+In contrast, a CFG can't be LR if it has such an ambiguity. If you give a
+grammar such as E: E ""+"" E | E ""-"" E to YACC it will tell you it
+is ambiguous (using the infamous, and in some ways unfortunate, terminology of ""shift/shift"",
+""reduce/reduce"", or ""accept/reduce""). Although few people think of it as such,
+LR is effectively a type checker for grammar ambiguity: if you don't get any
+errors, your grammar is guaranteed to be unambiguous. One of the beauties of LR
+parsing is that the same grammar that has been ""type checked"" to be unambiguous
+can then be automatically turned into a parser: there is no way that you can
+accidentally introduce ambiguity, or other bugs, into the resulting parser
+[5].
+
+Fundamentally, recursive descent parsers have no equivalent ""type checker"",
+and we know that we can't build such an equivalent for the general case.
+Recursive descent parsers thus parse the languages they parse, but we don't, in
+general, know how to recover the grammar that such parsers are implicitly
+parsing. That is not the tautology it sounds: my experience is that bugs in
+recursive parsers are common. I have had the dubious pleasure of converting a
+number of recursive descent parsers to LR grammars and none of the non-trivial
+recursive descent parsers has parsed the language their authors expected.
+Sometimes they accept inputs they shouldn't; sometimes they reject inputs they
+shouldn't.
+
+This wouldn't be as much of a problem if it was easy to test parsers, but it turns out
+to be surprisingly hard to create good parser suites. Most parser test suites
+that I've seen focus most of their effort on testing that ""good"" inputs are
+accepted. Since the range of ""bad"" inputs is, in general, much more diverse,
+test suites rarely cover much of the space of ""bad"" inputs to check that
+they're rejected [6].
+
+There is an additional, easily over-looked, factor that comes from
+relying on recursive descent parsers: learners cannot,
+in any sensible time, understand from the recursive descent parser the
+language's syntax. Many languages ignore this problem at first, and hope
+that learners can guess the language's syntax from examples. This is inevitably
+unsatisfactory, and it is then common over time for languages to try deriving
+a CFG from the recursive descent parser, to help learners and tool authors.
+However, these CFGs rarely fully match the recursive descent parser, leaving
+learners confused, and tool authors frustrated.
+
+There are two other use-cases for recursive descent parsing. The first is
+performance. Although there aren't, to the best of my knowledge, modern
+performance numbers, it is reasonable to assume that recursive descent parsing
+is generally faster than LR parsing. However, ""faster"" is relative: on modern
+machines, even a naive LR parser on a huge grammar will happily parse thousands
+of lines of code a second which is enough for the vast majority of use cases.
+The second is error recovery. LR parsers have traditionally had terrible error
+recovery. Immodestly, I now claim that some work I was
+involved in allows LR parsers to have error recovery that is better than
+all but the best recursive descent parsers.
+
+
+Summary
+
+It seems to me that if you believe static type checking allows you to write
+programs that are more reliable than if you used dynamic type checking then,
+logically, you must also believe that LR parsing is more reliable than
+recursive descent parsing. Similarly, if you believe that explicit static types
+help readers better understand code, then you must also believe that
+explicit LR grammars better convey to readers the grammar of a language than
+the equivalent recursive descent parser.
+
+There is then a separate debate to be had about whether the costs of LR
+parsing are worth the benefits. My personal experience is that, for unambiguous
+languages, it takes relatively little practise to design LR grammars. It is
+then more than just a bonus that we can automatically generate a parser
+from the grammar. Indeed, and to my surprise, I've found it markedly quicker to write an LR grammar
+than to write, test, and debug the equivalent recursive descent parser.
+My advice for writing LR grammars to those new to it boils down to,
+in essence, ""write your grammar in
+small bits, continually test it for LR-ness, and if you get a shift/reduce
+(etc.) error, undo your last change, and try a variation."" If that sounds
+trite, or patronising, please bear in mind that it's exactly the approach I
+take myself!
+
+If you agree with this line of thinking, then you might find the following
+list of recommendations useful:
+
+
+New languages (whether they be ""programming languages"" or mere
+""configuration languages"" and the like) should come with an LR grammar: you
+then have a specification that users can understand, and people can automatically
+derive parsers for their favourite use-case directly from that specification.
+Specifying new languages in this style is not difficult, and the restrictions
+on syntax rarely onerous. If writing a grammar in LR style is hard for you as
+the language author, it will almost certainly be hard for users to understand!
+
+Existing languages have often evolved in a manner that makes it
+difficult, or impossible, to specify an LR grammar. There's no point in
+trying to fight this: just use recursive descent parsing.
+
+The more complex your recursive descent parser, the more effort you need to
+put into testing. Without extensive testing, your parser will do things you
+didn't expect: it is just normal code, after all, and all of us make mistakes
+when coding!
+
+If you're writing a parser for a language which doesn't have an LR grammar,
+it can be worth trying to create one. If you're lucky you'll find that your
+language has an unambiguous grammar; if you're unlucky, you'll at least
+understand where some of the points of ambiguity are [7]. I find that this makes writing a recursive descent parser a less fraught
+task, as at least I know where the likely bugs due to ambiguity will lie.
+
+If you're writing a parser for a language which is ambiguous, you
+might be able to use the conflict resolution offered by YACC and
+friends. However, in general, I suggest avoiding YACC's conflict resolution if
+possible, as you have to at least somewhat understand the underlying LR
+algorithm to understand how conflicts have been resolved.
+
+If you need the best possible performance or error recovery, recursive
+descent parsing is the best choice. If you know you will need this and
+you're designing a new language, at least create an LL grammar, since from
+that you can derive a recursive descent parser. [Bear in mind that LL grammars
+are more annoying to write than LR grammars which is why I suggest
+avoiding LL unless you have this very specific use case.]
+
+LALR and SLR are subsets of LR parsing that are irritating to use and, on
+any machine from the last 20 years, have no meaningful advantages. Avoid.
+
+Otherwise, just use LR parsing, whether it's YACC or the equivalent for
+your favourite language (e.g. I am fond of lrpar for Rust since I wrote it).
+
+
+
+Looking back to Tiark's article, my opinion on teaching parsing is two-fold.
+First, parsing isn't generally worth much of student's time, so teach them the
+minimum possible. Second, the minimum possible is, in my opinion, that which is
+needed to write: recursive descent parsing, so that they can parse existing
+languages which lack an unambiguous grammar; and LR parsing so that they don't
+keep designing hard-to-parse languages in the future.
+
+
+
+
+
+If you’d like updates on new blog posts: follow me on
+Mastodon
+or Twitter;
+or subscribe to the RSS feed;
+or subscribe to email updates:
+
+
+
+
+Failed to subscribe: please load page and try again
+Sending...
+
+
+
+
+Footnotes
+[1] I didn't have the opportunity to study compilers as an undergraduate. If I had, I
+would not have wanted parsing to take up more than 1 week of such a course: I'd
+have wanted to know more about the many other parts that constitute a compiler!
+[2] Note I'm using the word ""design"" deliberately: it is not, in my opinion, a
+flaw to implement parsers with recursive descent, provided there is a
+non-recursive descent design of the grammar elsewhere.
+[3] More formally, and generally, we can talk about ""the language a parser accepts"".
+[4] Though there are some unambiguous grammars that are not in the LR subset. That
+need not concern us here.
+[5] This isn't true for Yacc which allows action code to change how the parser
+operates, allowing it to parse non-LR languages. Perhaps unsurprisingly, I do
+not consider this a good idea, and lrpar does not feature such functionality.
+[6] Oddly enough, my experience of converting recursive descent parsers to LR
+grammars suggests that recursive descent parsers seem about as
+often to reject ""good"" inputs as to accept ""bad"" inputs. I don't have a
+convincing explanation as to why this might be the case.
+[7] Though depending on how many ambiguities your grammar has, you might find that
+some ""shadow"" others. In other words, by failing to write one part of a grammar
+in the LR subset, you might not be able to write other parts of your grammar in
+the LR subset either, causing some ambiguities to remain unnoticed.
+☒I didn't have the opportunity to study compilers as an undergraduate. If I had, I
+would not have wanted parsing to take up more than 1 week of such a course: I'd
+have wanted to know more about the many other parts that constitute a compiler!☒Note I'm using the word ""design"" deliberately: it is not, in my opinion, a
+flaw to implement parsers with recursive descent, provided there is a
+non-recursive descent design of the grammar elsewhere.☒More formally, and generally, we can talk about ""the language a parser accepts"".☒Though there are some unambiguous grammars that are not in the LR subset. That
+need not concern us here.☒This isn't true for Yacc which allows action code to change how the parser
+operates, allowing it to parse non-LR languages. Perhaps unsurprisingly, I do
+not consider this a good idea, and lrpar does not feature such functionality.☒Oddly enough, my experience of converting recursive descent parsers to LR
+grammars suggests that recursive descent parsers seem about as
+often to reject ""good"" inputs as to accept ""bad"" inputs. I don't have a
+convincing explanation as to why this might be the case.☒Though depending on how many ambiguities your grammar has, you might find that
+some ""shadow"" others. In other words, by failing to write one part of a grammar
+in the LR subset, you might not be able to write other parts of your grammar in
+the LR subset either, causing some ambiguities to remain unnoticed.
+Comments
+
+
+
+
+
+Comment:
+
+
+
+Name:
+
+
+
+Homepage:
+ (optional)
+
+
+Email:
+
+(used only to verify your comment: it is not displayed)
+
+
+
+
+
+Notify me of further comments
+
+
+
+
+
+
+Failed to submit comment: please load page and try again
+Submitting...
+
+
+
+
+
+Can't load comments
+
+
+
+
+
+
+
+
+
+
+
+Home
+        > Blog
+
+
+
+≡
+
+  Home
+> Blog
+
+
+
+
+
+
+email  
+Mastodon  
+Twitter  
+
+
+Mastodon  
+Twitter
+
+
+
+
+
+
+
+
+"
+https://news.ycombinator.com/rss,Dijkstra Maps Visualized,http://www.roguebasin.com/index.php/Dijkstra_Maps_Visualized,Comments,"
+RogueBasinSorry! This site is experiencing technical difficulties.Try waiting a few minutes and reloading.(Cannot access the database)"
+https://news.ycombinator.com/rss,The Scandal of Financial Nihilism,https://read.lukeburgis.com/p/the-scandal-of-financial-nihilism,Comments,"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+The Scandal of Financial Nihilism - by Luke Burgis
+
+
+
+
+
+
+
+
+
+
+
+
+
+SubscribeSign inShare this postThe Scandal of Financial Nihilismread.lukeburgis.comCopy linkTwitterFacebookEmailThe Scandal of Financial NihilismThe Wheels Keep on Turning—and the anti-mimetic breaks are breaking. Luke BurgisJan 14913Share this postThe Scandal of Financial Nihilismread.lukeburgis.comCopy linkTwitterFacebookEmailArticle voiceover1×0:00-16:29Audio playback is not supported on your browser. Please upgrade.“It is because you don't know the end and purpose of things that you think the wicked and the criminal have power and happiness.” — Boethius, On the Consolation of PhilosophyNobody has a precise idea how much wealth anyone else has. There is a good chance that you don’t even know your own. We are all engaged in an elaborate game of assumptions, even about our own future. The fact that men are posting gain and loss porn on Reddit is not a sign of transparency, but opacity. The narratives only go skin deep. Beneath the narratives, people are silently crying out for order—a link between cause and effect, or some indication that hard work still matters, or the assurance that they will be rewarded for good decisions and not for reckless ones.When you make and/or lose a lot of money quickly, without the ability to see exactly why and how the windfall or bust happened, it can lead to financial nihilism. When you see—or think you see—other people doing the same, it can lead to financial nihilism. When you work very hard and do All the Right Things (as Dave Ramsey, or some other financial guru, would have you do) and then proceed to lose most of your net worth in the course of a month due to unexpected circumstances, it can lead to financial nihilism. There are a few different ways of defining this particular form of nihilism. Each of them points to a different aspect of it.My friend Demetri Kofinas has referred to financial nihilism as “a philosophy that treats the objects of speculation as though they were intrinsically worthless.” It is a philosophy that fully embraces the view that reality is completely subjective. I should note that the Subjective Theory of Value in economics does not, in any way, imply that reality itself is subjective—but rather that subjects determine the value of an object, and ultimately its price, through their collective decisions. Each of these actors could be acting with a greater or lesser vision of and adherence to reality. But for the financial nihilist, the subjective completely subsumes the objective. The truth is that both exist. For example: beauty, at least classically understood, is objective—it has certain characteristics, like claritas (clarity), consonantia (proportion), integritas (integrity/coherence)—but I perceive it subjectively. Conflating the two leads to problems. Financial nihilism is usually downstream from ontological nihilism. I don’t think people are nihilistic in a domain-specific sense; I believe that nihilism is diffusive and easily bleeds over into all aspects of life, from relationships to one’s health. (For instance: you hear about a friend who takes extremely good care of himself but is nevertheless unexpectedly diagnosed with cancer, and so you think: ‘screw it, what’s the use of this discipline?’). We have entered a truly nihilistic age, which is reflected in our politics as much if not more than our markets. It’s as if it doesn’t actually matter what people say or do anymore. This spirit of political nihilism was summed up by Donald Trump saying “I could stand in the middle of Fifth Avenue and shoot somebody, and I wouldn't lose any voters, OK? It's, like, incredible."" Yes, it is incredible. And that’s why politics is no longer credible. Nihilism, like all of life, ultimately comes down to the fundamental question of belief. People don’t know who they can trust or who they can believe in, but they must believe in something. There is a time-bound aspect to financial nihilism. If in one second you can lose or make a lot of money in a manner that feels completely detached from any amount of “value” that you believe you created  (the idea that all people who have money must have created a ton of “value” is problematic, because most people don’t understand what value means in this specific case—which is subjective value), then you begin to get the sense that the quality of your work has no connection to what people will pay for it, or to financial success. Not even your intelligence can save you. You can analyze a single stock for six months (as one long-only hedge fund manager told me) and buy it with a complete conviction that it’s undervalued, and then watch as it loses 80% in the course of a single year. If the bears are making money based purely on mimesis and momentum, what’s the use of pouring yourself out doing analysis for 40+ hours? Eventually, you come to place here you simply wait, second by second, to see if anything changes. Having lost a firm belief in your own agency, you place bets, you wait, you see what happens. If nothing matters, then what good is there in being good? Abandonment to non-divine providence is the only thing left.If you’re unable to transcend the transactional—to exit the logic of the game (the gamification of the stock market, the NFT swindles, the latest crypto narrative)—you simply enter deeply into it for fear of being left out or left behind. The small amount of nihilism that led to your decision to play breeds more nihilism once you’re deep inside of the game. Now, in the moment, you may feel that you truly believe in the game, but you don’t really. You can’t even be an honest nihilist because you have had to make friends with dishonest wealth.Lastly, a financial nihilist can be described as someone who has no skin in the game. No doubt we could list more, but I’ll leave it at that for now. SubscribeFinancial nihilism comes down to an even more fundamental problem. It is an epistemic problem. Many people simply see nothing worth believing in and so they are, in the words of Neil Postman, amusing themselves to death.Unfortunately, I think it’s even darker than that. Financial nihilism very often stems from a basic (unacknowledged) belief that life is simply not worth living. If we’re bankrupt a few years from now, who cares? We don’t want to be here in the first place. If a person lacks the will to live and engage deeply with the world, what is there to fear about financial loss? The pain of loss may in fact be the only way they have left to feel anything at all. Nihilism lies at the heart of many of our health problems, political problems, and relationship problems. When there is no hope for the future, why do we expect people to care about decisions that affect the future? For lack of vision people perish. Lastly, we lack a rich understanding of the difference between wealth and money. Wealth, as Paul Graham has written, is what we want: food, clothes, a home, the ability to travel and learn about the world, and so forth. Money is simply a system we’ve devised for helping us get the things that we want, or think we want, in a specialized world. Obviously, though, we want much more than food, clothes, houses, cars, and things. We want loving relationships, lives full of beauty, nourishing conversations, and many more immaterial things that we often say we “can’t put a price on.”But of course we can. How much would you pay, right now, to be magically transported to a wonderful meal with a handful of wise people who are interested in you and wanted to engage in conversation about all of the topics that were most important to you? I would pay a handsome price.   I can’t buy that, though. Nobody can. (Some extraordinarily rich people do attempt to buy these kinds of experiences and relationships, but those purchases carry one big caveat: genuine, loving care and attention is not something anyone can buy. Many extremely rich people go their entire lives wondering if anyone is really their friend—someone interested in them for who they are, rather than their bank account. I can’t imagine that kind of existential loneliness on account of money.) What I can do, though, is invest in things that I feel matter—and resist the temptation to invest in things that I don’t think matter merely so that I’m part of the game. I can refuse to play a nihilistic game. That is one freedom that each of has. We get to choose.Financial nihilists of the speculative variety aren’t necessarily greedy people who seek money at all costs. They are people who have ceased to believe that money means anything—so it ends up meaning everything. The financial nihilists actually have something right: money doesn’t matter as much as most people think it does. Their downfall is their inability to believe that a greater reality exists for which money is simply one layer. The economic layer is an important layer, no doubt, but it is not the Layer Zero of life. If money is ordered to nothing else, then it becomes ordered to itself—to its own propagation and self-replication. And that is precisely the definition of a meme. That is why we have a meme market and a meme economy. SubscribeWhen I was a kid, I begged my parents for a Nintendo Entertain System for well over two years before they finally gave in. Well, my dad gave in. All of my friends had one. My mimetic desire was raging. One day, I sat down and made a list of “100 reasons why I should have a Nintendo.” (A miraculous accomplishment, when I think about it). I wish it was still around somewhere because it would be hilarious to read. I would’ve gladly posted it here for your amusement.I don’t remember a single item on the list, but I know that I came up with 100. I’m sure some of them were noble (I had pledged to buy learning games that would help develop my brain—that much I do remember). But many of my “reasons” were likely suspect, to say the least.My dad took one look at the list and decided that he had had enough. It was not that the list had convinced him that I should have a Nintendo. I can’t imagine that it was all that persuasive. It was the fact that I had actually taken the time to make it. He just couldn’t take it anymore. I think he thought that his kid, his only son and only child, had finally lost it.He told me to get in the car and drove me to the nearest Best Buy where he bought me a Nintendo and told me to pick out three games (I would’ve been happy with one). When he got home, he got in a little spat with my mom who couldn’t believe that he had succumbed. I started feeling bad. Had I manipulated him into buying it for me? My dad was a truck driver. He worked his ass off for every penny he ever made. He had no idea what a Nintendo even was. After seeing my mom’s concern, and my own distress, my dad turned to me and said: “Son, it’s only money.” He smiled, sat down, cracked open a beer, and started watching a Detroit Tigers game.I’ve never forgotten that. My dad wasn’t a financial nihilist. He—perhaps more than anybody I’ve ever known—knew what money is. It was something real to him because it led to, or made possible, real things. But he had perspective, and he had order. He could say “it’s only money” without a hint of the cool cynicism of the man who blows his Bitcoin windfall on a new car that he doesn’t need. My dad said “it’s only money” because he secretly knew that he was wealthy.  3Share this postThe Scandal of Financial Nihilismread.lukeburgis.comCopy linkTwitterFacebookEmailPrevious3 CommentsLuke BurgisJan 15AuthorFriends, there were a couple of types in the original piece. I apologize for that. I'm still a one-man shop at this point (but looking for help...!). Thanks to the few of you who pointed them out. I corrected what I was able to find, but always welcome you pointing them out. Thank you, as always, for reading. Expand full commentReplyCollapseAndrew VierraJan 16Really liking the article voiceover enjoying how it works best for me by using my phone/bluetooth and reading along on the laptop for pausing purposes. The article was excellent and highlights for me something Gil Bailie talked about  when he mentioned a virtical relationship and a horizontal relationship in a talk with the Dominican School on Youtube. Or the talk I had with my gf this morning about the 1st and the 10th Commandment. We will always worship something whether its a partner, money, or a car but to have a primary relationship with something greater will be more fruitful if it comes first. The article also reminds me of the book The Noonday Devil by Jean Charles Nault OSB in writing about Acedia the author outlines one who flees their cell spreading scandal in an empty attempt to avoid ones primary duty. Beautiful how the article ends with something I will always try to silently remember to myself that fondness inside of each of us that is wealth. Expand full commentReplyCollapse1 more comments…TopNewCommunityNo postsReady for more?Subscribe© 2023 Luke BurgisPrivacy ∙ Terms ∙ Collection notice Publish on SubstackGet the appSubstack is the home for great writing
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        This site requires JavaScript to run correctly. Please turn on JavaScript or unblock scripts
+    
+
+
+
+"
+https://news.ycombinator.com/rss,Sirum (YC Nonprofit) Is Hiring Chief of Staff and Product Managers in Atlanta,https://sirum.org/careers/,Comments,"
+
+
+
+
+
+
+Careers - SIRUM - Saving Medicine : Saving Lives
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Donate Medicine
+
+Manufacturers & Wholesalers
+Pharmacies
+Nursing Homes & Assisted Living
+Individuals
+
+
+Receive Medicine
+
+Community Partners
+Resources for Individuals
+
+
+About Us
+
+Press
+Careers
+Support Our Work
+
+
+Sign Up
+Sign In
+
+
+
+
+
+Join our team.We’re a fast-growing, non-profit, for-impact startup at the intersection of health + technology + social enterprise. We're looking for future SIRUMites ready to roll up their sleeves and help us build a national solution for the drug pricing epidemic. See open rolesWorking at SIRUMWe're a small team that's passionate about our mission of reimagining healthcare access for those in need. We come from organizations like McKinsey, the Clinton Foundation, and Stanford Biology and include everyone from programmers to volunteers. We like to work hard, solve tough problems, and debate who has the best lunch in Palo Alto. BenefitsCompetitive salaryWe work hard to be competitive for a tech-forward social impact organization.Huge social impactYou will see and feel the tangible impact of your work on a daily basis. Awesome teamFun virtual team that's up for adventures from virtual cooking classes and escape rooms to putt-putt and paddleboardingGreat health benefits100% of monthly premiums for medical, dental, and vision insurance for full-time employeesAccess to on-demand primary care, personal health advocates, mental health support, and more401k matchingFull-time employees eligible for a 4% matchTime off to rest2+ weeks of paid company holidays annually4 weeks of accrued PTO annuallyCurrent Open RolesCheck out our current open roles below -- we're constantly growing and post new opportunities all the time.Don't see something that's the right fit? Drop us a line below. We love hearing from people who share our mission. See open roles Fellow & Associate ProgramSIRUM Fellowship & Associate roles are unique 1-2 year opportunities for ambitious recent graduates and early career professionals. Working directly with SIRUM’s co-founders and owning a critical set of special projects reflective of their skills, Fellows and Associates become key players in our fast-growing start up.They take on important roles in:- Strategic Partnerships- Product Management- Strategy & AnalysisAfter their 1-2 years, Fellows and Associates might stay on with SIRUM or go on to attend top graduate programs. Our Alums have gone on to top medical schools, business schools, and more.We look for Fellows & Associates in our Palo Alto and Atlanta offices.See Fellow & Associate roles Need more information?If you didn't find what you're looking for, get in touch and we'd be happy to help. 
+ 
+
+
+[email protected](650) 488-7434Visit our FacebookVisit our TwitterVisit our LinkedIn©SIRUM Copyright 2022.Donate MedicineManufacturers & WholesalersPharmaciesNursing Homes & Assisted LivingIndividualsReceive MedicineCommunity PartnersResources for IndividualsAbout UsPressCareersSupport Our Work 
+
+
+
+
+
+
+
+crossmenuchevron-down
+
+
+
+
+
+
+linkedin
+
+
+
+
+
+facebook
+
+
+
+pinterest
+
+
+
+youtube
+
+
+
+rss
+
+
+
+twitter
+
+
+
+instagram
+
+
+
+
+
+facebook-blank
+
+
+
+rss-blank
+
+
+
+linkedin-blank
+
+
+
+pinterest
+
+
+
+youtube
+
+
+
+twitter
+
+
+
+instagram
+
+
+
+
+
+
+
+
+
+
+
+"
+https://news.ycombinator.com/rss,How does it know I want CSV? – An HTTP trick,https://csvbase.com/blog/2,Comments,"
+
+
+
+
+
+
+
+
+
+
+How does it know I want csv? ⁠— An HTTP trick
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            csvbase (alpha)
+
+
+
+
+
+
+
+Paste/Upload
+
+
+Blog
+
+
+About
+
+
+
+
+
+
+
+csvbase is a website for hosting table data.  For more details see the about page.
+
+
+
+
+
+How does it know I want csv? ⁠— An HTTP trick
+
+
+
+Forgotten parts of RFC2616
+2023-01-17
+by Cal Paterson
+
+How come when you visit
+https://csvbase.com/meripaterson/stock-exchanges
+in a browser you get a webpage –:
+
+but when you curl the same url you get a csv file?:
+
+The url is the same - so how come?
+The answer is HTTP's built-in ""content negotiation"".
+How content negotiation works
+When an HTTP client sends any request, it sends ""headers"" with that request.
+Here are the headers that Google Chrome sends:
+accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+accept-encoding: gzip, deflate, br
+accept-language: en-GB,en-US;q=0.9,en;q=0.8
+cache-control: no-cache
+pragma: no-cache
+sec-ch-ua: ""Google Chrome"";v=""105"", ""Not)A;Brand"";v=""8"", ""Chromium"";v=""105""
+sec-ch-ua-mobile: ?0
+sec-ch-ua-platform: ""Linux""
+sec-fetch-dest: document
+sec-fetch-mode: navigate
+sec-fetch-site: none
+sec-fetch-user: ?1
+upgrade-insecure-requests: 1
+user-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36
+
+That's a lot.  Only the first of these is relevant: the accept header:
+accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+
+The accept header is an unordered list of preferences for what media type
+(aka ""Content Type"", or file format) the server should send.
+Chrome is saying:
+
+
+Ideally, give me:
+text/html (ie: HTML)
+application/xhtml+xml (XHTML)
+image/avif
+image/webp
+or image/apng (a animated version of a PNG)
+
+
+
+Otherwise (""q"", or quality, 0.9), give me
+application/xml
+or application/signed-exchange;v=b3
+
+
+
+And if none of these are available (lowest priority; q=0.8):
+just send me anything (*/*)
+
+
+
+csvbase has an HTML representation of the url being requested, which is
+Chrome's joint top preference, so it just replies with that.
+What accept header does curl send?  It sends just:
+accept: */*
+
+Much shorter.  Curl will take anything.  And csvbase has a default format:
+csv, so it replies with that.
+""Why though?"", escape hatches and non-negotiables
+The main reason why csvbase bothers at all with this is to make it easier to
+export tables.  For example, to get a table loaded into
+pandas, all you have to do
+is paste the url into the first argument for pandas' read_csv - the same url
+as for the page:
+
+This works in most tools - curl, pandas,
+R and many others.
+But not all.  Some, like Apache
+Spark, ask for HTML for some
+reason.  So csvbase has an escape hatch from content negotiation — adding
+a file extension:
+https://csvbase.com/meripaterson/stock-exchanges.csv
+always returns csv file.
+This escape hatch is also useful for other formats.  Media types are
+controlled by the Internet Assigned Numbers
+Authority.
+Not every file format has been given a media type.  For example, parquet (the
+current favourite of most data scientists) doesn't have a media type.  Neither
+does jsonlines.  At least not yet.
+csvbase can output in those formats too, but there's no way to content neogiate
+them - at least not until the IANA get around to officially assigning them a
+media type.
+Until then, use:
+https://csvbase.com/meripaterson/stock-exchanges.parquet
+You can even do:
+import pandas as pd
+
+pd.read_parquet(""https://csvbase.com/meripaterson/stock-exchanges.parquet"")
+
+
+
+
+
+
+
+
+
+
+Source code
+Privacy policy
+Terms
+
+
+
+
+
+"
+https://news.ycombinator.com/rss,Safe Native Code (2015),http://joeduffyblog.com/2015/12/19/safe-native-code/,Comments,"
+
+
+
+ 
+
+
+
+Joe Duffy - Safe Native Code
+
+
+
+
+
+
+
+
+
+
+Joe Duffy's Blog
+
+
+
+
+
+
+
+
+
+        Founder/CEO Pulumi •
+        Cloud, languages, and developer tools guy •
+        Eat, sleep, code, repeat
+    
+
+
+
+Popular:
+Pulumi
+Midori
+Software Leadership
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  © Joe Duffy, 2018
+
+
+
+
+
+
+
+                December 19, 2015 
+            
+
+
+Safe Native Code
+
+
+In my first Midori post, I described how safety was the
+foundation of everything we did.  I mentioned that we built an operating system out of safe code, and yet stayed
+competitive with operating systems like Windows and Linux written in C and C++.  In many ways, system architecture
+played a key role, and I will continue discussing how in future posts.  But, at the foundation, an optimizing compiler
+that often eeked out native code performance from otherwise “managed”, type- and memory-safe code, was one of our most
+important weapons.  In this post, I’ll describe some key insights and techniques that were essential to our success.
+Overview
+When people think of C#, Java, and related languages, they usually think of Just-In-Time (JIT) compilation.  Especially back in the mid-2000s when Midori began.  But
+Midori was different, using more C++-like Ahead-Of-Time (AOT) compilation from the outset.
+AOT compiling managed, garbage collected code
+presents some unique challenges compared to C and C++.  As a result, many AOT efforts don’t achieve parity with their
+native counterparts.  .NET’s NGEN technology is a good example of this.  In fact, most efforts in .NET have exclusively
+targeted startup time; this is clearly a key metric, but when you’re building an operating system and everything on top,
+startup time just barely scratches the surface.
+Over the course of 8 years, we were able to significantly narrow the gap between our version of C# and classical C/C++
+systems, to the point where basic code quality, in both size of speed dimensions, was seldom the deciding factor when
+comparing Midori’s performance to existing workloads.  In fact, something counter-intuitive happened.  The ability to
+co-design the language, runtime, frameworks, operating system, and the compiler – making tradeoffs in one area to gain
+advantages in other areas – gave the compiler far more symbolic information than it ever had before about the program’s
+semantics and, so, I dare say, was able to exceed C and C++ performance in a non-trivial number of situations.
+Before diving deep, I have to put in a reminder.  The architectural decisions – like Async Everywhere and Zero-Copy IO (coming soon) – had more to do with us
+narrowing the gap at a “whole system” level.  Especially the less GC-hungry way we wrote systems code.  But the
+foundation of a highly optimizing compiler, that knew about and took advantage of safety, was essential to our results.
+I would also be remiss if I didn’t point out that the world has made considerable inroads in this area alongside us.
+Go has straddled an elegant line between systems performance and safety.  Rust is just plain awesome.  The .NET Native and, related, Android Runtime projects have brought a nice taste of AOT to C# and Java in a more
+limited way, as a “silent” optimization technique to avoid mobile application lag caused by JITting.  Lately, we’ve
+been working on bringing AOT to a broader .NET setting with the CoreRT project.
+Through that effort I hope we can bring some of the lessons learned below to a real-world setting.  Due to the
+delicate balance around breaking changes it remains to be seen how far we can go.  It took us years to get
+everything working harmoniously, measured in man-decades, however, so this transfer of knowledge will take time.
+First thing’s first.  Let’s quickly recap: What’s the difference between native and managed code, anyway?
+What’s the same
+I despise the false dichotomy “native and managed,” so I must apologize for using it.  After reading this article, I
+hope to have convinced you that it’s a continuum.  C++ is safer these days than ever before, and likewise, C# performant.  It’s amusing how many of these lessons apply
+directly to the work my team is doing on Safe C++ these days.
+So let’s begin by considering what’s the same.
+All the basic dragon book topics apply to managed as
+much as they do native code.
+In general, compiling code is a balancing act between, on one hand emitting the most efficient instruction sequences
+for the target architecture, to execute the program quickly; and on the other hand emitting the smallest encoding of
+instructions for the target architecture, to store the program compactly and effectively use the memory system on the
+target device.  Countless knobs exist on your favorite compiler to dial between the two based on your scenario.  On
+mobile, you probably want smaller code, whereas on a multimedia workstation, you probably want the fastest.
+The choice of managed code doesn’t change any of this.  You still want the same flexibility.  And the techniques you’d
+use to achieve this in a C or C++ compiler are by and large the same as what you use for a safe language.
+You need a great inliner.  You want common subexpression
+elimination (CSE), constant propagation and folding, strength reduction,
+and an excellent loop optimizer.  These days, you probably want to
+use static single assignment form (SSA), and some unique
+SSA optimizations like global value numbering (although you need
+to be careful about working set and compiler throughput when using SSA everywhere).  You will need specialized machine
+dependent optimizers for the target architectures that are important to you, including register allocators.  You’ll eventually want a global analyzer that does interprocedural
+optimizations, link-time code-generation to extend those interprocedural optimizations across passes, a vectorizer for modern processors (SSE, NEON, AVX, etc.), and most definitely
+profile guided optimizations (PGO) to inform all of the
+above based on real-world scenarios.
+Although having a safe language can throw some interesting curveballs your way that are unique and interesting – which
+I’ll cover below – you’ll need all of the standard optimizing compiler things.
+I hate to say it, but doing great at all of these things is “table stakes.”  Back in the mid-2000s, we had to write
+everything by hand.  Thankfully, these days you can get an awesome off-the-shelf optimizing compiler like LLVM that has most of these things already battle tested, ready to go, and ready for you to help improve.
+What’s different
+But, of course, there are differences.  Many.  This article wouldn’t be very interesting otherwise.
+The differences are more about what “shapes” you can expect to be different in the code and data structures thrown at
+the optimizer.  These shapes come in the form of different instruction sequences, logical operations in the code that
+wouldn’t exist in the C++ equivalent (like more bounds checking), data structure layout differences (like extra object
+headers or interface tables), and, in most cases, a larger quantity of supporting runtime data structures.
+Objects have “more to them” in most managed languages, compared to frugal data types in, say, C.  (Note that C++ data
+structures are not nearly as frugal as you might imagine, and are probably closer to C# than your gut tells you.)  In
+Java, every object has a vtable pointer in its header.  In C#, most do, although structs do not.  The GC can impose
+extra layout restrictions, such as padding and a couple words to do its book-keeping.  Note that none of this is really
+specific to managed languages – C and C++ allocators can inject their own words too, and of course, many C++ objects
+also carry vtables – however it’s fair to say that most C and C++ implementations tend to be more economical in these
+areas.  In most cases, for cultural reasons more than hard technical ones.  Add up a few thousand objects in a heap,
+especially when your system is built of many small processes with isolated heaps, like Midori, and it adds up quickly.
+In Java, you’ve got a lot more virtual dispatch, because methods are virtual by default.  In C#, thankfully, methods
+are non-virtual by default.  (We even made classes sealed by default.)  Too much virtual dispatch can totally screw
+inlining which is a critical optimization to have for small functions.  In managed languages you tend to have more
+small functions for two reasons: 1) properties, and 2) higher level programmers tend to over-use abstraction.
+Although it’s seldom described this formally, there’s an “ABI” (Application Binary Interface) that governs interactions between code and the runtime.
+The ABI is where the rubber meets the road.  It’s where things like calling conventions, exception handling, and, most
+notably, the GC manifest in machine code.  This is not unique to managed code!  C++ has a “runtime” and therfore an
+ABI too.  It’s just that it’s primarily composed of headers, libraries like allocators, and so on, that are more
+transparently linked into a program than with classical C# and Java virtual machines, where a runtime is non-negotiable
+(and in the JIT case, fairly heavy-handed).  Thinking of it this way has been helpful to me, because the isomorphisms
+with C++ suddenly become immediately apparent.
+The real biggie is array bounds checks.  A traditional approach is to check that the index is within the bounds of an
+array before accessing it, either for loading or storing.  That’s an extra field fetch, compare, and conditional
+branch.  Branch prediction these days is quite good, however it’s just
+plain physics that if you do more work, you’re going to pay for it.  Interestingly, the work we’re doing with C++’s
+array_view<T> incurs all these same costs.
+Related to this, there can be null checks where they didn’t exist in C++.  If you perform a method dispatch on a null
+object pointer in C++, for example, you end up running the function anyway.  If that function tries to access this,
+it’s bound to AV, but in Java and .NET, the compiler is required
+(per specification) to explicitly check and throw an exception in these cases, before the call even occurs.  These
+little branches can add up too.  We eradicated such checks in favor of C++ semantics in optimized builds.
+In Midori, we compiled with overflow checking on by default.  This is different from stock C#, where you must explicitly
+pass the /checked flag for this behavior.  In our experience, the number of surprising overflows that were caught,
+and unintended, was well worth the inconvenience and cost.  But it did mean that our compiler needed to get really good
+at understanding how to eliminate unnecessary ones.
+Static variables are very expensive in Java and .NET.  Way more than you’d expect.  They are mutable and so cannot be
+stored in the readonly segment of an image where they are shared across processes.  And my goodness, the amount of
+lazy-initialization checking that gets injected into the resulting source code is beyond belief.  Switching from
+preciseinit to beforefieldinit semantics in .NET helps a little bit, since the checks needn’t happen on every
+access to a static member – just accesses to the static variable in question – but it’s still disgusting compared to
+a carefully crafted C program with a mixture of constant and intentional global initialization.
+The final major area is specific to .NET: structs.  Although structs help to alleviate GC pressure and hence are a
+good thing for most programs, they also carry some subtle problems.  The CLI specifies surprising behavior around their
+initialization, for example.  Namely if an exception happens during construction, the struct slot must remain zero-
+initialized.  The result is that most compilers make defensive copies.  Another example is that the compiler must
+make a defensive copy anytime you call a function on a readonly struct.  It’s pretty common for structs to be copied
+all over the place which, when you’re counting cycles, hurts, especially since it often means time spent in memcpy.
+We had a lot of techniques for addressing this and, funny enough, I’m pretty sure when all was said and done, our
+code quality here was better than C++’s, given all of its RAII, copy constructor, destructor, and so on, penalties.
+Compilation Architecture
+Our architecture involved three major components:
+
+C# Compiler: Performs lexing, parsing, and semantic analysis.  Ultimately
+translates from C# textual source code into a CIL-based
+intermediate representation (IR).
+Bartok: Takes in said IR, does high-level MSIL-based analysis,
+transformations, and optimizations, and finally lowers this IR to something a bit closer to a more concrete machine
+representation.  For example, generics are gone by the time Bartok is done with the IR.
+Phoenix: Takes in this lowered IR, and goes to town on
+it.  This is where the bulk of the “pedal to the metal” optimizations happen.  The output is machine code.
+
+The similarities here with Swift’s compiler design, particularly SIL, are evident.  The .NET Native project also
+mirrors this architecture somewhat.  Frankly, most AOT compilers for high level languages do.
+In most places, the compiler’s internal representation leveraged static single assignment form (SSA).  SSA was preserved until very late in the compilation.
+This facilitated and improved the use of many of the classical compiler optimizations mentioned earlier.
+The goals of this architecture included:
+
+Facilitate rapid prototyping and experimentation.
+Produce high-quality machine code on par with commerical C/C++ compilers.
+Support debugging optimized machine code for improved productivity.
+Facilitate profile-guided optimizations based on sampling and/or instrumenting code.
+Suitable for self-host:
+    
+The resulting compiled compiler is fast enough.
+It is fast enough that the compiler developers enjoy using it.
+It is easy to debug problems when the compiler goes astray.
+
+
+
+Finally, a brief warning.  We tried lots of stuff.  I can’t remember it all.  Both Bartok and Phoenix existed for years
+before I even got involved in them.  Bartok was a hotbed of research on managed languages – ranging from optimizations
+to GC to software transactional memory – and Phoenix was meant to replace the shipping Visual C++ compiler.  So,
+anyway, there’s no way I can tell the full story.  But I’ll do my best.
+Optimizations
+Let’s go deep on a few specific areas of classical compiler optimizations, extended to cover safe code.
+Bounds check elimination
+C# arrays are bounds checked.  So were ours.  Although it is important to eliminate superfluous bounds checks in regular
+C# code, it was even more so in our case, because even the lowest layers of the system used bounds checked arrays.  For
+example, where in the bowels of the Windows or Linux kernel you’d see an int*, in Midori you’d see an int[].
+To see what a bounds check looks like, consider a simple example:
+var a = new int[100];
+for (int i = 0; i < 100; i++) {
+    ... a[i] ...;
+}
+
+Here’s is an example of the resulting machine code for the inner loop array access, with a bounds check:
+; First, put the array length into EAX:
+3B15: 8B 41 08        mov         eax,dword ptr [rcx+8]
+; If EDX >= EAX, access is out of bounds; jump to error:
+3B18: 3B D0           cmp         edx,eax
+3B1A: 73 0C           jae         3B28
+; Otherwise, access is OK; compute element's address, and assign:
+3B1C: 48 63 C2        movsxd      rax,edx
+3B1F: 8B 44 81 10     mov         dword ptr [rcx+rax*4+10h],r8d
+; ...
+; The error handler; just call a runtime helper that throws:
+3B28: E8 03 E5 FF FF  call        2030
+
+If you’re doing this bookkeeping on every loop iteration, you won’t get very tight loop code.  And you’re certainly not
+going to have any hope of vectorizing it.  So, we spent a lot of time and energy trying to eliminate such checks.
+In the above example, it’s obvious to a human that no bounds checking is necessary.  To a compiler, however, the
+analysis isn’t quite so simple.  It needs to prove all sorts of facts about ranges.  It also needs to know that a
+isn’t aliased and somehow modified during the loop body.  It’s surprising how hard this problem quickly becomes.
+Our system had multiple layers of bounds check eliminations.
+First it’s important to note that CIL severely constraints an optimizer by being precise in certain areas.  For example,
+accessing an array out of bounds throws an IndexOutOfRangeException, similar to Java’s ArrayOutOfBoundsException.
+And the CIL specifies that it shall do so at precisely the exception that threw it.  As we will see later on, our
+error model was more relaxed.  It was based fail-fast and permitted code motion that led to inevitable failures
+happening “sooner” than they would have otherwise.  Without this, our hands would have been tied for much of what I’m
+about to discuss.
+At the highest level, in Bartok, the IR is still relatively close to the program input.  So, some simple patterns could
+be matched and eliminated.  Before lowering further, the ABCD algorithm – a straightforward value range analysis based on
+SSA – then ran to eliminate even more common patterns using a more principled approach than pattern matching.  We were
+also able to leverage ABCD in the global analysis phase too, thanks to inter-procedural length and control flow fact
+propagation.
+Next up, the Phoenix Loop Optimizer got its hands on things.  This layer did all sorts of loop optimizations and, most
+relevant to this section, range analysis.  For example:
+
+Loop materialization: this analysis actually creates loops.  It recognizes repeated patterns of code that would be
+more ideally represented as loops, and, when profitable, rewrites them as such.  This includes unrolling hand-rolled
+loops so that a vectorizer can get its hands on them, even if they might be re-unrolled later on.
+Loop cloning, unrolling, and versioning: this analysis creates copies of loops for purposes of specialization.  That
+includes loop unrolling, creating architectural-specific versions of a vectorized loop, and so on.
+Induction range optimization: this is the phase we are most
+concerned with in this section.  It uses induction range analysis to remove unnecessary checks, in addition to doing
+classical induction variable optimizations such as widening.  As a byproduct of this phase, bounds checks were
+eliminated and coalesced by hoisting them outside of loops.
+
+This sort of principled analysis was more capable than what was shown earlier.  For example, there are ways to write
+the earlier loop that can easily “trick” the more basic techniques discussed earlier:
+var a = new int[100];
+
+// Trick #1: use the length instead of constant.
+for (int i = 0; i < a.length; i++) {
+    a[i] = i;
+}
+
+// Trick #2: start counting at 1.
+for (int i = 1; i <= a.length; i++) {
+    a[i-1] = i-1;
+}
+
+// Trick #3: count backwards.
+for (int i = a.length - 1; i >= 0; i--) {
+    a[i] = i;
+}
+
+// Trick #4: don't use a for loop at all.
+int i = 0;
+next:
+if (i < a.length) {
+    a[i] = i;
+    i++;
+    goto next;
+}
+
+You get the point.  Clearly at some point you can screw the optimizer’s ability to do anything, especially if you
+start doing virtual dispatch inside the loop body, where aliasing information is lost.  And obviously, things get more
+difficult when the array length isn’t known statically, as in the above example of 100.  All is not lost, however,
+if you can prove relationships between the loop bounds and the array.  Much of this analysis requires special knowledge
+of the fact that array lengths in C# are immutable.
+At the end of the day, doing a good job at optimizing here is the difference between this:
+; Initialize induction variable to 0:
+3D45: 33 C0           xor         eax,eax
+; Put bounds into EDX:
+3D58: 8B 51 08        mov         edx,dword ptr [rcx+8]
+; Check that EAX is still within bounds; jump if not:
+3D5B: 3B C2           cmp         eax,edx
+3D5D: 73 13           jae         3D72
+; Compute the element address and store into it:
+3D5F: 48 63 D0        movsxd      rdx,eax
+3D62: 89 44 91 10     mov         dword ptr [rcx+rdx*4+10h],eax
+; Increment the loop induction variable:
+3D66: FF C0           inc         eax
+; If still < 100, then jump back to the loop beginning:
+3D68: 83 F8 64        cmp         eax,64h
+3D6B: 7C EB           jl          3D58
+; ...
+; Error routine:
+3D72: E8 B9 E2 FF FF  call        2030
+
+And the following, completely optimized, bounds check free, loop:
+; Initialize induction variable to 0:
+3D95: 33 C0           xor         eax,eax
+; Compute the element address and store into it:
+3D97: 48 63 D0        movsxd      rdx,eax
+3D9A: 89 04 91        mov         dword ptr [rcx+rdx*4],eax
+; Increment the loop induction variable:
+3D9D: FF C0           inc         eax
+; If still < 100, then jump back to the loop beginning:
+3D9F: 83 F8 64        cmp         eax,64h
+3DA2: 7C F3           jl          3D97
+
+It’s amusing that I’m now suffering deja vu as we go through this same exercise with C++’s new array_view<T> type.
+Sometimes I joke with my ex-Midori colleagues that we’re destined to repeat ourselves, slowly and patiently, over the
+course of the next 10 years.  I know that sounds arrogant.  But I have this feeling on almost a daily basis.
+Overflow checking
+As mentioned earlier, in Midori we compiled with checked arithmetic by default (by way of C#’s /checked flag).  This
+eliminated classes of errors where developers didn’t anticipate, and therefore code correctly for, overflows.  Of
+course, we kept the explicit checked and unchecked scoping constructs, to override the defaults when appropriate,
+but this was preferable because a programmer declared her intent.
+Anyway, as you might expect, this can reduce code quality too.
+For comparison, imagine we’re adding two variables:
+int x = ...;
+int y = ...;
+int z = x + y;
+
+Now imagine x is in ECX and y is in EDX.  Here is a standard unchecked add operation:
+03 C2              add         ecx,edx
+
+Or, if you want to get fancy, one that uses the LEA instruction to also store the result in the EAX register using
+a single instruction, as many modern compilers might do:
+8D 04 11           lea         eax,[rcx+rdx]
+
+Well, here’s the equivalent code with a bounds check inserted into it:
+3A65: 8B C1              mov         eax,ecx
+3A67: 03 C2              add         eax,edx
+3A69: 70 05              jo          3A70
+; ...
+3A70: E8 B3 E5 FF FF     call        2028
+
+More of those damn conditional jumps (JO) with error handling routines (CALL 2028).
+It turns out a lot of the analysis mentioned earlier that goes into proving bounds checks redundant also apply to
+proving that overflow checks are redundant.  It’s all about proving facts about ranges.  For example, if you can prove
+that some check is dominated by some earlier check, and that
+furthermore that earlier check is a superset of the later check, then the later check is unnecessary.  If the opposite
+is true – that is, the earlier check is a subset of the later check, then if the subsequent block postdominates the
+earlier one, you might move the stronger check to earlier in the program.
+Another common pattern is that the same, or similar, arithmetic operation happens multiple times near one another:
+int p = r * 32 + 64;
+int q = r * 32 + 64 - 16;
+
+It is obvious that, if the p assignment didn’t overflow, then the q one won’t either.
+There’s another magical phenomenon that happens in real world code a lot.  It’s common to have bounds checks and
+arithmetic checks in the same neighborhood.  Imagine some code that reads a bunch of values from an array:
+int data0 = data[dataOffset + (DATA_SIZE * 0)];
+int data1 = data[dataOffset + (DATA_SIZE * 1)];
+int data2 = data[dataOffset + (DATA_SIZE * 2)];
+int data3 = data[dataOffset + (DATA_SIZE * 3)];
+.. and so on ...
+
+Well C# arrays cannot have negative bounds.  If a compiler knows that DATA_SIZE is sufficiently small that an
+overflowed computation won’t wrap around past 0, then it can eliminate the range check in favor of the bounds check.
+There are many other patterns and special cases you can cover.  But the above demonstrates the power of a really good
+range optimizer that is integrated with loops optimization.  It can cover a wide array of scenarios, array bounds and
+arithmetic operations included.  It takes a lot of work, but it’s worth it in the end.
+Inlining
+For the most part, inlining is the same as with true native code.  And
+just as important.  Often more important, due to C# developers’ tendency to write lots of little methods (like property
+accessors).  Because of many of the topics throughout this article, getting small code can be more difficult than in
+C++ – more branches, more checks, etc. – and so, in practice, most managed code compilers inline a lot less than
+native code compilers, or at least need to be tuned very differently.  This can actually make or break performance.
+There are also areas of habitual bloat.  The way lambdas are encoded in MSIL is unintelligable to a naive backend
+compiler, unless it reverse engineers that fact.  For example, we had an optimization that took this code:
+void A(Action a) {
+    a();
+}
+
+void B() {
+    int x = 42;
+    A(() => x++);
+    ...
+}
+
+and, after inlining, was able to turn B into just:
+void B() {
+    int x = 43;
+    ...
+}
+
+That Action argument to A is a lambda and, if you know how the C# compiler encodes lambdas in MSIL, you’ll
+appreciate how difficult this trick was.  For example, here is the code for B:
+.method private hidebysig instance void
+    B() cil managed
+{
+    // Code size       36 (0x24)
+    .maxstack  3
+    .locals init (class P/'<>c__DisplayClass1' V_0)
+    IL_0000:  newobj     instance void P/'<>c__DisplayClass1'::.ctor()
+    IL_0005:  stloc.0
+    IL_0006:  nop
+    IL_0007:  ldloc.0
+    IL_0008:  ldc.i4.s   42
+    IL_000a:  stfld      int32 P/'<>c__DisplayClass1'::x
+    IL_000f:  ldarg.0
+    IL_0010:  ldloc.0
+    IL_0011:  ldftn      instance void P/'<>c__DisplayClass1'::'<B>b__0'()
+    IL_0017:  newobj     instance void [mscorlib]System.Action::.ctor(object,
+                                                                  native int)
+    IL_001c:  call       instance void P::A(class [mscorlib]System.Action)
+    IL_0021:  nop
+    IL_0022:  nop
+    IL_0023:  ret
+}
+
+To get the magic result required constant propagating the ldftn, recognizing how delegate construction works
+(IL_0017), leveraging that information to inline B and eliminate the lambda/delegate altogether, and then, again
+mostly through constant propagation, folding the arithmetic into the constant 42 initialization of x.  I always
+found it elegant that this “fell out” of a natural composition of multiple optimizations with separate concerns.
+As with native code, profile guided optimization made our inlining decisions far more effective.
+Structs
+CLI structs are almost just like C structs.  Except they’re not.  The CLI imposes some semantics that incur overheads.
+These overheads almost always manifest as excessive copying.  Even worse, these copies are usually hidden from your
+program.  It’s worth noting, because of copy constructors and destructors, C++ also has some real issues here, often
+even worse than what I’m about to describe.
+Perhaps the most annoying is that initializing a struct the CLI way requires a defensive copy.  For example, consider
+this program, where the initialzer for S throws an exception:
+class Program {
+    static void Main() {
+        S s = new S();
+        try {
+            s = new S(42);
+        }
+        catch {
+            System.Console.WriteLine(s.value);
+        }
+    }
+}
+
+struct S {
+    public int value;
+    public S(int value) {
+        this.value = value;
+        throw new System.Exception(""Boom"");
+    }
+}
+
+The program behavior here has to be that the value 0 is written to the console.  In practice, that means that the
+assignment operation s = new S(42) must first create a new S-typed slot on the stack, construct it, and then and
+only then copy the value back over the s variable.  For single-int structs like this one, that’s not a huge deal.
+For large structs, that means resorting to memcpy.  In Midori, we knew what methods could throw, and which could not,
+thanks to our error model (more later), which meant we could avoid this overhead in nearly all cases.
+Another annoying one is the following:
+struct S {
+    // ...
+    public int Value { get { return this.value; } }
+}
+
+static readonly S s = new S();
+
+Every single time we read from s.Value:
+int x = s.Value;
+
+we are going to get a local copy.  This one’s actually visible in the MSIL.  This is without readonly:
+ldsflda    valuetype S Program::s
+call       instance int32 S::get_Value()
+
+And this is with it:
+ldsfld     valuetype S Program::s
+stloc.0
+ldloca.s   V_0
+call       instance int32 S::get_Value()
+
+Notice that the compiler elected to use ldsfld followed by lodloca.s, rather than loading the address directly,
+by way of ldsflda in the first example.  The resulting machine code is even nastier.  I also can’t pass the struct
+around by-reference which, as I mention later on, requires copying it and again can be problematic.
+We solved this in Midori because our compiler knew about methods that didn’t mutate members.  All statics were immutable
+to begin with, so the above s wouldn’t need defensive copies.  Alternatively, or in addition to this, the struct could
+have beem declared as immutable, as follows:
+immutable struct S {
+    // As above ...
+}
+
+Or because all static values were immutable anyway.  Alternatively, the properties or methods in question could have
+been annotated as readable meaning that they couldn’t trigger mutations and hence didn’t require defensive copies.
+I mentioned by-reference passing.  In C++, developers know to pass large structures by-reference, either using * or
+&, to avoid excessive copying.  We got in the habit of doing the same.  For example, we had in parameters, as so:
+void M(in ReallyBigStruct s) {
+    // Read, but don't assign to, s ...
+}
+
+I’ll admit we probably took this to an extreme, to the point where our APIs suffered.  If I could do it all over again,
+I’d go back and eliminate the fundamental distinction between class and struct in C#.  It turns out, pointers aren’t
+that bad after all, and for systems code you really do want to deeply understand the distinction between “near” (value)
+and “far” (pointer).  We did implement what amounted to C++ references in C#, which helped, but not enough.  More on
+this in my upcoming deep dive on our programming language.
+Code size
+We pushed hard on code size.  Even more than some C++ compilers I know.
+A generic instantiation is just a fancy copy-and-paste of code with some substitutions.  Quite simply, that means an
+explosion of code for the compiler to process, compared to what the developer actually wrote.  I’ve covered many of the
+performance challenges with generics in the past.  A major problem there is the
+transitive closure problem.  .NET’s straightforward-looking List<T> class actually creates 28 types in its transitive
+closure!  And that’s not even speaking to all the methods in each type.  Generics are a quick way to explode code size.
+I never forgot the day I refactored our LINQ implementation.  Unlike in .NET, which uses extension methods, we made all
+LINQ operations instance methods on the base-most class in our collection type hierarchy.  That meant 100-ish nested
+classes, one for each LINQ operation, for every single collection instantiated!  Refactoring this was an easy way for
+me to save over 100MB of code size across the entire Midori “workstation” operating system image.  Yes, 100MB!
+We learned to be more thoughtful about our use of generics.  For example, types nested inside an outer generic are
+usually not good ideas.  We also aggressively shared generic instantiations, even more than what the CLR does.  Namely, we shared value type generics, where the
+GC pointers were at the same locations.  So, for example, given a struct S:
+struct S {
+    int Field;
+}
+
+we would share the same code representation of List<int> with List<S>.  And, similarly, given:
+struct S {
+    object A;
+    int B;
+    object C;
+}
+
+struct T {
+    object D;
+    int E;
+    object F;
+}
+
+we would share instantiations between List<S> and List<T>.
+You might not realize this, but C# emits IL that ensures structs have sequential layout:
+.class private sequential ansi sealed beforefieldinit S
+    extends [mscorlib]System.ValueType
+{
+    ...
+}
+
+As a result, we couldn’t share List<S> and List<T> with some hypothetical List<U>:
+struct U {
+    int G;
+    object H;
+    object I;
+}
+
+For this, among other reasons – like giving the compiler more flexibility around packing, cache alignment, and so on
+– we made structs auto by default in our language.  Really, sequential only matters if you’re doing unsafe code,
+which, in our programming model, wasn’t even legal.
+We did not support reflection in Midori.  In principle, we had plans to do it eventually, as a purely opt-in feature.
+In practice, we never needed it.  What we found is that code generation was always a more suitable solution.  We shaved
+off at least 30% of the best case C# image size by doing this.  Significantly more if you factor in systems where the
+full MSIL is retained, as is usually the case, even for NGen and .NET AOT solutions.
+In fact, we removed significant pieces of System.Type too.  No Assembly, no BaseType, and yes, even no FullName.
+The .NET Framework’s mscorlib.dll contains about 100KB of just type names.  Sure, names are useful, but our eventing
+framework leveraged code generation to produce just those you actually needed to be around at runtime.
+At some point, we realized 40% of our image sizes were vtables.
+We kept pounding on this one relentlessly, and, after all of that, we still had plenty of headroom for improvements.
+Each vtable consumes image space to hold pointers to the virtual functions used in dispatch, and of course has a runtime
+representation.  Each object with a vtable also has a vtable pointer embedded within it.  So, if you care about size
+(both image and runtime), you are going to care about vtables.
+In C++, you only get a vtable if your type is polymorphic.  In
+languages like C# and Java, on the other hand, you get a vtable even if you don’t want, need, or use it.  In C#, at
+least, you can use a struct type to elide them.  I actually love this aspect of Go, where you get a virtual dispatch-
+like thing, via interfaces, without needing to pay for vtables on every type; you only pay for what you use, at the
+point of coercing something to an interface.
+Another vtable problem in C# is that all objects inherit three virtuals from System.Object: Equals, GetHashCode,
+and ToString.  Besides the point that these generally don’t do the right thing in the right way anyways – Equals
+requires reflection to work on value types, GetHashCode is nondeterministic and stamps the object header (or sync-
+block; more on that later), and ToString doesn’t offer formatting and localization controls – they also bloat every
+vtable by three slots.  This may not sound like much, but it’s certainly more than C++ which has no such overhead.
+The main source of our remaining woes here was the assumption in C#, and frankly most OOP languages like C++ and Java,
+that RTTI is always available for downcasts.  This was
+particularly painful with generics, for all of the above reasons.  Although we aggressively shared instantiations, we
+could never quite fully fold together the type structures for these guys, even though disparate instantiations tended
+to be identical, or at least extraordinarily similar.  If I could do it all over agan, I’d banish RTTI.  In 90% of the
+cases, type discriminated unions or pattern matching are more appropriate solutions anyway.
+Profile guided optimizations (PGO)
+I’ve mentioned profile guided optimization (PGO) already.
+This was a critical element to “go that last mile” after mostly everything else in this article had been made
+competitive.  This gave our browser program boosts in the neighborhood of 30-40% on benchmarks like SunSpider and Octane.
+Most of what went into PGO was similar to classical native profilers, with two big differences.
+First, we tought PGO about many of the unique optimizations listed throughout this article, such as asynchronous stack
+probing, generics instantiations, lambdas, and more.  As with many things, we could have gone on forever here.
+Second, we experimented with sample profiling, in addition to the ordinary instrumented profiling.  This is much nicer
+from a developer perspective – they don’t need two builds – and also lets you collect counts from real, live running
+systems in the data center.  A good example of what’s possible is outlined in this Google-Wide Profiling (GWP) paper.
+System Architecture
+The basics described above were all important.  But a number of even more impactful areas required deeper architectural
+co-design and co-evolution with the language, runtime, framework, and operating system itself.  I’ve written about the
+immense benefits of this sort of “whole system” approach before.  It was kind of magical.
+GC
+Midori was garbage collected through-and-through.  This was a key element of our overall model’s safety and
+productivity.  In fact, at one point, we had 11 distinct collectors, each with its own unique characteristics.  (For
+instance, see this study.)  We
+had some ways to combat the usual problems, like long pause times.  I’ll go through those in a future post, however.
+For now, let’s stick to the realm of code quality.
+The first top-level decision is: conservative or precise?  A conservative collector is easier to wedge into an
+existing system, however it can cause troubles in certain areas.  It often needs to scan more of the heap to get the
+same job done.  And it can falsely keep objects alive.  We felt both were unacceptable for a systems programming
+environment.  It was an easy, quick decision: we sought precision.
+Precision costs you something in the code generators, however.  A precise collector needs to get instructions where to
+find its root set.  That root set includes field offsets in data structures in the heap, and also places on the stack
+or, even in some cases, registers.  It needs to find these so that it doesn’t miss an object and erroneously collect it
+or fail to adjust a pointer during a relocation, both of which would lead to memory safety problems.  There was no magic
+trick to making this efficient other than close integration between runtime and code generator, and being thoughtful.
+This brings up the topic of cooperative versus preemptive, and the notion of GC safe-points.  A GC operating in
+cooperative mode will only collect when threads have reached so-called “safe-points.”  A GC operating in preemptive
+mode, on the other hand, is free to stop threads in their tracks, through preemption and thread suspension, so that it
+may force a collection.  In general, preemptive requires more bookkeeping, because the roots must be identifiable at
+more places, including things that have spilled into registers.  It also makes certain low-level code difficult to
+write, of the ilk you’ll probably find in an operating system’s kernel, because objects are subject to movement between
+arbitrary instructions.  It’s difficult to reason about.  (See this file, and its associated uses in the CLR codebase, if you
+don’t believe me.)  As a result, we used cooperative mode as our default.  We experimented with automatic safe-point
+probes inserted by the compiler, for example on loop back-edges, but opted to bank the code quality instead.  It did
+mean GC “livelock” was possible, but in practice we seldom ran into this.
+We used a generational collector.  This has the advantage of reducing pause times because less of the heap needs to be
+inspected upon a given collection.  It does come with one disadvantage from the code generator’s perspective, which is
+the need to insert write barriers into the code.  If an older generation object ever points back at a younger generation
+object, then the collector – which would have normally preferred to limit its scope to younger generations – must know
+to look at the older ones too.  Otherwise, it might miss something.
+Write barriers show up as extra instructions after certain writes; e.g., note the call:
+48 8D 49 08        lea         rcx,[rcx+8]
+E8 7A E5 FF FF     call        0000064488002028
+
+That barrier simply updates an entry in the card table, so the GC knows to look at that segment the next time it scans
+the heap.  Most of the time this ends up as inlined assembly code, however it depends on the particulars of the
+situation.  See this code for an
+example of what this looks like for the CLR on x64.
+It’s difficult for the compiler to optimize these away because the need for write barriers is “temporal” in nature.  We
+did aggressively eliminate them for stack allocated objects, however.  And it’s possible to write, or transform code,
+into less barrier hungry styles.  For example, consider two ways of writing the same API:
+bool Test(out object o);
+object Test(out bool b);
+
+In the resulting Test method body, you will find a write barrier in the former, but not the latter.  Why?  Because the
+former is writing a heap object reference (of type object), and the compiler has no idea, when analyzing this method
+in isolation, whether that write is to another heap object.  It must be conservative in its analysis and assume the
+worst.  The latter, of course, has no such problem, because a bool isn’t something the GC needs to scan.
+Another aspect of GC that impacts code quality is the optional presence of more heavyweight concurrent read and write
+barriers, when using concurrent collection.  A concurrent GC does some collection activities concurrent with the user
+program making forward progress.  This is often a good use of multicore processors and it can reduce pause times and
+help user code make more forward progress over a given period of time.
+There are many challenges with building a concurrent GC, however one is that the cost of the resulting barriers is high.
+The original concurrent GC by Henry Baker was a copying GC and had the notion
+of “old” versus “new” space.  All reads and writes had to be checked and, anything operation against the old space had
+to be forwarded to the new space.  Subsequent research for the DEC Firefly used hardware memory protection to reduce the
+cost, but the faulting cases were still exceedingly expensive.  And, worst of all, access times to the heap were
+unpredictable.  There has been a lot of good research into solving this problem, however we abandoned copying.
+Instead, we used a concurrent mark-sweep compacting collector.  This means only write barriers are needed under normal
+program execution, however some code was cloned so that read barriers were present when programs ran in the presence of
+object movement.  Our primary GC guy’s research was published, so you can read all about it.  The
+CLR also has a concurrent collector, but it’s not quite as good.  It uses copying to collect the youngest generation,
+mark-sweep for the older ones, and the mark phase is parallelized.  There are unfortunately a few conditions that can
+lead to sequential pauses (think of this like a big “lock”), sometimes over 10 milliseconds: 1) all threads must be
+halted and scanned, an operation that is bounded only by the number of threads and the size of their stacks; 2) copying
+the youngest generation is bounded only by the size of that generation (thankfully, in normal configurations, this is
+small); and 3) under worst case conditions, compaction and defragmentation, even of the oldest generation, can happen.
+Separate compilation
+The basic model to start with is static linking.  In this model, you compile everything into a single executable.  The
+benefits of this are obvious: it’s simple, easy to comprehend, conceptually straightforward to service, and less work
+for the entire compiler toolchain.  Honestly, given the move to Docker containers as the unit of servicing, this model
+makes more and more sense by the day.  But at some point, for an entire operating system, you’ll want separate
+compilation.  Not just because compile times can get quite long when statically linking an entire operating system, but
+also because the working set and footprint of the resulting processes will be bloated with significant duplication.
+Separately compiling object oriented APIs is hard.  To be honest, few people have actually gotten it to work.  Problems
+include the fragile base class problem, which is a real killer for
+version resilient libraries.  As a result, most real systems use a dumbed down “C ABI” at the boundary between components.  This is why Windows,
+for example, has historically used flat C Win32 APIs and, even in the shift to more object orientation via WinRT, uses
+COM underneath it all.  At some runtime expense, the ObjectiveC runtime addressed this challenge.  As with most things
+in computer science, virtually all problems can be solved with an extra level of indirection; this one can be too.
+The design pivot we took in Midori was that whole processes were sealed.  There was no dynamic loading, so nothing that
+looked like classical DLLs or SOs.  For those scenarios, we used the Asynchronous Everything programming model, which made it easy to dynamically
+connect to and use separately compiled and versioned processes.
+We did, however, want separately compiled binaries, purely as a developer productivity and code sharing (working set)
+play.  Well, I lied.  What we ended up with was incrementally compiled binaries, where a change in a root node triggered
+a cascading recompilation of its dependencies.  But for leaf nodes, such as applications, life was beautiful.  Over
+time, we got smarter in the toolchain by understanding precisely which sorts of changes could trigger cascading
+invalidation of images.  A function that was known to never have been inlined across modules, for example, could have its
+implementation – but not its signature – changed, without needing to trigger a rebuild.  This is similar to the
+distinction between headers and objects in a classical C/C++ compilation model.
+Our compilation model was very similar to C++’s, in that there was static and dynamic linking.  The runtime model, of
+course, was quite different.  We also had the notion of “library groups,” which let us cluster multiple logically
+distinct, but related, libraries into a single physical binary.  This let us do more aggressive inter-module
+optimizations like inlining, devirtualization, async stack optimizations, and more.
+Parametric polymorphism (a.k.a., generics)
+That brings me to generics.  They throw a wrench into everything.
+The problem is, unless you implement an erasure
+model – which utterly stinks performance-wise due
+to boxing allocations, indirections, or both – there’s no way for you to possibly pre-instantiate all possible versions
+of the code ahead-of-time.  For example, say you’re providing a List<T>.  How do you know whether folks using your
+library will want a List<int>, List<string>, or List<SomeStructYouveNeverHeardOf>?
+Solutions abound:
+
+Do not specialize.  Erase everything.
+Specialize only a subset of instantiations, and create an erased instantiation for the rest.
+Specialize everything.  This gives the best performance, but at some complexity.
+
+Java uses #1 (in fact, erasure is baked into the language).  Many ML compilers use #2.  .NET’s NGen compilation
+model is sort of a variant of #2, where things that can be trivially specialized are specialized, and everything else is
+JIT compiled.  .NET Native doesn’t yet have a solution to this problem, which means 3rd party libraries, separate
+compilation, and generics are a very big TBD.   As with everything in Midori, we picked the hardest path, with the most
+upside, which meant #3.  Actually I’m being a little glib; we had several ML compiler legends on the team, and #2 is
+fraught with peril; just dig a little into some papers on how hard (and clever) this can
+get.  It’s difficult to know a priori which instantiations are going to be performance critical to a program.  My own
+experience trying to get C# code into the heart of Windows back in the Longhorn days also reinforced this; we didn’t
+want JIT’ting and the rules for what generics you could and couldn’t use in that world were so mind boggling they
+eventually led to greek formulas.
+Anyway, Midori’s approach turned out to be harder than it sounded at first.
+Imagine you have a diamond.  Library A exports a List<T> type, and libraries B and C both instantiate List<int>.  A
+program D then consumes both B and C and maybe even passes List<T> objects returned from one to the other.  How do we
+ensure that the versions of List<int> are compatible?
+We called this problem the potentially multiply instantiated, or PMI for short, problem.
+The CLR handles this problem by unifying the instantiations at runtime.  All RTTI data structures, vtables, and whatnot,
+are built and/or aggressively patched at runtime.  In Midori, on the other hand, we wanted all such data structures to
+be in readonly data segments and hence shareable across processes, wherever possible.
+Again, everything can be solved with an indirection.  But unlike solution #2 above, solution #3 permits you to stick
+indirections only in the rare places where you need them.  And for purposes of this one, that meant RTTI and accessing
+static variables of just those generic types that might have been subject to PMI.  First, that affected a vast subset of
+code (versus #2 which generally affects even loading of instance fields).  Second, it could be optimized away for
+instantiations that were known not to be PMI, by attaching state and operations to the existing generic dictionary that
+was gets passed around as a hidden argument already.  And finally, because of all of this, it was pay for play.
+But damn was it complex.
+It’s funny, but C++ RTTI for template instantiations actually suffers from many of the same problems.  In fact, the
+Microsoft Visual C++ compiler resorts to a strcmp of the type names, to resolve diamond issues!  (Thankfully there are
+well-known, more efficient ways to do this, which we are
+actively pursuing for the next release of VC++.)
+Virtual dispatch
+Although I felt differently when first switching from Java to C#, Midori made me love that C# made methods non-virtual
+by default.  I’m sure we would have had to change this otherwise.  In fact, we went even further and made classes
+sealed by default, requiring that you explicitly mark them virtual if you wanted to facilitate subclasses.
+Aggressive devirtualization, however, was key to good performance.  Each virtual means an indirection.  And more
+impactfully, a lost opportunity to inline (which for small functions is essential).  We of course did global
+intra-module analysis to devirtualize, but also extended this across modules, using whole program compilation, when
+multiple binaries were grouped together into a library group.
+Although our defaults were right, my experience with C# developers is that they go a little hog-wild with virtuals and
+overly abstract code.  I think the ecosystem of APIs that exploded around highly polymorphic abstractions, like LINQ and
+Reactive Extensions, encouraged this and instilled a bit of bad behavior (“gratuitous over-abstraction”).  I guess you
+could make similar arguments about highly templated code in C++.  As you can guess, there wasn’t very much of it in the
+lowest levels of our codebase – where every allocation and instruction mattered – but in higher level code, especially
+in applications that tended to be dominated by high-latency asynchronous operations, the overheads were acceptable and
+productivity benefits high.  A strong culture around identifying and trimming excessive fat helped to ensure features
+like this were used appropriately, via code reviews, benchmarks, and aggressive static analysis checking.
+Interfaces were a challenge.
+There are just some poorly designed, inefficient patterns in the .NET Framework.  IEnumerator<T> requires two
+interface dispatches simply to extract the next item!  Compare that to C++ iterators which can compile down a pointer
+increment plus dereference.  Many of these problems could be addressed simply with better library designs.  (Our final
+design for enumeration didn’t even involve interfaces at all.)
+Plus invoking a C# interface is tricky.  Existing systems do not use pointer adjustment like
+C++ does so usually an interface dispatch requires a table search.  First a level of indirection to get to the vtable,
+then another level to find the interface table for the interface in question.  Some systems attempt to do callsite
+caching for monomorphic invocations; that is, caching the latest invocation in the hope that the same object kind passes
+through that callsite time and time again.  This requires mutable stubs, however, not to mention an incredibly complex
+system of thunks and whatnot.  In Midori, we
+never ever ever violated W^X; and we avoided mutable runtime data structures,
+because they inhibit sharing, both in terms of working set, but also amortizing TLB and data cache pressure.
+Our solution took advantage of the memory ordering model earlier.  We used so-called “fat” interface pointers.  A fat
+interface pointer was two words: the first, a pointer to the object itself; the second, a pointer to the interface
+vtable for that object.  This made conversion to interfaces slightly slower – because the interface vtable lookup had
+to happen – but for cases where you are invoking it one or more times, it came out a wash or ahead.  Usually,
+significantly.  Go does something like this, but it’s slightly different for two reasons.  First, they generate the
+interface tables on the fly, because interfaces are duck typed.  Second, fat interface pointers are subject to tearing
+and hence can violate memory safety in Go, unlike Midori thanks to our strong concurrency model.
+The finally challenge in this category was generic virtual methods, or GVMs.  To cut to the chase, we banned them.
+Even if you NGen an image in .NET, all it takes is a call to the LINQ query a.Where(...).Select(...), and you’re
+pulling in the JIT compiler.  Even in .NET Native, there is considerable runtime data structure creation, lazily, when
+this happens.  In short, there is no known way to AOT compile GVMs in a way that is efficient at runtime.  So, we didn’t
+even bother offering them.  This was a slightly annoying limitation on the programming model but I’d have done it all
+over again thanks to the efficiencies that it bought us.  It really is surprising how many GVMs are lurking in .NET.
+Statics
+I was astonished the day I learned that 10% of our code size was spent on static initialization checks.
+Many people probably don’t realize that the CLI specification offers two static initialization modes.  There
+is the default mode and beforefieldinit.  The default mode is the same as Java’s.  And it’s horrible. The static
+initializer will be run just prior to accessing any static field on that type, any static method on that type, any
+instance or virtual method on that type (if it’s a value type), or any constructor on that type.  The “when” part
+doesn’t matter as much as what it takes to make this happen; all of those places now need to be guarded with explicit
+lazy initialization checks in the resulting machine code!
+The beforefieldinit relaxation is weaker.  It guarantees the initializer will run sometime before actually accessing
+a static field on that type.  This gives the compiler a lot of leeway in deciding on this placement.  Thankfully the
+C# compiler will pick beforefieldinit automatically for you should you stick to using field initializers only.  Most
+people don’t realize the incredible cost of choosing instead to use a static constructor, however, especially for value
+types where suddenly all method calls now incur initialization guards.  It’s just the difference between:
+struct S {
+    static int Field = 42;
+}
+
+and:
+struct S {
+    static int Field;
+    static S() {
+        Field = 42;
+    }
+}
+
+Now imagine the struct has a property:
+struct S {
+    // As above...
+    int InstanceField;
+    public int Property { get { return InstanceField; } }
+}
+
+Here’s the machine code for Property if S has no static initializer, or uses beforefieldinit (automatically
+injected by C# in the the field initializer example above):
+; The struct is one word; move its value into EAX, and return it:
+8B C2                mov         eax,edx
+C3                   ret
+
+And here’s what happens if you add a class constructor:
+; Big enough to get a frame:
+56                   push        rsi
+48 83 EC 20          sub         rsp,20h
+; Load the field into ESI:
+8B F2                mov         esi,edx
+; Load up the cctor's initialization state:
+48 8D 0D 02 D6 FF FF lea         rcx,[1560h]
+48 8B 09             mov         rcx,qword ptr [rcx]
+BA 03 00 00 00       mov         edx,3
+; Invoke the conditional initialization helper:
+E8 DD E0 FF FF       call        2048
+; Move the field from ESI into EAX, and return it:
+8B C6                mov         eax,esi
+48 83 C4 20          add         rsp,20h
+5E                   pop         rsi
+
+On every property access!
+Of course, all static members still incur these checks, even if beforefieldinit is applied.
+Although C++ doesn’t suffer this same problem, it does have mind-bending initialization ordering semantics.  And, like C# statics, C++11 introduced thread-safe
+initialization, by way of the “magic statics” feature.
+We virtually eliminated this entire mess in Midori.
+I mentioned offhandedly earlier that Midori had no mutable statics.  More accurately, we extended the notion of const
+to cover any kind of object.  This meant that static values were evaluated at compile-time, written to the readonly
+segment of the resulting binary image, and shared across all processes.  More importantly for code quality, all runtime
+initialization checks were removed, and all static accesses simply replaced with a constant address.
+There were still mutable statics at the core of the system – in the kernel, for example – but these did not make their
+way up into user code.  And because they were few and far between, we did not rely on the classical C#-style lazy
+initialization checks for them.  They were manually initialized on system startup.
+As I said earlier, a 10% reduction in code size, and lots of speed improvements.  It’s hard to know exactly how much
+saved this was than a standard C# program because by the time we made the change, developers were well aware of the
+problems and liberally applied our [BeforeFieldInit] attribute all over their types, to avoid some of the overheads.
+So the 10% number is actually a lower bound on the savings we realized throughout this journey.
+Async model
+I already wrote a lot about our async model.  I won’t
+rehash all of that here.  I will reiterate one point: the compiler was key to making linked stacks work.
+In a linked stacks model, the compiler needs to insert probes into the code that check for available stack space.  In
+the event there isn’t enough to perform some operation – make a function call, dynamically allocate on the stack, etc.
+– the compiler needs to arrange for a new link to get appended, and to switch to it.  Mostly this amounts to some
+range checking, a conditional call to a runtime function, and patching up RSP.  A probe looked something like:
+; Check amount of stack space:
+    lea     rax, [rsp-250h]
+    cmp     rax, qword ptr gs:[0]
+    ja      prolog
+; If insufficient stack, link a new segment:
+    mov     eax, 10029h
+    call    ?g_LinkNewStackTrampoline
+prolog:
+; The real code goes here...
+
+Needless to say, you want to probe as little as possible, for two reasons.  First, they incur runtime expense.  Second,
+they chew up code size.  There are a few techniques we used to eliminate probes.
+The compiler of course knew how to compute stack usage of functions.  As a result, it could be smart about the amount of
+memory to probe for.  We incorporated this knowledge into our global analyzer.  We could coalesce checks after doing
+code motion and inlining.  We hoisted checks out of loops.  For the most part, we optimized for eliminating checks,
+sometimes at the expense of using a little more stack.
+The most effective technique we used to eliminate probes was to run synchronous code on a classical stack, and to teach
+our compiler to elide probes altogether for them.  This took advantage of our understanding of async in the type system.
+Switching between the classical stack and back again again amounted to twiddling RSP:
+; Switch to the classical stack:
+move    rsp, qword ptr gs:[10h]
+sub     rsp, 20h
+
+; Do some work (like interop w/ native C/C++ code)...
+
+; Now switch back:
+lea     rsp, [rbp-50h]
+
+I know Go abandoned linked stacks because of these switches.  At first they were pretty bad for us, however after about
+a man year or two of effort, the switching time faded away into the sub-0.5% noise.
+Memory ordering model
+Midori’s stance on safe concurrency had truly one
+amazing benefit: you get a sequentially consistent memory
+ordering model for free.  You may wish to read that again.  Free!
+Why is this so?  First, Midori’s process model ensured
+single-threaded execution by default.  Second, any fine-grained parallelism inside of a process was governed by a finite
+number of APIs, all of which were race-free.  The lack of races meant we could inject a fence at fork and join points,
+selectively, without a developer needing to care or know.
+Obviously this had incredible benefits to developer productivity.  The fact that Midori programmers never got bitten by
+memory reordering problems was certainly one of my proudest outcomes of the project.
+But it also meant the compiler was free to make more aggressive code motion optimizations, without any sacrifices to this
+highly productive programming model.  In other words, we got the best of both worlds.
+A select few kernel developers had to think about the memory ordering model of the underlying machine.  These were the
+people implementing the async model itself.  For that, we eliminated C#’s notion of volatile – which is utterly
+broken anyway – in favor of something more like C++
+atomics.  That model is quite nice for two reasons.  First, what kind of
+fence you need is explicit for every read and write, where it actually matters.  (ences affect the uses of a variable,
+not its declaration.  Second, the explicit model tells the compiler more information about what optimizations can or
+cannot take place, again at a specific uses, where it matters most.
+Error model
+Our error model journey was a long one and will be the topic of a future post.  In a nutshell, however, we experimented
+with two ends of the spectrum – exceptions and return codes – and lots of points in betweeen.
+Here is what we found from a code quality perspective.
+Return codes are nice because the type system tells you an error can happen.  A developer is thus forced to deal with
+them (provided they don’t ignore return values).  Return codes are also simple, and require far less “runtime magic”
+than exceptions or related mechanisms like setjmp/longjmp.  So, lots to like here.
+From a code quality persective, however, return codes suck.  They force you to execute instructions in hot paths that
+wouldn’t have otherwise been executed, including when errors aren’t even happening.  You need to return a value from
+your function – occupying register and/or stack space – and callers need to perform branches to check the results.
+Granted, we hope that these are predicted correctly, but the reality is, you’re just doing more work.
+Untyped exceptions suck when you’re trying to build a reliable system.  Operating systems need to be reliable.  Not
+knowing that there’s a hidden control flow path when you’re calling a function is, quite simply, unacceptable.  They
+also require heavier weight runtime support to unwind stacks, search for handlers, and so on.  It’s also a real pain in
+the arse to model exceptional control flow in the compiler.  (If you don’t believe me, just read through this mail
+exchange).  So, lots to hate here.
+Typed exceptions – I got used to not saying checked exceptions for fear of hitting Java nerves – address some of these
+shortcomings, but come with their own challenges.  Again, I’ll save detailed analysis for my future post.
+From a code quality perspective, exceptions can be nice.  First, you can organize code segments so that the “cold”
+handlers aren’t dirtying your ICACHE on successful pathways.  Second, you don’t need to perform any extra work during
+the normal calling convention.  There’s no wrapping of values – so no extra register or stack pressure – and there’s
+no branching in callers.  There can be some downsides to exceptions, however.  In an untyped model, you must assume
+every function can throw, which obviously inhibits your ability to move code around.
+Our model ended up being a hybrid of two things:
+
+Fail-fast for programming bugs.
+Typed exceptions for dynamically recoverable errors.
+
+I’d say the ratio of fail-fast to typed exceptions usage ended up being 10:1.  Exceptions were generally used for I/O
+and things that dealt with user data, like the shell and parsers.  Contracts were the biggest source of fail-fast.
+The result was the best possible configuration of the above code quality attributes:
+
+No calling convention impact.
+No peanut butter associated with wrapping return values and caller branching.
+All throwing functions were known in the type system, enabling more flexible code motion.
+All throwing functions were known in the type system, giving us novel EH optimizations, like turning try/finally
+blocks into straightline code when the try could not throw.
+
+A nice accident of our model was that we could have compiled it with either return codes or exceptions.  Thanks to this,
+we actually did the experiment, to see what the impact was to our system’s size and speed.  The exceptions-based system
+ended up being roughly 7% smaller and 4% faster on some key benchmarks.
+At the end, what we ended up with was the most robust error model I’ve ever used, and certainly the most performant one.
+Contracts
+As implied above, Midori’s programming language had first class contracts:
+void Push(T element)
+    requires element != null
+    ensures this.Count == old.Count + 1
+{
+        ...
+}
+
+The model was simple:
+
+By default, all contracts are checked at runtime.
+The compiler was free to prove contracts false, and issue compile-time errors.
+The compiler was free to prove contracts true, and remove these runtime checks.
+
+We had conditional compilation modes, however I will skip these for now.  Look for an upcoming post on our language.
+In the early days, we experimented with contract analyzers like MSR’s Clousot, to prove contracts.  For compile-time reasons, however, we had to
+abandon this approach.  It turns out compilers are already very good at doing simple constraint solving and propagation.
+So eventually we just modeled contracts as facts that the compiler knew about, and let it insert the checks wherever
+necessary.
+For example, the loop optimizer complete with range information above can already leverage checks like this:
+void M(int[] array, int index) {
+    if (index >= 0 && index < array.Length) {
+        int v = array[index];
+        ...
+    }
+}
+
+to eliminate the redundant bounds check inside the guarded if statement.  So why not also do the same thing here?
+void M(int[] array, int index)
+        requires index >= 0 && index < array.Length {
+    int v = array[index];
+    ...
+}
+
+These facts were special, however, when it comes to separate compilation.  A contract is part of a method’s signature,
+and our system ensured proper subtyping substitution,
+letting the compiler do more aggressive optimizations at separately compiled boundaries.  And it could do these
+optimizations faster because they didn’t depend on global analysis.
+Objects and allocation
+In a future post, I’ll describe in great detail our war with the garbage collector.  One technique that helped us win,
+however, was to aggressively reduce the size and quantity of objects a well-behaving program allocated on the heap.
+This helped with overall working set and hence made programs smaller and faster.
+The first technique here was to shrink object sizes.
+In C# and most Java VMs, objects have headers.  A standard size is a single word, that is, 4 bytes on 32-bit
+architectures and 8 bytes on 64-bit.  This is in addition to the vtable pointer.  It’s typically used by the GC to mark
+objects and, in .NET, is used for random stuff, like COM interop, locking, memozation of hash codes, and more.  (Even
+the source code calls it the “kitchen sink”.)
+Well, we ditched both.
+We didn’t have COM interop.  There was no unsafe free-threading so there was no locking (and locking on random objects
+is a bad idea anyway).  Our
+Object didn’t define a GetHashCode.  Etc.  This saved a word per object with no discernable loss in the programming
+model (actually, to the contrary, it was improved), which is nothing to shake a stick at.
+At that point, the only overhead per object was the vtable pointer.  For structs, of course there wasn’t one (unless
+they were boxed).  And we did our best to eliminate all of them.  Sadly, due to RTTI, it was difficult to be aggressive.
+I think this is another area where I’d go back and entirely upend the C# type system, to follow a more C, C++, or even
+maybe Go-like, model.  In the end, however, I think we did get to be fairly competitive with your average C++ program.
+There were padding challenges.  Switching the struct layout from C#’s current default of sequential, to our
+preferred default of auto, certainly helped.  As did optimizations like the well-known C++ empty base optimization.
+We also did aggressive escape analysis in order to more efficiently allocate objects.  If an object was found to be
+stack-confined, it was allocated on the stack instead of the heap.  Our initial implementation of this moved somewhere
+in the neighborhood of 10% static allocations from the heap to the stack, and let us be far more aggressive about
+pruning back the size of objects, eliminating vtable pointers and entire unused fields.  Given how conservative this
+analysis had to be, I was pretty happy with these results.
+We offered a hybrid between C++ references and Rust borrowing if developers wanted to give the compiler a hint while at
+the same time semantically enforcing some level of containment.  For example, say I wanted to allocate a little array to
+share with a callee, but know for sure the callee does not remember a reference to it.  This was as simple as saying:
+void Caller() {
+    Callee(new[] { 0, 1, ..., 9 });
+}
+
+void Callee(int[]& a) {
+    ... guaranteed that `a` does not escape ...
+}
+
+The compiler used the int[]& information to stack allocate the array and, often, eliminate the vtable for it
+entirely.  Coupled with the sophisticated elimination of bounds checking, this gave us something far closer to C
+performance.
+Lambdas/delegates in our system were also structs, so did not require heap allocation.  The captured display frame was
+subject to all of the above, so frequently we could stack allocate them.  As a result, the following code was heap
+allocation-free; in fact, thanks to some early optimizations, if the callee was inlined, it ran as though the actual
+lambda body was merely expanded as a sequence of instructions, with no call over head either!
+void Caller() {
+    Callee(() => ... do something ... );
+}
+
+void Callee(Action& callback) {
+    callback();
+}
+
+In my opinion, this really was the killer use case for the borrowing system.  Developers avoided lambda-based APIs in
+the early days before we had this feature for fear of allocations and inefficiency.  After doing this feature, on the
+other hand, a vibrant ecosystem of expressive lambda-based APIs flourished.
+Throughput
+All of the above have to do with code quality; that is, the size and speed of the resulting code.  Another important
+dimension of compiler performance, however, is throughput; that is, how quickly you can compile the code.  Here too
+a language like C# comes with some of its own challenges.
+The biggest challenge we encountered has less to do with the inherently safe nature of a language, and more to do with
+one very powerful feature: parametric polymorphism.  Or, said less pretentiously, generics.
+I already mentioned earlier that generics are just a convenient copy-and-paste mechanism.  And I mentioned some
+challenges this poses for code size.  It also poses a problem for throughput, however.  If a List<T> instantiation
+creates 28 types, each with its own handful of methods, that’s just more code for the compiler to deal with.  Separate
+compilation helps, however as also noted earlier, generics often flow across module boundaries.  As a result, there’s
+likely to be a non-trivial impact to compile time.  Indeed, there was.
+In fact, this is not very different from where most C++ compilers spend the bulk of their time.  In C++, it’s templates.
+More modern C++ code-bases have similar problems, due to heavy use of templated abstractions, like STL, smart pointers,
+and the like.  Many C++ code-bases are still just “C with classes” and suffer this problem less.
+As I mentioned earlier, I wish we had banished RTTI.  That would have lessened the generics problem.  But I would guess
+generics still would have remained our biggest throughput challenge at the end of the day.
+The funny thing – in a not-so-funny kind of way – is that you can try to do analysis to prune the set of generics and,
+though it is effective, this analysis takes time.  The very thing you’re trying to save.
+A metric we got in the habit of tracking was how much slower AOT compiling a program was than simply C# compiling it.
+This was a totally unfair comparison, because the C# compiler just needs to lower to MSIL whereas an AOT compler needs
+to produce machine code.  It’d have been fairer to compare AOT compiling to JIT compiling.  But no matter, doing a great
+job on throughput is especially important for a C# audience.  The expectation of productivity was quite high.  This was
+therefore the key metric we felt customers would judge us on, and so we laser-focused on it.
+In the early days, the number was ridiculously bad.  I remember it being 40x slower.  After about a year and half with
+intense focus we got it down to 3x for debug builds and 5x for optimized builds.  I was very happy with this!
+There was no one secret to achieving this.  Mostly it had to do with just making the compiler faster like you would any
+program.  Since we built the compiler using Midori’s toolchain, however – and compiled it using itself – often this
+was done by first making Midori better, which then made the the compiler faster.  It was a nice virtuous loop.  We had
+real problems with string allocations which informed what to do with strings in our programming model.  We found crazy
+generics instantiation closures which forced us to eliminate them and build tools to help find them proactively.  Etc.
+Culture
+A final word before wrapping up.  Culture was the most important aspect of what we did.  Without the culture, such an
+amazing team wouldn’t have self-selected, and wouldn’t have relentlessly pursued all of the above achievements.  I’ll
+devote an entire post to this.  However, in the context of compilers, two things helped:
+
+We measured everything in the lab.  “If it’s not in the lab, it’s dead to me.”
+We reviewed progress early and often.  Even in areas where no progress was made.  We were habitually self-critical.
+
+Every sprint, we had a so-called “CQ Review” (where CQ stands for “code quality”).  The compiler team prepared for a few
+days, by reviewing every benchmark – ranging from the lowest of microbenchmarks to compiling and booting all of Windows
+– and investigating any changes.  All expected wins were confirmed (we called this “confirming your kill”), any
+unexpected regressions were root cause analyzed (and bugs filed), and any wins that didn’t materialize were also
+analyzed and reported on so that we could learn from it.  We even stared at numbers that didn’t change, and asked
+ourselves, why didn’t they change.  Was it expected?  Do we feel bad about it and, if so, how will we change next
+sprint?  We reviewed our competitors’ latest compiler drops and monitored their rate of change.  And so on.
+This process was enormously healthy.  Everyone was encouraged to be self-critical.  This was not a “witch hunt”; it was
+an opportunity to learn as a team how to do better at achieving our goals.
+Post-Midori, I have kept this process.  I’ve been surprised at how contentious this can be with some folks.  They get
+threatened and worry their lack of progress makes them look bad.  They use “the numbers aren’t changing because that’s
+not our focus right now” as justification for getting out of the rhythm.  In my experience, so long as the code is
+changing, the numbers are changing.  It’s best to keep your eye on them lest you get caught with your pants around your
+ankles many months later when it suddenly matters most.  The discipline and constant drumbeat are the most important
+parts of these reviews, so skipping even just one can be detrimental, and hence was verboten.
+This process was as much our secret sauce as anything else was.
+Wrapping Up
+Whew, that was a lot of ground to cover.  I hope at the very least it was interesting, and I hope for the incredible
+team who built all of this that I did it at least a fraction of justice.  (I know I didn’t.)
+This journey took us over a decade, particularly if you account for the fact that both Bartok and Phoenix had existed
+for many years even before Midori formed.  Merely AOT compiling C#, and doing it well, would have netted us many of the
+benefits above.  But to truly achieve the magical native-like performance, and indeed even exceed it in certain areas,
+required some key “whole system” architectural bets.  I hope that some day we can deliver safety into the world at this
+level of performance.  Given the state of security all-up in the industry, mankind seriously needs it.
+I’ve now touched on our programming language enough that I need to go deep on it.  Tune in next time!
+
+Tweet
+
+
+
+
+
+
+
+
+
+
+
+"
+https://news.ycombinator.com/rss,Show HN: Otterkit – COBOL compiler for .NET,https://github.com/otterkit/otterkit,Comments,"
+
+
+
+
+
+
+
+
+otterkit
+
+/
+
+otterkit
+
+Public
+
+
+
+
+ 
+
+Notifications
+
+
+
+ 
+
+Fork
+    1
+
+
+
+
+ 
+
+
+          Star
+ 77
+  
+
+
+
+
+
+
+
+
+
+        Otterkit COBOL Compiler
+      
+
+
+
+
+
+otterkit.com
+
+
+License
+
+
+
+
+
+     Apache-2.0 license
+    
+
+
+
+
+
+
+77
+          stars
+ 
+
+
+
+1
+          fork
+ 
+
+
+
+ 
+
+
+          Star
+
+  
+
+
+
+
+
+ 
+
+Notifications
+
+
+
+
+
+
+
+
+
+
+
+
+Code
+
+
+
+
+
+
+
+Issues
+1
+
+
+
+
+
+
+Pull requests
+0
+
+
+
+
+
+
+Discussions
+
+
+
+
+
+
+
+Actions
+
+
+
+
+
+
+
+Projects
+0
+
+
+
+
+
+
+Security
+
+
+
+
+
+
+
+Insights
+
+
+
+ 
+ 
+
+
+
+More
+
+
+ 
+
+
+                  Code
+ 
+
+
+                  Issues
+ 
+
+
+                  Pull requests
+ 
+
+
+                  Discussions
+ 
+
+
+                  Actions
+ 
+
+
+                  Projects
+ 
+
+
+                  Security
+ 
+
+
+                  Insights
+ 
+
+
+
+
+
+
+
+otterkit/otterkit
+
+
+
+
+
+
+
+
+
+This commit does not belong to any branch on this repository, and may belong to a fork outside of the repository.
+
+
+
+
+
+
+
+
+
+
+
+main
+
+
+
+
+
+Switch branches/tags
+
+
+
+
+
+
+
+
+
+
+Branches
+Tags
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+View all branches
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+View all tags
+
+
+
+
+
+
+
+
+
+
+
+
+
+Name already in use
+
+
+
+
+
+
+
+
+
+      A tag already exists with the provided branch name. Many Git commands accept both tag and branch names, so creating this branch may cause unexpected behavior. Are you sure you want to create this branch?
+
+
+
+    Cancel
+
+    Create
+
+
+
+
+
+
+
+
+4
+branches
+
+
+
+
+
+0
+tags
+
+
+
+
+
+
+
+    Code
+ 
+
+
+
+
+
+
+
+Local
+
+
+
+ Codespaces
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  Clone
+
+
+
+
+
+            HTTPS
+ 
+            GitHub CLI
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+        Use Git or checkout with SVN using the web URL.
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+      Work fast with our official CLI.
+      Learn more.
+    
+
+
+
+
+
+
+
+
+    Open with GitHub Desktop
+
+
+
+
+
+
+    Download ZIP
+
+
+
+ 
+Sign In Required
+
+                Please
+                sign in
+                to use Codespaces.
+              
+
+
+
+Launching GitHub Desktop
+
+    If nothing happens, download GitHub Desktop and try again.
+  
+
+
+
+
+Launching GitHub Desktop
+
+    If nothing happens, download GitHub Desktop and try again.
+  
+
+
+
+
+Launching Xcode
+
+    If nothing happens, download Xcode and try again.
+  
+
+
+
+
+
+Launching Visual Studio Code
+Your codespace will open once ready.
+There was a problem preparing your codespace, please try again.
+
+
+
+
+
+
+
+
+
+
+Latest commit
+
+
+
+
+
+
+ 
+
+
+
+
+KTSnowy
+
+[Update]: Parse SEARCH statement
+
+
+
+
+        …
+      
+
+
+
+
+        eb47152
+      
+
+Jan 17, 2023
+
+
+
+
+
+[Update]: Parse SEARCH statement
+
+
+eb47152
+
+
+
+Git stats
+
+
+
+
+
+
+
+176
+
+                      commits
+                    
+
+
+
+
+
+
+
+Files
+Permalink
+
+
+
+
+  
+    Failed to load latest commit information.
+
+
+  
+ 
+
+
+Type
+Name
+Latest commit message
+Commit time
+
+
+
+
+
+
+
+
+.github/ISSUE_TEMPLATE
+
+
+
+[Update]: Update issue templates and security policy notice
+
+
+
+Nov 19, 2022
+
+
+
+
+
+
+
+
+
+Assets
+
+
+
+[Update]: Added dotnet tool and project templates Nuget packages
+
+
+
+Dec 24, 2022
+
+
+
+
+
+
+
+
+
+OtterkitTemplatePack
+
+
+
+[Update]: Update Otterkit.Templates version number
+
+
+
+Dec 24, 2022
+
+
+
+
+
+
+
+
+
+libotterkit @ a0256a7
+
+
+
+[Update/Fix]: Apply Roslyn Analyzers fixes and change suggestions
+
+
+
+Jan 4, 2023
+
+
+
+
+
+
+
+
+
+src
+
+
+
+[Update]: Parse SEARCH statement
+
+
+
+Jan 17, 2023
+
+
+
+
+
+
+
+
+
+.gitattributes
+
+
+
+Create .gitattributes
+
+
+
+Oct 13, 2022
+
+
+
+
+
+
+
+
+
+.gitignore
+
+
+
+[Update]: Added dotnet tool and project templates Nuget packages
+
+
+
+Dec 24, 2022
+
+
+
+
+
+
+
+
+
+.gitmodules
+
+
+
+[Update]: Added libotterkit as a git submodule
+
+
+
+Nov 2, 2022
+
+
+
+
+
+
+
+
+
+LICENSE
+
+
+
+[Update]: Added year and name to the LICENSE file
+
+
+
+Dec 19, 2022
+
+
+
+
+
+
+
+
+
+README.md
+
+
+
+[Update]: Add project icon to the README header
+
+
+
+Jan 11, 2023
+
+
+
+
+
+
+
+
+
+SECURITY.md
+
+
+
+[Update]: Change ""runtime"" to ""compiler"" in the security policy
+
+
+
+Nov 19, 2022
+
+
+
+
+
+
+
+
+
+THIRD-PARTY-LICENSES
+
+
+
+[Update]: Added libmpdec license notice
+
+
+
+Oct 23, 2022
+
+
+
+
+    View code
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ Otterkit COBOL Compiler
+About
+Installation
+Quick Install
+Build from Source
+Standard Acknowledgement
+
+
+
+
+
+README.md
+
+
+
+
+ Otterkit COBOL Compiler
+Otterkit is a free and open source compiler for the COBOL Programming Language on the .NET platform.
+Warning: The project is currently in pre-release, so not all of the standard has been implemented.
+About
+COBOL was created in 1959 by the CODASYL Committee (With Rear Admiral Grace Hopper as a technical consultant to the committee), its design follows Grace Hopper's belief that programs should be written in a language that is close to English. It prioritizes readability, reliability, and long-term maintenance. The language has been implemented throughout the decades on many platforms with many dialects, and the Otterkit COBOL compiler is a free and open source implementation of the ISO COBOL 2022 Standard on the .NET platform.
+Installation
+Quick Install
+Otterkit is available to install on the Nuget package manager (.NET 7 is required). To install, type into the command line:
+dotnet tool install --global Otterkit --version 1.0.15-alpha
+
+Build from Source
+First, clone the git repo from https://github.com/otterkit/otterkit.git to get the source code. To access the libotterkit submodule inside, use the --recurse-submodules --remote-submodules flag on the clone command. To run, navigate into the src folder (for the compiler, not libotterkit) and then type dotnet run into the command line.
+Standard Acknowledgement
+Any organization interested in reproducing the COBOL standard and specifications in whole or in part,
+using ideas from this document as the basis for an instruction manual or for any other purpose, is free
+to do so. However, all such organizations are requested to reproduce the following acknowledgment
+paragraphs in their entirety as part of the preface to any such publication (any organization using a
+short passage from this document, such as in a book review, is requested to mention ""COBOL"" in
+acknowledgment of the source, but need not quote the acknowledgment):
+COBOL is an industry language and is not the property of any company or group of companies, or of any
+organization or group of organizations.
+No warranty, expressed or implied, is made by any contributor or by the CODASYL COBOL Committee
+as to the accuracy and functioning of the programming system and language. Moreover, no
+responsibility is assumed by any contributor, or by the committee, in connection therewith.
+The authors and copyright holders of the copyrighted materials used herein:
+
+FLOW-MATIC® (trademark of Sperry Rand Corporation), Programming for the 'UNIVAC® I and
+II, Data Automation Systems copyrighted 1958,1959, by Sperry Rand Corporation;
+IBM Commercial Translator Form No F 28-8013, copyrighted 1959 by IBM;
+FACT, DSI 27A5260-2760, copyrighted 1960 by Minneapolis-Honeywell
+
+Have specifically authorized the use of this material in whole or in part, in the COBOL specifications.
+Such authorization extends to the reproduction and use of COBOL specifications in programming
+manuals or similar publications.
+
+
+
+
+
+
+
+
+
+About
+
+      Otterkit COBOL Compiler
+    
+
+
+
+
+
+otterkit.com
+
+
+Topics
+
+
+
+  compiler
+
+
+  dotnet
+
+
+  cobol
+
+
+
+Resources
+
+
+
+
+
+      Readme
+ 
+License
+
+
+
+
+
+     Apache-2.0 license
+    
+
+Security policy
+
+
+
+
+
+      Security policy
+    
+
+
+
+Stars
+
+
+
+
+
+77
+    stars
+
+Watchers
+
+
+
+
+
+3
+    watching
+
+Forks
+
+
+
+
+
+1
+    fork
+
+
+
+
+
+
+
+    Releases
+
+No releases published
+
+
+
+
+
+
+
+
+
+
+
+
+    Contributors 3
+
+
+
+
+
+
+
+
+KTSnowy
+Gabriel Gonçalves
+
+ 
+
+
+
+
+
+
+TriAttack238
+Sean Vo
+
+ 
+
+
+
+
+
+
+gabrielesilinic
+Gabriele Silingardi
+
+ 
+
+
+
+
+
+Languages
+
+
+
+
+
+
+
+
+
+
+C#
+100.0%
+
+
+
+
+
+
+
+
+
+
+
+"
+https://news.ycombinator.com/rss,Olympic medalists in art competitions,https://en.wikipedia.org/wiki/List_of_Olympic_medalists_in_art_competitions,Comments,"
+
+
+
+List of Olympic medalists in art competitions - Wikipedia
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+List of Olympic medalists in art competitions
+
+From Wikipedia, the free encyclopedia
+
+
+
+Jump to navigation
+Jump to search
+
+
+ Under the pseudonyms Georges Hohrod and Martin Eschbach, IOC founder Pierre de Coubertin won a gold medal in the literature category at the 1912 Summer Olympics.
+There were 146 medalists in the art competitions that were part of the Olympic Games from 1912 until 1948. These art competitions were considered an integral part of the movement by International Olympic Committee (IOC) founder Pierre de Coubertin and necessary to recapture the complete essence of the Ancient Olympic Games. Their absence before the 1912 Summer Olympics, according to journalism professor Richard Stanton, stems from Coubertin ""not wanting to fragment the focus of his new and fragile movement"".[1] Art competitions were originally planned for inclusion in the 1908 Summer Olympics but were delayed after that edition's change in venue from Rome to London following the 1906 eruption of Mount Vesuvius.[2] By the 1924 Summer Olympics they had grown to be considered internationally relevant and potentially ""a milestone in advancing public awareness of art as a whole"".[3]
+During their first three appearances, the art competitions were grouped into five broad categories: architecture, literature, music, painting, and sculpture. The Dutch Organizing Committee for the 1928 Summer Olympics split these into subcategories in the hopes of increasing participation.[4] Although it was a successful strategy, the 1932 Summer Olympics eliminated several of these subcategories, which led to fewer entries in the broader categories.[5] For the 1936 Summer Olympics, the German government proposed the addition of a film contest to the program, which was rejected.[6]
+Following a final appearance at the 1948 Summer Olympics, art competitions were removed from the Olympic program. Planners of the 1952 Summer Olympics opposed their inclusion on logistical grounds, claiming that the lack of an international association for the event meant that the entire onus of facilitation was placed on the local organizing committee.[7] Concerns were also raised about the professionalism of the event, since only amateurs were allowed to participate in the sporting tournaments,[8] and the growing commercialization of the competitions, as artists had been permitted to sell their submissions during the course of the Games since 1928. In 1952 an art festival and exhibition was held concurrent with the Games, a tradition that has been maintained in all subsequent Summer Olympics.[9]
+The IOC does not track medalists in Olympic art competitions in its database and thus the prize winners are only officially recorded in the original Olympic reports. Judges were not required to distribute first, second, and third place awards for every category, and thus certain events lack medalists in these placements. Since participants were allowed multiple submissions, it was also possible for artists to win more than one in a single event, as Alex Diggelmann of Switzerland did in the graphic arts category of the 1948 edition.[10] Diggelmann is tied with Denmark's Josef Petersen, who won second prize three times in literature, for the number of medals captured in the art competitions. Luxembourg's Jean Jacoby is the only individual to win two gold medals, doing so in painting in 1924 and 1928. Of the 146 medalists, 11 were women and only Finnish author Aale Tynni was awarded gold. Germany was the most successful nation, with eight gold, seven silver, and nine bronze medals,[11] although one was won by Coubertin himself, a Frenchman. He submitted his poem Ode to Sport under the pseudonyms Georges Hohrod and Martin Eschbach, as if it were a joint-entry, and won first prize in the 1912 literature category. The original report credits this medal to Germany.[12] Two individuals, Walter W. Winans[13] and Alfréd Hajós, won medals in both athletic and art competitions.[14]
+
+Contents
+
+1 Architecture
+
+1.1 Mixed architecture
+1.2 Mixed architecture, architectural designs
+1.3 Town planning
+
+
+2 Literature
+
+2.1 Mixed literature
+2.2 Dramatic works
+2.3 Epic works
+2.4 Lyric and speculative works
+
+
+3 Music
+
+3.1 Mixed music
+3.2 Compositions for orchestra
+3.3 Solo and chorus compositions
+3.4 Instrumental and chamber
+3.5 Vocal
+
+
+4 Painting
+
+4.1 Mixed painting
+4.2 Drawings and water colors
+4.3 Engravings and etchings
+4.4 Graphic works
+4.5 Paintings
+
+
+5 Sculpturing
+
+5.1 Mixed sculpturing
+5.2 Medals
+5.3 Medals and plaques
+5.4 Reliefs and medallions
+5.5 Reliefs
+5.6 Statues
+
+
+6 Statistics
+
+6.1 Multiple medalists
+6.2 Medals per year
+
+
+7 References
+
+7.1 General
+7.2 Specific
+
+
+8 Notes
+
+
+Architecture[edit]
+Mixed architecture[edit]
+ Alfréd Hajós was one of two individuals to win medals in sport and art competitions.
+
+Olympic medalists in mixed architecture
+
+
+Games
+
+Gold
+
+Silver
+
+Bronze
+
+
+1912 Stockholm
+
+ Eugène-Edouard Monod & Alphonse Laverrière (SUI)Building-plan of a modern Stadium
+
+none awarded
+
+none awarded
+
+
+1920 Antwerp
+
+none awarded
+
+ Holger Sinding-Larsen (NOR)Project pour une Ecole de Gymnastique
+
+none awarded
+
+
+1924 Paris
+
+none awarded
+
+ Alfréd Hajós & Dezső Lauber (HUN)Plan d'un Stade
+
+ Julien Médecin (MON)Stade pour Monte-Carlo
+
+Mixed architecture, architectural designs[edit]
+ Jan Wils, 1928 gold medalist in architectural designs
+
+Olympic medalists in mixed architecture, architectural designs
+
+
+Games
+
+Gold
+
+Silver
+
+Bronze
+
+
+1928 Amsterdam
+
+ Jan Wils (NED)Olympic Stadium in Amsterdam
+
+ Ejnar Mindedal Rasmussen (DEN)Swimming pool at Ollerup
+
+ Jacques Lambert (FRA)Stadium at Versailles
+
+
+1932 Los Angeles
+
+ Gustave Saacké, Pierre Bailly, & Pierre Montenot (FRA)Design for a ""Cirque pour Toros""
+
+ John Russell Pope (USA)Design for the Payne Whitney Gymnasium, New Haven, Conn.
+
+ Richard Konwiarz (GER)Design for a ""Schlesierkampfbahn"" in the Sport Park of Breslau
+
+
+1936 Berlin
+
+ Hermann Kutschera (AUT)Skiing Stadium
+
+ Werner March[note 1] (GER)Reich Sport Field
+
+ Hermann Stiegholzer & Herbert Kastinger (AUT)Sporting Center in Vienna
+
+
+1948 London
+
+ Adolf Hoch (AUT)Skisprungschanze auf dem Kobenzl
+
+ Alfred Rinesch (AUT)Watersports Centre in Carinthia
+
+ Nils Olsson (SWE)Baths and Sporting Hall for Gothenburg
+
+Town planning[edit]
+ Charles Downing Lay, 1936 silver medalist in designs for municipal planning
+
+Olympic medalists in town planning
+
+
+Games
+
+Gold
+
+Silver
+
+Bronze
+
+
+1928 Amsterdam
+
+ Alfred Hensel (GER)Stadium at Nuremberg
+
+ Jacques Lambert (FRA)Stadium at Versailles
+
+ Max Laeuger (GER)Municipal park at Hamburg
+
+
+1932 Los Angeles
+
+ John Hughes (GBR)Design for a Sports and Recreation Center with Stadium, for the City of Liverpool
+
+ Jens Klemmensen (DEN)Design for a Stadium and Public Park
+
+ André Verbeke (BEL)Design for a ""Maraton Park""
+
+
+1936 Berlin[15]
+
+ Werner March & Walter March (GER)Reich Sport Field
+
+ Charles Downing Lay (USA)Marine Park, Brooklyn
+
+ Theo Nussbaum (GER)Municipal Planning and Sporting Centre in Cologne
+
+
+1948 London
+
+ Yrjö Lindegren (FIN)The Centre of Athletics in Varkaus, Finland.
+
+ Werner Schindler & Edy Knupfer (SUI)Swiss Federal Sports and Gymnastics Training Centre
+
+ Ilmari Niemeläinen (FIN)The Athletic Centre in Kemi, Finland.
+
+Literature[edit]
+Mixed literature[edit]
+ Oliver St. John Gogarty, 1924 bronze medalist in literature
+ Kazimierz Wierzyński, 1928 gold medalist in lyric and speculative works
+
+Olympic medalists in mixed literature
+
+
+Games
+
+Gold
+
+Silver
+
+Bronze
+
+
+1912 Stockholm
+
+ Georges Hohrod & Martin Eschbath (GER)Ode to sport
+
+none awarded
+
+none awarded
+
+
+1920 Antwerp
+
+ Raniero Nicolai (ITA)Canzoni Olimpioniche
+
+ Theodore Andrea Cook (GBR)Olympic Games of Antwerp
+
+ Maurice Bladel (BEL)La Louange des Dieux
+
+
+1924 Paris
+
+ Géo-Charles (FRA)Jeux Olympiques
+
+ Margaret Stuart (GBR)Sword Songs
+
+ Charles Gonnet (FRA)Vers le Dieu d’Olympie
+
+
+ Josef Petersen (DEN) Euryale
+
+ Oliver St. John Gogarty (IRL)Ode pour les Jeux de Tailteann
+
+
+1932 Los Angeles
+
+ Paul Bauer (GER)Am Kangehenzonga
+
+ Josef Petersen (DEN)The Argonauts
+
+none awarded
+
+Dramatic works[edit]
+
+Olympic medalists in dramatic works
+
+
+Games
+
+Gold
+
+Silver
+
+Bronze
+
+
+1928 Amsterdam
+
+none awarded
+
+ Lauro De Bosis (ITA)Icaro
+
+none awarded
+
+Epic works[edit]
+
+Olympic medalists in epic works
+
+
+Games
+
+Gold
+
+Silver
+
+Bronze
+
+
+1928 Amsterdam
+
+ Ferenc Mező (HUN)L’histoire des Jeux Olympiques
+
+ Ernst Weiss (GER)Boetius von Orlamünde
+
+ Carel Scharten & Margo Scharten-Antink (NED)De Nar uit de Maremmen
+
+
+1936 Berlin
+
+ Urho Karhumäki (FIN)Avoveteen
+
+ Wilhelm Ehmer (GER)For the Top of the World
+
+ Jan Parandowski (POL)Dysk Olimijski
+
+
+1948 London
+
+ Giani Stuparich (ITA)La Grotta
+
+ Josef Petersen (DEN)The Olympic Champion
+
+ Éva Földes (HUN)The Well of Youth
+
+Lyric and speculative works[edit]
+
+Olympic medalists in lyric and speculative works
+
+
+Games
+
+Gold
+
+Silver
+
+Bronze
+
+
+1928 Amsterdam
+
+ Kazimierz Wierzyński (POL)Laur Olimpijski
+
+ Rudolf G. Binding (GER)Reitvorschrift fur eine Geliebte
+
+ Johannes Weltzer (DEN)Symphonia Heroïca
+
+
+1936 Berlin[16]
+
+ Felix Dhünen-Sondinger (GER)The Runner
+
+ Bruno Fattori (ITA)Profili Azzuri
+
+ Hans Stoiber (AUT)The Discus
+
+
+1948 London[17]
+
+ Aale Tynni (FIN)Laurel of Hellas
+
+ Ernst van Heerden (RSA)Six Poems
+
+ Gilbert Prouteau (FRA)Rythme du Stade
+
+Music[edit]
+Mixed music[edit]
+ Josef Suk, 1932 silver medalist in music
+
+Olympic medalists in mixed music
+
+
+Games
+
+Gold
+
+Silver
+
+Bronze
+
+
+1912 Stockholm
+
+ Riccardo Barthelemy (ITA)Triumphal March
+
+none awarded
+
+none awarded
+
+
+1920 Antwerp
+
+ Georges Monier (BEL)Olympique
+
+ Oreste Riva (ITA)Epinicion
+
+none awarded
+
+
+1932 Los Angeles
+
+none awarded
+
+ Josef Suk (TCH)Into a New Life
+
+none awarded
+
+Compositions for orchestra[edit]
+ Werner Egk, 1936 gold medalist in compositions for orchestra
+
+Olympic medalists in compositions for orchestra
+
+
+Games
+
+Gold
+
+Silver
+
+Bronze
+
+
+1928 Amsterdam
+
+none awarded
+
+none awarded
+
+ Rudolph Simonsen (DEN)Symphony No. 2 ""Hellas""
+
+
+1936 Berlin
+
+ Werner Egk (GER)Olympic Festive Music
+
+ Lino Liviabella (ITA)The Victor
+
+ Jaroslav Křička (TCH)Mountain Suite
+
+
+1948 London[18]
+
+ Zbigniew Turski (POL)Olympic Symphony
+
+ Kalervo Tuukkanen (FIN)Karhunpyynti
+
+ Erling Brene (DEN)Viguer
+
+Solo and chorus compositions[edit]
+ Kurt Thomas, 1936 silver medalist in solo and chorus compositions
+
+Olympic medalists in solo and chorus compositions
+
+
+Games
+
+Gold
+
+Silver
+
+Bronze
+
+
+1936 Berlin
+
+ Paul Höffer (GER)Olympic Vow
+
+ Kurt Thomas (GER)Olympic Cantata, 1936
+
+ Harald Genzmer (GER)The Runner
+
+Instrumental and chamber[edit]
+
+Olympic medalists in the instrumental and chamber event
+
+
+Games
+
+Gold
+
+Silver
+
+Bronze
+
+
+1948 London
+
+none awarded
+
+ Jean Weinzweig (CAN)Divertimenti for Solo Flute and Strings
+
+ Sergio Lauricella (ITA)Toccata per Pianoforte
+
+Vocal[edit]
+
+Olympic medalists in the vocal event
+
+
+Games
+
+Gold
+
+Silver
+
+Bronze
+
+
+1948 London
+
+none awarded
+
+none awarded
+
+ Gabriele Bianchi (ITA)Inno Olimpionico
+
+Painting[edit]
+Mixed painting[edit]
+ Jack Butler Yeats, 1924 silver medalist in painting
+
+Olympic medalists in mixed painting
+
+
+Games
+
+Gold
+
+Silver
+
+Bronze
+
+
+1912 Stockholm
+
+ Carlo Pellegrini (ITA)Winter Sports
+
+none awarded
+
+none awarded
+
+
+1920 Antwerp
+
+none awarded
+
+ Henriette Brossin de Mère-de Polanska (FRA)L'Elan
+
+ Alfred Ost (BEL)Joueur de Football
+
+
+1924 Paris
+
+ Jean Jacoby (LUX)Etude de Sport
+
+ Jack Butler Yeats (IRL)Natation
+
+ Johan van Hell (NED)Patineurs
+
+Drawings and water colors[edit]
+ Rugby by Jean Jacoby, the winning entry in the 1928 drawings category
+
+Olympic medalists in drawing and water colors
+
+
+Games
+
+Gold
+
+Silver
+
+Bronze
+
+
+1928 Amsterdam[19]
+
+ Jean Jacoby (LUX)Rugby
+
+ Alex Virot (FRA)Gestes de Football
+
+ Władysław Skoczylas (POL)Posters
+
+
+1932 Los Angeles
+
+ Lee Blair (USA)Rodeo
+
+ Percy Crosby (USA)Jackknife
+
+ Gerhard Westermann (NED)Horseman
+
+
+1936 Berlin
+
+none awarded
+
+ Romano Dazzi (ITA)Four Sketches for Frescoes
+
+ Sujaku Suzuki (JPN)Classical Horse Racing in Japan
+
+Engravings and etchings[edit]
+
+Olympic medalists in engravings and etchings
+
+
+Games
+
+Gold
+
+Silver
+
+Bronze
+
+
+1948 London
+
+ Albert Decaris (FRA)Swimming Pool
+
+ John Copley (GBR)Polo Players
+
+ Walter Battiss (RSA)Seaside Sport
+
+Graphic works[edit]
+ William Nicholson, 1928 gold medalist in graphic works
+
+Olympic medalists in graphic works
+
+
+Games
+
+Gold
+
+Silver
+
+Bronze
+
+
+1928 Amsterdam
+
+ William Nicholson (GBR)Un Almanach de douze Sports
+
+ Carl Moos (SUI)Posters
+
+ Max Feldbauer (GER)Mailcoach
+
+
+1932 Los Angeles[20]
+
+ Joseph Golinkin (USA)Leg Scissors
+
+ Janina Konarska (POL)Stadium
+
+ Joachim Karsch (GER)Stabwechsel
+
+
+1936 Berlin[21]
+
+ Alex Diggelmann (SUI)Arosa I Placard
+
+ Alfred Hierl (GER)International Automobile Race on the Avis
+
+ Stanisław Ostoja-Chrostowski (POL)Yachting Club Certificate
+
+
+1948 London[22]
+
+none awarded
+
+ Alex Diggelmann (SUI)World Championship for Cycling Poster
+
+ Alex Diggelmann (SUI)World Championship for Ice Hockey Poster
+
+Paintings[edit]
+ David Wallin, 1932 gold medalist in painting
+
+Olympic medalists in paintings
+
+
+Games
+
+Gold
+
+Silver
+
+Bronze
+
+
+1928 Amsterdam
+
+ Isaac Israëls (NED)Cavalier Rouge
+
+ Laura Knight (GBR)Boxeurs
+
+ Walther Klemm (GER)Patinage
+
+
+1932 Los Angeles
+
+ David Wallin (SWE)At the Seaside of Arild
+
+ Ruth Miller (USA)Struggle
+
+none awarded
+
+
+1936 Berlin
+
+none awarded
+
+ Rudolf Eisenmenger (AUT)Runner at the Finishing Line
+
+ Ryuji Fujita (JPN)Ice Hockey
+
+
+1948 London
+
+ Alfred Thomson (GBR)London Amateur Championships
+
+ Giovanni Stradone (ITA)Le Pistard
+
+ Letitia Marion Hamilton (IRL)Meath Hunt Point-to-Point Races
+
+Sculpturing[edit]
+Mixed sculpturing[edit]
+ Walter W. Winans was one of two individuals to win medals in sport and art competitions.
+ Frederick William MacMonnies, 1932 silver medalist in medals and reliefs
+ Mahonri Young, 1932 gold medalist in statues
+
+Olympic medalists in mixed sculpturing
+
+
+Games
+
+Gold
+
+Silver
+
+Bronze
+
+
+1912 Stockholm
+
+ Walter W. Winans (USA)An American trotter
+
+ Georges Dubois (FRA)Model of the entrance to a modern Stadium
+
+none awarded
+
+
+1920 Antwerp
+
+ Albéric Collin (BEL)La Force
+
+ Simon Goossens (BEL)Les Patineurs
+
+ Alphons De Cuyper (BEL)Lanceur de Poids et Coureur
+
+
+1924 Paris
+
+ Konstantinos Dimitriadis (GRE)Discobole Finlandais
+
+ Frantz Heldenstein (LUX)Vers l'olympiade
+
+ Jean René Gauguin (DEN)Le Boxeur
+
+
+ Claude-Léon Mascaux (FRA)Cadre de Medailles
+
+
+Medals[edit]
+
+Olympic medalists in medals
+
+
+Games
+
+Gold
+
+Silver
+
+Bronze
+
+
+1936 Berlin
+
+none awarded
+
+ Luciano Mercante (ITA)Medals
+
+ Josue Dupon (BEL)Equestrian Medals
+
+Medals and plaques[edit]
+
+Olympic medalists in medals and plaques
+
+
+Games
+
+Gold
+
+Silver
+
+Bronze
+
+
+1948 London
+
+none awarded
+
+ Oskar Thiede (AUT)Eight Sports Plaques
+
+ Edwin Grienauer (AUT)Prize Rowing Trophy
+
+Reliefs and medallions[edit]
+
+Olympic medalists in reliefs and medallions
+
+
+Games
+
+Gold
+
+Silver
+
+Bronze
+
+
+1928 Amsterdam
+
+ Edwin Grienauer (AUT)Médailles
+
+ Chris van der Hoef (NED)Médaille pour les Jeux Olympiques
+
+ Edwin Scharff (GER)Plaquette
+
+
+1932 Los Angeles[23]
+
+ Józef Klukowski (POL)Sport Sculpture II
+
+ Frederick William MacMonnies (USA)Lindbergh Medal
+
+ R. Tait McKenzie (CAN)Shield of the Athletes
+
+Reliefs[edit]
+
+Olympic medalists in reliefs
+
+
+Games
+
+Gold
+
+Silver
+
+Bronze
+
+
+1936 Berlin
+
+ Emil Sutor (GER)Hurdlers
+
+ Józef Klukowski (POL)Ball
+
+none awarded
+
+
+1948 London
+
+none awarded
+
+none awarded
+
+ Rosamund Fletcher (GBR)The End of the Covert
+
+Statues[edit]
+
+Olympic medalists in statues
+
+
+Games
+
+Gold
+
+Silver
+
+Bronze
+
+
+1928 Amsterdam
+
+ Paul Landowski (FRA)Boxer
+
+ Milo Martin (SUI)Athlète au repos
+
+ Renée Sintenis (GER)Footballeur
+
+
+1932 Los Angeles
+
+ Mahonri Young (USA)The Knockdown
+
+ Miltiades Manno (HUN)Wrestling
+
+ Jakub Obrovský (TCH)Odysseus
+
+
+1936 Berlin
+
+ Farpi Vignoli (ITA)Sulky Driver
+
+ Arno Breker (GER)Decathlon Athlete
+
+ Stig Blomberg (SWE)Wrestling Youths
+
+
+1948 London
+
+ Gustaf Nordahl (SWE)Homage to Ling
+
+ Chintamoni Kar (GBR)The Stag
+
+ Hubert Yencesse (FRA)Nageuse
+
+Statistics[edit]
+Multiple medalists[edit]
+
+Multiple medalists in Olympic art competitions
+
+
+Athlete
+
+Nation
+
+Olympics
+
+Gold
+
+Silver
+
+Bronze
+
+Total
+
+
+Alex Diggelmann
+
+ Switzerland (SUI)
+
+1936–1948
+
+1
+1
+1
+3
+
+
+Josef Petersen
+
+ Denmark (DEN)
+
+1924, 1932, 1948
+
+0
+3
+0
+3
+
+
+Jean Jacoby
+
+ Luxembourg (LUX)
+
+1924–1936
+
+2
+0
+0
+2
+
+
+Józef Klukowski
+
+ Poland (POL)
+
+1932–1936
+
+1
+1
+0
+2
+
+
+Werner March
+
+ Germany (GER)
+
+1928–1936
+
+1
+1
+0
+2
+
+
+Edwin Grienauer
+
+ Austria (AUT)
+
+1928, 1948
+
+1
+0
+1
+2
+
+
+Jacques Lambert
+
+ France (FRA)
+
+1928
+
+0
+1
+1
+2
+
+Medals per year[edit]
+
+Medals won by country by year
+
+
+Nation
+
+1912
+
+1920
+
+1924
+
+1928
+
+1932
+
+1936
+
+1948
+
+Total
+
+
+ Austria (AUT)
+
+–
+–
+–
+1
+–
+4
+4
+9
+
+
+ Belgium (BEL)
+
+–
+6
+–
+–
+1
+1
+–
+8
+
+
+ Canada (CAN)
+
+–
+–
+–
+–
+1
+–
+1
+2
+
+
+ Denmark (DEN)
+
+–
+–
+2
+3
+2
+–
+2
+9
+
+
+ Finland (FIN)
+
+–
+–
+–
+–
+–
+1
+4
+5
+
+
+ France (FRA)
+
+1
+1
+3
+2
+3
+–
+3
+13
+
+
+ Great Britain (GBR)
+
+–
+1
+1
+2
+1
+–
+4
+9
+
+
+ Germany (GER)
+
+1
+–
+–
+8
+3
+12
+–
+24
+
+
+ Greece (GRE)
+
+–
+–
+1
+–
+–
+–
+–
+1
+
+
+ Hungary (HUN)
+
+–
+–
+1
+1
+1
+–
+1
+4
+
+
+ Ireland (IRL)
+
+–
+–
+2
+–
+–
+–
+1
+3
+
+
+ Italy (ITA)
+
+2
+2
+–
+1
+–
+5
+4
+14
+
+
+ Japan (JPN)
+
+–
+–
+–
+–
+–
+2
+–
+2
+
+
+ Luxembourg (LUX)
+
+–
+–
+2
+1
+–
+–
+–
+3
+
+
+ Monaco (MON)
+
+–
+–
+1
+–
+–
+–
+–
+1
+
+
+ Netherlands (NED)
+
+–
+–
+1
+4
+1
+–
+–
+6
+
+
+ Norway (NOR)
+
+–
+1
+–
+–
+–
+–
+–
+1
+
+
+ Poland (POL)
+
+–
+–
+–
+2
+2
+3
+1
+8
+
+
+ South Africa (RSA)
+
+–
+–
+–
+–
+–
+–
+2
+2
+
+
+ Switzerland (SUI)
+
+1
+–
+–
+2
+–
+1
+3
+7
+
+
+ Sweden (SWE)
+
+–
+–
+–
+–
+1
+1
+2
+4
+
+
+ Czechoslovakia (TCH)
+
+–
+–
+–
+–
+2
+1
+–
+3
+
+
+ United States (USA)
+
+1
+–
+–
+–
+7
+1
+–
+9
+
+
+References[edit]
+General[edit]
+""The Official Report of the Olympic Games of Stockholm 1912"" (PDF). Stockholm: Swedish Olympic Committee. 1913: 808–809. Archived from the original (PDF) on 2014-02-07. Retrieved 2017-05-14. {{cite journal}}: Cite journal requires |journal= (help)
+""Olympic Games: Antwerp 1920: Official Report"" (PDF) (in French). Brussels: Belgian Olympic Committee. 1957: 80. Archived from the original (PDF) on 2018-10-07. Retrieved 2017-05-14. {{cite journal}}: Cite journal requires |journal= (help)
+""Les Jeux de la VIIIE Olympiade"" (PDF) (in French). Paris: Comite Olympique Francais. 1924: 605–612. Archived from the original (PDF) on 2016-08-25. Retrieved 2017-05-14. {{cite journal}}: Cite journal requires |journal= (help)
+""Official Report of the Olympic Games of 1928 Celebrated at Amsterdam"" (PDF). Amsterdam: Netherlands Olympic Committee. 1928: 892–901. Archived from the original (PDF) on 2013-09-23. Retrieved 2017-05-14. {{cite journal}}: Cite journal requires |journal= (help)
+""The Games of the Xth Olympiad Los Angeles 1932"" (PDF). Los Angeles: Xth Olympiade Committee of the Games of Los Angeles. 1933: 756–765. Archived from the original (PDF) on 2016-08-19. Retrieved 2017-05-14. {{cite journal}}: Cite journal requires |journal= (help)
+""The XIth Olympic Games Berlin, 1936: Official Report Volume II"" (PDF). Berlin: Organisationskomitee Fur Die XI. Olympiade Berlin 1936 E.V. 1937: 1119–1123. Archived from the original (PDF) on 2017-01-30. Retrieved 2017-05-14. {{cite journal}}: Cite journal requires |journal= (help)
+""The Official Report of the Organising Committee for the XIV Olympiad London 1948"" (PDF). London: The Organising Committee for the XIV Olympiad. 1951: 535–537. Archived from the original (PDF) on 2013-09-27. Retrieved 2017-05-14. {{cite journal}}: Cite journal requires |journal= (help)
+Specific[edit]
+
+
+^ Stanton, Richard (2000). The Forgotten Olympic Art Competitions (1st ed.). Victoria: Trafford Publishing. p. 3. ISBN 1552126064.
+
+^ Stanton, p. 18.
+
+^ Stanton, p. 69.
+
+^ Stanton, p. 95.
+
+^ Stanton, p. 146.
+
+^ Stanton, p. 158.
+
+^ Stanton, p. 210.
+
+^ Stanton, p. 211.
+
+^ Stanton, p. 213.
+
+^ ""The Official Report of the Organising Committee for the XIV Olympiad London 1948"" (PDF). London: The Organising Committee for the XIV Olympiad. 1951: 536. Archived from the original (PDF) on 2016-03-03. Retrieved 2012-03-06. {{cite journal}}: Cite journal requires |journal= (help)
+
+^ Gjerde, Arild; Jeroen Heijmans; Bill Mallon; Hilary Evans (2011). ""Art Competitions"". Olympics. Sports Reference.com. Archived from the original on 2012-05-14. Retrieved 2012-03-07.
+
+^ Gjerde, Arild; Jeroen Heijmans; Bill Mallon; Hilary Evans (2011). ""Pierre, Baron de Coubertin Biography and Olympic Results"". Olympics. Sports Reference.com. Archived from the original on 2012-05-04. Retrieved 2012-03-07.
+
+^ Gjerde, Arild; Jeroen Heijmans; Bill Mallon; Hilary Evans (2011). ""Walter Winans Biography and Olympic Results"". Olympics. Sports Reference.com. Archived from the original on 2012-10-18. Retrieved 2012-03-08.
+
+^ Gjerde, Arild; Jeroen Heijmans; Bill Mallon; Hilary Evans (2011). ""Alfréd Hajós Biography and Olympic Results"". Olympics. Sports Reference.com. Archived from the original on 2012-11-01. Retrieved 2012-03-08.
+
+^ In 1936, this event was listed as ""Designs for Municipal Planning"". ""The XIth Olympic Games Berlin, 1936: Official Report Volume II"" (PDF). Berlin: Organisationskomitee Fur Die XI. Olympiade Berlin 1936 E.V. 1937: 1119. Archived from the original (PDF) on 2014-03-02. Retrieved 2017-05-14. {{cite journal}}: Cite journal requires |journal= (help)
+
+^ In 1936, this event was listed as ""Lyric Works"". ""The XIth Olympic Games Berlin, 1936: Official Report Volume II"" (PDF). Berlin: Organisationskomitee Fur Die XI. Olympiade Berlin 1936 E.V. 1937: 1122. Archived from the original (PDF) on 2014-03-02. Retrieved 2017-05-14. {{cite journal}}: Cite journal requires |journal= (help)
+
+^ In 1948, this event was listed as ""Lyrics"". ""The Official Report of the Organising Committee for the XIV Olympiad London 1948"" (PDF). London: The Organising Committee for the XIV Olympiad. 1951: 536. Archived from the original (PDF) on 2016-09-12. Retrieved 2017-05-14. {{cite journal}}: Cite journal requires |journal= (help)
+
+^ In 1948, this event was listed as ""Choral and Orchestra"". ""The Official Report of the Organising Committee for the XIV Olympiad London 1948"" (PDF). London: The Organising Committee for the XIV Olympiad. 1951: 537. Archived from the original (PDF) on 2016-09-12. Retrieved 2017-05-14. {{cite journal}}: Cite journal requires |journal= (help)
+
+^ In 1928, this event was listed as ""Drawings"". ""Official Report of the Olympic Games of 1928 Celebrated at Amsterdam"" (PDF). Amsterdam: Netherlands Olympic Committee. 1928: 898. Retrieved 2017-05-28. {{cite journal}}: Cite journal requires |journal= (help)
+
+^ In 1932, this event was listed as ""Prints"".""The Games of the Xth Olympiad Los Angeles 1932"" (PDF). Los Angeles: Xth Olympiade Committee of the Games of Los Angeles. 1933: 758. Archived from the original (PDF) on 2014-03-02. Retrieved 2017-05-14. {{cite journal}}: Cite journal requires |journal= (help)
+
+^ In 1936, this event was listed as ""Commercial Graphic Art"". ""The XIth Olympic Games Berlin, 1936: Official Report Volume II"" (PDF). Berlin: Organisationskomitee Fur Die XI. Olympiade Berlin 1936 E.V. 1937: 1122. Archived from the original (PDF) on 2014-03-02. Retrieved 2017-05-14. {{cite journal}}: Cite journal requires |journal= (help)
+
+^ In 1948, this event was listed as ""Applied Art and Crafts"". ""The Official Report of the Organising Committee for the XIV Olympiad London 1948"" (PDF). London: The Organising Committee for the XIV Olympiad. 1951: 535–537. Archived from the original (PDF) on 2016-09-12. Retrieved 2017-05-14. {{cite journal}}: Cite journal requires |journal= (help)
+
+^ In 1932, this event was listed as ""Medals and Reliefs"". ""The Games of the Xth Olympiad Los Angeles 1932"" (PDF). Los Angeles: Xth Olympiade Committee of the Games of Los Angeles. 1933: 758. Archived from the original (PDF) on 2014-03-02. Retrieved 2017-05-14. {{cite journal}}: Cite journal requires |journal= (help)
+
+
+Notes[edit]
+
+
+^ Data provided by Bill Mallon to Sports Reference.com lists Walter March as a co-medalist.
+
+
+vteArt competitions at the Summer Olympics
+1912
+1920
+1924
+1928
+1932
+1936
+1948
+
+List of medalists
+
+vteLists of Olympic medalistsSummer sports
+Archery
+Artistic swimming
+Athletics
+men
+women
+mixed
+Badminton
+Baseball
+Basketball
+Boxing
+Canoeing
+men
+women
+Cycling
+men
+women
+Diving
+Equestrian
+Fencing
+men
+women
+Field hockey
+Football
+Golf
+Gymnastics
+men
+women
+Handball
+men
+women
+Judo
+Karate
+Modern pentathlon
+Rowing
+men
+women
+Rugby
+Rugby sevens
+Sailing
+by discipline
+by class
+Shooting
+Skateboarding
+Sport climbing
+Softball
+Surfing
+Swimming
+men
+women
+mixed
+Table tennis
+Taekwondo
+Tennis
+Triathlon
+Volleyball
+Water polo
+men
+women
+Weightlifting
+Wrestling
+freestyle
+Greco-Roman
+Winter sports
+Alpine skiing
+Biathlon
+Bobsleigh
+Cross-country skiing
+Curling
+Figure skating
+Freestyle skiing
+Ice hockey
+Luge
+Nordic combined
+Short track speed skating
+Skeleton
+Ski jumping
+Snowboarding
+Speed skating
+Discontinued sports
+Basque pelota
+Cricket
+Croquet
+Jeu de paume
+Lacrosse
+Polo
+Rackets
+Roque
+Tug of war
+Water motorsports
+Unofficial sports
+Art competitions
+
+Olympic sports
+Olympic medal
+All-time Olympic Games medal table
+ Olympic Games portal
+
+
+
+
+
+
+
+Retrieved from ""https://en.wikipedia.org/w/index.php?title=List_of_Olympic_medalists_in_art_competitions&oldid=1123623812""
+Categories: Lists of Summer Olympic medalists by sportArts awardsArchitecture awardsArt competitions at the Olympic GamesOlympic medalists in art competitionsHidden categories: CS1 errors: missing periodicalArticles with short descriptionShort description is different from WikidataArticles with hCardsCS1 French-language sources (fr)Featured lists
+
+
+
+Navigation menu
+
+
+
+Personal tools
+
+
+Not logged inTalkContributionsCreate accountLog in
+
+
+
+
+
+Namespaces
+
+
+ArticleTalk
+
+
+
+
+
+English
+
+
+
+
+
+
+
+
+
+Views
+
+
+ReadEditView history
+
+
+
+
+
+More
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Navigation
+
+
+Main pageContentsCurrent eventsRandom articleAbout WikipediaContact usDonate
+
+
+
+
+Contribute
+
+
+HelpLearn to editCommunity portalRecent changesUpload file
+
+
+
+
+Tools
+
+
+What links hereRelated changesUpload fileSpecial pagesPermanent linkPage informationCite this pageWikidata item
+
+
+
+
+Print/export
+
+
+Download as PDFPrintable version
+
+
+
+
+Languages
+
+
+Français日本語Suomi
+Edit links
+
+
+
+
+
+
+ This page was last edited on 24 November 2022, at 19:18 (UTC).
+Text is available under the Creative Commons Attribution-ShareAlike License 3.0;
+additional terms may apply.  By using this site, you agree to the Terms of Use and Privacy Policy. Wikipedia® is a registered trademark of the Wikimedia Foundation, Inc., a non-profit organization.
+
+
+Privacy policy
+About Wikipedia
+Disclaimers
+Contact Wikipedia
+Mobile view
+Developers
+Statistics
+Cookie statement
+
+
+
+
+
+
+
+
+
+
+"
+https://news.ycombinator.com/rss,Elliptic Curves: The Great Mystery,https://www.cantorsparadise.com/elliptic-curves-the-great-mystery-61599a93c61d,Comments,"Published inCantor’s ParadiseKasper MüllerFollowJan 14·11 min read·Member-onlySaveElliptic Curves: The Great MysteryA surprisingly beautiful blend of algebra, geometry, and number theoryImage from Wikimedia CommonsThese curves defined by very simple equations are shrouded in mystery and elegance. In fact, the equations describing them are so simple that even high-school students would be able to understand them.However, a ton of simple questions about them remain unsolved despite tenacious efforts by some of the greatest mathematicians in the world. But that’s not all. As you will soon see, this theory connects various important fields of mathematics because it turns out that elliptic curves are more than just plane curves!Let’s grab a cup of coffee and start from the beginning.Introduction and MotivationIn mathematics, we often solve problems by stating them in a different setting than they originally occurred in. An example of this is that some geometric problems can be turned into algebraic problems and vice versa.A classical problem going back thousands of years is whether a positive integer n is the area of some right triangle with rational side lengths, that is such that the lengths of all three sides are expressible as fractions of whole numbers. In this case, n is called a congruent number). For instance, 6 is a congruent number because it is the area of the right triangle with side lengths 3, 4 and 5.In 1640, Fermat famously proved that 1 is not a congruent number. He did so using his famous method of proof by infinite descent.As the amazing mathematician, Keith Conrad notes about the result:This leads to a weird proof that √2 is irrational. If √2 were rational then √2, √2 and 2 would be the sides of a rational right triangle with area 1. This is a contradiction of 1 not being a congruent number!Since Fermat’s proof, the hunt for proving or disproving that numbers are congruent has been ongoing.Amazingly, one can show by elementary methods that for each triple of rational numbers (a, b, c) such that a² + b² = c² and 1/2 ab = n, we can find two rational numbers x and y such that y² = x³ - n²x and y ≠ 0 and conversely for each rational pair (x, y) such that y² = x³ - n²x and y ≠ 0, we can find three rational numbers a, b, c such that a² + b² = c² and 1/2 ab = n.That is, right triangles with area n correspond exactly to rational solutions to the equation y² = x³ - n²x with y ≠ 0 and vice versa. A mathematician would say that there is a bijection between the two sets.Therefore, a rational number n > 0 is congruent if and only if the equation y² = x³ - n²x has a rational solution (x, y) with y ≠ 0. For example, since 1 is not congruent, the only rational solutions to y² = x² - x have y = 0.For the interested reader, the exact correspondence is the following.If we try this correspondence on the triangle with side lengths 3, 4, and 5, and with area 6, then the corresponding solution is (x, y) = (12, 36).To me, this is absolutely amazing. One starts with a problem in number theory and geometry and through algebra, transforms it into a problem about rational points on plane curves!The equation y² = x³ - n²x is an example of an elliptic curve.Elliptic CurvesIn general, if f(x) denotes a third-degree polynomial with a non-zero discriminant (i.e. all the roots are distinct), then y² = f(x) describes an elliptic curve except for one important addition to this object, namely what is called a “point at infinity”.Basically, a point at infinity is a point where parallel lines can meet. It is out of the scope of this article to go into projective geometry to proper define it but this is a wonderful and exciting subject that I strongly encourage you to look up.Now, by a minor algebraic miracle, it turns out that we can make a suitable (rational) change of coordinates, and get a new curve on the form y² = x³ + ax + b such that rational points on the two curves are in one-to-one correspondence. The second transformed curve however is typically easier to work with.Because of this, we sometimes assume that an elliptic curve is on this form and so from now on we will assume that too, that is, when we say “elliptic curve”, we mean a curve on the form y² = x³ + ax + b together with a point 𝒪 at infinity.Throughout this article, unless otherwise stated, we’ll assume that the coefficients a and b are rational numbers.Elliptic curves take on two typical shapes which are graphed below.Image from Wikimedia CommonsHowever, if we consider x and y as complex variables, the curves will look entirely different. In fact, they will then take the form of a complex torus or doughnut!So why do we study elliptic curves and what can we do with them?First of all, many number theoretic problems can be translated into problems about Diophantine equations, secondly, it turns out that elliptic curves are related to discrete geometric objects called lattices and deeply connected to some very important objects called modular forms which are certain extremely symmetric complex functions with a lot of number theoretic information in them.Actually, the connection between elliptic curves and modular forms turned out to be the key to proving Fermat’s Last Theorem which Andrew Wiles achieved in the 90s through several years of intensive work on this connection.The story about this quest and the proof of the Theorem is in my opinion one of the most beautiful pursuits in all of science - unfortunately, as pointed out by my friend Kenneth Nielsen, the margin in this Medium post is too narrow to contain it!So I guess I’ll have to write another article.Elliptic curves are also used in cryptography to encrypt messages and online transactions.The most important feature of them, however, is the mind-blowing fact that they are more than just curves and more than just geometry. In fact, they have an algebraic structure on them called an Abelian group structure with respect to a cool geometric operation - a kind of geometric addition rule for how to add points on the curve together.If you don’t know what an Abelian group is, you can think about it as a set of objects with an operation defined on them such that they have the same kind of structure as the integers with respect to addition (except they can be finite).More specifically, for a group with the operation *, it needs to be stable with respect to the operation (i.e. if a is in the group and b is in the group, then a * b is in the group), there is an identity element e (0 for the integers) such that a * e = a for all elements a in the group, and for each element a, there is an inverse element c, such that when you operate them together you get back the identity element (a * c = e). Furthermore, the group operation has to be associative i.e. a * (b * c) = (a * b) * c. That is, it doesn’t matter which elements you add together first. If the commutative law holds ( i.e. a * b = b * a) then the group is called an Abelian group.Examples of Abelian groups are:The integers ℤ with respect to the operation +.The action of rotating a square clockwise by 90 degreesVector spaces with vectors as elements and vector addition as the operationThe fancy terminology for a curve with an Abelian group structure is Abelian variety.What is so amazing about elliptic curves is that we can define an operation (let’s denote it ⊕) between rational points on them (that is, both the x and y coordinates are rational numbers) such that the set of those points on the curve becomes an Abelian group with respect to the operation ⊕ and with identity element 𝒪 (the point at infinity).Let’s define the operation.If you take two rational points on the curve (for example P and Q) and consider a line through them, then the line intersects the curve at another rational point (possibly the point at infinity). Let’s call this point -R.Now, because the curve is symmetric about the x-axis, we get another rational point R when we reflect -R about it. There is a drawing of this below.Addition rule for elliptic curves - image from Wikimedia CommonsThis reflected point (R in the above image) is the addition of the two aforementioned points (P and Q above). We can write P ⊕ Q = R.One can prove (and this is actually not easy) that this operation is associative, which is really surprising, at least to me. Also, the point at infinity acts as a (unique) identity for this operation and each point has an inverse point (which is just the point you get by reflecting about the x-axis). It is also Abelian (i.e. P ⊕ Q = Q ⊕ P).The MysteryIt turns out that two different elliptic curves can have vastly different groups associated with them. An important invariant that in some sense is the most defining feature is what is known as the rank of the curve (or group).A curve can have a finite or an infinite number of rational points on them. This can be hard to handle, so what we are interested in, is how many points we need in order to generate all the others by the aforementioned addition rule. These generators are called basis points.The rank is a dimensionality measure like the dimension of a vector space and indicates how many independent basis points (on the curve) have infinite order (i.e. we can keep adding it without getting our starting point back). If the curve only contains a finite amount of rational points on it, then the rank is zero. There is still a group but it is finite.Calculating the rank of an elliptic curve is notoriously difficult but we have a nice result due to Mordell which tells us that the rank is always finite. That is, we only need a finite amount of basis points in order to generate all the rational points on the curve.One of the most important and interesting problems in number theory is called the Birch and Swinnerton-Dyer Conjecture and it is all about the rank of elliptic curves. In fact, it is so difficult and important that it is one of the Millenium Problems.You actually get a million dollars if you solve it!Finding rational points on elliptic curves with rational coefficients is hard. One way to approach this is by reducing the curve modulo p where p is a prime number. This means that instead of considering the rational solution set of the equation y² = x³ + ax + b, we consider the rational solution set of the congruence y² ≡ x³ + ax + b (mod p) where for this to make sense we might have to clear denominators by multiplying by an integer on both sides.So we are considering two numbers with the same remainder when divided by p to be equal in this new space. The great thing about this is that now there are only a finite number of things to check. Let’s denote the number of rational solutions to such a reduced curve modulo p, by Np.In the early 1960s, Peter Swinnerton-Dyer used the EDSAC-2 computer (not exactly a Macbook!) at the University of Cambridge Computer Laboratory to calculate the number of points modulo p on elliptic curves with known rank. He worked together with the mathematician Bryan John Birch in understanding elliptic curves and after the computer had crunched a bunch of products of the formfor growing x, they got the following output taken from data associated with the curve E: y² = x³ − 5x (as an example). I should note that the x-axis is really log log x and the y-axis is log y.The curve in question is y² = x³ − 5x. This is a curve of rank 1 and one of the curves originally looked at by Birch and Swinnerton-Dyer.Now, I am a mathematician and not a statistician but even I can see a clear trend and it does seem that the regression line has slope 1 on this plot.The curve E has rank 1 and when they tried different curves of varying ranks, they found the same pattern every time. The slope of the fitted regression line, it seemed, was always equal to the rank of the curve in question.More precisely, they stated the bold conjecture thatHere C is some constant.This computer crunching adventure combined with a great deal of far-sightedness led them to make a general conjecture about the behavior of a curve’s Hasse–Weil L-function L(E, s) at s = 1.This L-function is defined as follows. Letand let the discriminant of the curve be denoted Δ. Then we can define the L-function associated with E as the following Euler productWe view this as a function of the complex variable s.Their conjecture now has the form:Conjecture (Birch and Swinnerton-Dyer): Let E be any elliptic curve over ℚ. The rank of the abelian group E(ℚ) of rational points of the curve E is equal to the order of the zero of L(E, s) at s = 1.The reason why it was quite far-sighted is that, at the time, they didn’t even know if a so-called analytic continuation existed for all such L-functions. The problem was that L(E, s) as defined above only converges when Re(s) > 3/2.That they can all be evaluated at s = 1 by analytic continuation was first proved in 2001 again by using the close connection to modular forms that Andrew Wiles proved.Sometimes the conjecture is stated using the Taylor expansion of the L-function, but it is saying the same thing in a different way. The field of rational numbers can be replaced by a more general field but I didn’t want to go into more abstraction than necessary.The subject of Elliptic Curves is a beautiful dance between number theory, abstract algebra and geometry. There is a lot more to say about them than what I have sketched here, but I hope that you got a feeling or a glimpse of something that one could call astounding.We reached the end of this article…If you have any questions, comments or concerns, then please reach out.If you like to read articles like this one on Medium, you can get a membership for full access: simply click here.Thanks for reading.MathematicsMathScienceTechnologyHistory----8More from Cantor’s ParadiseFollowMedium’s #1 Math PublicationRead more from Cantor’s ParadiseRecommended from MediumPallavi SolaiappanUnderstanding Simpson’s ParadoxSunny LabhWhat is the Batman Equation?Sunny LabhThe Mathematics Book That Awakened Ramanujan’s GeniusMipsmonstaSet Matrix Zeros (LintCode/LeetCode)logicianTHE UNKNOWN DIVIDERPacific Institute for the Mathematical SciencesinThe Pacific Institute for the Mathematical SciencesFields Medalist Martin Hairer Sits Down With PIMSCristian Miguel LunaNewton’s MethodJesus NajerainCantor’s ParadiseThe Four-Color TheoremAboutHelpTermsPrivacyGet the Medium app"
+https://news.ycombinator.com/rss,PHP in 2023,https://stitcher.io/blog/php-in-2023,Comments,"
+
+
+PHP in 2023 - stitcher.io
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    By continuing your visit to this site, you accept the use of cookies.
+    Read more.
+
+
+
+            « back — written by
+            Brent on January 17, 2023
+        
+
+PHP in 2023
+
+From its humble beginnings as a personal project in the mid-90s, PHP has grown to become one of the most popular languages for web development, powering everything from small blogs to large enterprise applications.
+It's a language that has seen an astonishing transformation over the course of almost three decades. Even within the last 10 years, PHP has transformed in ways we couldn't imagine.
+Every year, I write a post about the current state of PHP, where I look back and forward. Let's begin!
+
+
+
+
+
+
+# The PHP Foundation
+I usually start these posts with a summary of the latest PHP version, but this time I want focus on the PHP Foundation first. It's been a little over a year since the foundation was created: a collective of 10 volunteers and 6 developers being paid to work on PHP, the language.
+Last year, I wrote this:
+
+I'm a little worried now that Nikita has stepped down. He's definitely not the only person capable of working on PHP's core, but he did a tremendous amount of work these past years with PHP 8.0 and 8.1. I hope the PHP Foundation will be up to speed soon and that there are enough core developers who have time to work on PHP next year. PHP 8.2 is already in development, although there aren't many RFCs drafted yet.
+I don't think 2022 will be the most mind blowing year for PHP, but rather a year of adding stability. Nothing wrong with that.
+
+I think it's fair to say that the Foundation has delivered. They recently published their 2022 report, and it shows some pretty impressive numbers:
+
+In total, $580,000 was raised in 2022
+The Foundation pays 6 developers to work on PHP
+Foundation members made almost half of all commits in php-src
+They created 8 new RFCs, only one of those RFCs didn't make it
+
+I think the Foundation is one of the best things to happen to PHP in a long time, and I hope they'll be able to improve the language even more in 2023. If you're working at a company that uses PHP, I'd highly recommend you consider donating.
+# PHP 8.2
+Moving on to PHP 8.2. It's generally regarded as a smaller release, but nevertheless it has a bunch of nice features. Just to name a couple:
+Readonly classes:
+readonly class PostData
+{
+    public function __construct(
+        public string $title,
+        public string $author,
+        public string $body,
+        public DateTimeImmutable $createdAt,
+        public PostState $state,
+    ) {}
+}
+A brand new randomizer:
+$rng = $is_production
+    ? new Random\Engine\Secure()
+    : new Random\Engine\Mt19937(1234);
+ 
+$randomizer = new Random\Randomizer($rng);
+
+$randomizer->shuffleString('foobar');
+Standalone null, true and false:
+function alwaysFalse(): false
+{
+    return false;
+}
+Disjunctive normal form types:
+function generateSlug((HasTitle&HasId)|null $post) 
+{ /* … */ }
+Redacted parameters:
+function connect(
+    string $user,
+    #[\SensitiveParameter] string $password
+) {
+    // …
+}
+And more.
+It's kind of crazy to realise how much PHP has evolved over the years. I made a little video comparison that clearly shows the difference:
+
+# The ecosystem
+Just like every year, I should mention Packagist, PHP's package manager: it now lists 361,000 packages; 60,000 more than last year:
+
+One impressive number is the total amount of installations. Last year I mentioned this:
+
+Oh, by the way, just recently Packagist passed the milestone of having handled over more than 50 billion installs. Congrats Packagist!
+
+I just checked, and we're now at 74,492,061,634 installs. That's an increase of 24 billion installs in one year, 2 billion installs per month. All of that to say: the PHP ecosystem is growing a lot.
+
+Twice a year, I publish my version stats post. In these posts, I analyze PHP version usage across the community based on Packagist's data. I wanted to share a graph from that post again: the timeline between 2013 and now, showing the per-version usage history.
+
+While it's great to see PHP 8.* usage rise steeply, there's also a big chunk of people still stuck on older, slow and insecure PHP versions. My hope for 2023 is to see those old version numbers decline even more rapidly. I wrote it like this in my version stats post:
+
+This data beautifully visualizes the division within the PHP community: one part is keeping up with modern PHP, while another one stays helplessly behind.
+
+Speaking of upgrades, I want to mention one tool in particular: Rector. Rector is a free automation tool that helps upgrade your PHP codebase. All it takes is a tiny amount of configuration, and it'll do a huge amount of work for you.
+I recently used it to update my community-driven content aggregator, Aggregate to PHP 8.2, and it was really fun and easy to use.
+When, after publishing my version stats post, several people told me they hadn't updated yet and were stuck on PHP 7.*, I asked them why. They told me it was simply too much manual work. Interestingly enough, no one had even tried to use tools like Rector to help them…
+I firmly believe that a ""programming language"" is so much more than a compiler: it's the tools and ecosystem that play an equal part in defining that ""programming language"", and I really think lots of people, projects and businesses would benefit if they looked into using automation tools like Rector.
+
+Since I'm talking about the ecosystem, I can't go without mentioning PHP's two largest frameworks: Laravel and Symfony.
+Over the past years, Laravel has grown tremendously. They now employ 8 full time developers to work on the framework and its ecosystem. On top of that, JetBrains' dev survey reports that 67% of PHP developers work with Laravel.
+While Symfony as a framework might be less popular compared to Laravel these days, it's still one of the most mature and stable frameworks within the PHP community. It's more often used for enterprise app development, but its standalone components are popular throughout the whole PHP ecosystem — Laravel also has a couple of dependencies on Symfony components. No surprise that more than a handful of Symfony packages make it into Packagist's top package list.
+I should also mention WordPress. I'll be honest, I have a love/hate relationship with it. As a user, WordPress is great. It's so easy to install and use, and I think it has earned every bit of its popularity over the years.
+As a developer though, WordPress makes me sad. The inability to stay up to date with modern and safe PHP versions casts a shadow on the whole PHP community.
+Right now, WordPress only has beta support for PHP 8.0. Now, to be clear: PHP 8.0 was released in 2020, and is now end of life, three years later — and WordPress doesn't yet support it…
+Of course, there are reasons for not properly supporting newer PHP versions. Up to you to decide whether they are good or not. My personal opinion is that the decision to hold on to backwards compatibility as much as WordPress does is mostly business driven: a big part of WordPress is the commercial part, and a big part of their customer base is running old PHP versions. It's a vicious circle where both parties are holding each other back and, by extent, hold back the PHP community as a whole.
+On the other hand, we should recognise the fact that not many software projects are able to stay as popular and relevant as WordPress after almost 20 years, so maybe their strategy about backwards compatibility is the right one?
+# Superset
+Finally, I can't help but mention my long-term dream for PHP. I write about it, I speak about it, and I hope that one day it'll become true: a superset of PHP, with proper IDE and static analyser support.
+There are a bunch of reasons why I want it to happen, you can read and hear about them if you want to; but I really hope it'll become a reality. I doubt we'll get to see a widely accepted and supported superset in 2023, but some baby steps are already being made. I'm definitely keeping a close eye on PXP, which might take things in the right direction.
+
+With all of that being said, I hope that you'll enjoy 2023! And just in case you're new here: I'm Brent, developer advocate at JetBrains, I write and vlog about PHP; and I'd really appreciate it if you checked out the YouTube channel I've been working on lately. Take a look, and maybe consider subscribing? Thanks!
+If you're not into videos but still want to follow me, you can join 15k newsletter subscribers instead, I hope to see you there!
+
+
+        👍
+    
+
+        👍
+    
+
+        👍 0
+
+
+
+Footnotes
+
+The PHP Foundation
+
+
+PHP Annotated, my YouTube channel
+
+
+PHP 8.2 in 8 code blocks
+
+
+PHP version stats: January, 2023
+
+
+PHP in 2022
+
+
+What's new in PHP 8.2
+
+
+
+
+
+
+                    Next up: 
+                                            PHP version stats: January, 2023
+                                    
+
+
+    Follow me:
+    Twitter —
+    RSS —
+    Newsletter —
+    Patreon —
+    GitHub
+
+
+    © 2023 stitcher.io — Cookies & Privacy
+
+
+
+
+
+
+
+
+
+"
+https://news.ycombinator.com/rss,A Solid State of Progress – Fairchild Camera and Instrument Corporation (1979),https://archive.org/details/bitsavers_fairchildAs19731979_143551798,Comments,"
+
+
+
+
+
+
+
+
+    fairchild :: A Solid State Of Progress 1973 1979  
+
+    Item Preview
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+remove-circle 
+Share or Embed This Item
+
+
+
+
+
+
+
+Share to Twitter
+
+
+
+Share to Facebook
+
+
+
+Share to Reddit
+
+
+
+Share to Tumblr
+
+
+
+Share to Pinterest
+
+
+
+Share via email
+
+
+
+
+
+
+
+
+EMBED
+
+
+
+
+
+
+
+EMBED (for wordpress.com hosted blogs and archive.org item <description> tags)
+[archiveorg bitsavers_fairchildAs19731979_143551798 width=560 height=384 frameborder=0 webkitallowfullscreen=true mozallowfullscreen=true]
+
+
+
+
+                Want more?
+                Advanced embedding details, examples, and help!
+              
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Favorite 
+
+
+
+
+Share 
+
+
+
+Flag
+
+Flag this item for
+
+
+
+                  Graphic Violence                
+
+
+
+                  Explicit Sexual Content                
+
+
+
+                  Hate Speech                
+
+
+
+                  Misinformation/Disinformation                
+
+
+
+                  Marketing/Phishing/Advertising                
+
+
+
+                  Misleading/Inaccurate/Missing Metadata                
+
+
+ 
+ 
+ 
+
+
+texts
+
+fairchild :: A Solid State Of Progress 1973 1979
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Publication date
+
+
+1979
+
+
+
+
+Topics
+isoplanar, mos, logic, device, ttl, integrated, planar, circuit, semiconductor, monolithic, integrated circuit, linear integrated
+
+ Collection
+bitsavers_unsorted; bitsavers; additional_collections
+
+
+
+ Language
+English
+
+ 
+
+From the bitsavers.org collection, a scanned-in computer-related document.fairchild :: A Solid State Of Progress 1973 1979
+
+
+
+Addeddate
+2013-01-10 22:56:18
+
+
+Bitsavers-filename
+/pdf/fairchild/A_Solid_State_Of_Progress_1973_1979.pdf
+
+
+Identifier
+bitsavers_fairchildAs19731979_143551798
+
+
+Identifier-ark
+ark:/13960/t4mk7n90w
+
+
+Ocr
+ABBYY FineReader 8.0
+
+
+Ppi
+400
+
+
+
+
+
+plus-circle            Add Review
+
+comment
+        Reviews
+      
+
+          There are no reviews yet. Be the first one to
+          write a review.
+        
+
+
+
+
+
+
+470
+
+        Views      
+
+1
+Favorite
+
+
+
+
+        DOWNLOAD OPTIONS
+      
+
+
+
+
+download                1 file              
+
+
+
+              ABBYY GZ              download 
+
+
+
+
+
+download                1 file              
+
+
+
+              DAISY              download 
+For print-disabled users
+
+
+
+
+
+download                1 file              
+
+
+
+              EPUB              download 
+
+
+
+
+
+download                1 file              
+
+
+
+              FULL TEXT              download 
+
+
+
+
+
+download                1 file              
+
+
+
+              ITEM TILE              download 
+
+
+
+
+
+download                1 file              
+
+
+
+              KINDLE              download 
+
+
+
+
+
+download                1 file              
+
+
+
+              PDF              download 
+
+
+
+
+
+download                1 file              
+
+
+
+              PDF WITH TEXT              download 
+
+
+
+
+
+download                1 file              
+
+
+
+              SINGLE PAGE PROCESSED JP2 ZIP              download 
+
+
+
+
+
+download                1 file              
+
+
+
+              TORRENT              download 
+
+
+
+
+download 15 Files
+            
+download                7 Original
+
+SHOW ALL
+
+
+
+
+
+IN COLLECTIONS
+
+Bitsavers: General and Unsorted Items
+
+
+
+
+
+The BITSAVERS.ORG Documents Library
+
+
+
+
+
+Additional Collections
+
+
+
+
+
+
+
+
+        Uploaded by
+                  
+            Jason Scott          
+        
+                  on January 10, 2013
+
+
+
+
+
+
+
+
+
+SIMILAR ITEMS (based on metadata)
+
+
+
+
+
+
+
+Terms of Service (last updated 12/31/2014)
+
+"
+https://news.ycombinator.com/rss,Project Mage is an effort to build a power-user environment in Common Lisp,https://project-mage.org,Comments,"
+
+
+
+
+Project Mage
+
+
+
+
+
+
+
+
+
+
+
+
+
+Project Mage
+Home
+About
+Campaign
+Code
+Contact
+RSS
+
+
+
+
+
+
+
+
+
+nil
+
+
+Project Mage: The Elevator Pitch →
+
+
+
+Hi, and welcome! Project Mage is an effort to build a power-user environment and a set of applications in Common Lisp. For a comprehensive discussion, see The Power of Structure. But first it's probably best to get a brief outlook: Project Mage: The Elevator Pitch. Otherwise, the essays listed below may be read in any order.
+
+
+
+
+
+
+
+
+Project Mage: The Elevator Pitch (17 January 2023) The Power of Structure (12 January 2023) Emacs is Not Enough (12 January 2023) On Flexibility and Software Temples (12 January 2023) Overcoming the Print-Statement (12 January 2023) Data-Supplied Web as a Model of Free Web (12 January 2023) Isn't It Obvious That C Programmers Wrote Git? (12 January 2023) Epilogue (12 January 2023) [Appendix] Why Common Lisp for This Project (12 January 2023) [Appendix] All Else is Not Enough (12 January 2023)
+
+
+
+
+
+
+
+...proudly created, delivered and presented to you by: some-mthfka. Mthfka!
+
+
+
+"
+https://news.ycombinator.com/rss,"Twitter kicking off a developer API campaign on January 16, 2023",https://carhenge.club/@mattdsteele/109700383808551139,Comments,"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Matt Steele: ""Live your life with unbridled audacity, like Twit…"" - carhenge.club
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+To use the Mastodon web application, please enable JavaScript. Alternatively, try one of the native apps for Mastodon for your platform.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+"
