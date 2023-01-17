@@ -29757,3 +29757,8482 @@ This article is part of the Research Topic
 
 
 "
+https://news.ycombinator.com/rss,MSI's (in)Secure Boot,https://dawidpotocki.com/en/2023/01/13/msi-insecure-boot/,Comments,"
+
+MSI's (in)Secure Boot
+
+
+      posted on 2023-01-13 (UTC)
+    
+
+I guess I have found a reason to write my first blog post.
+Before we start, maybe I will quickly explain what Secure Boot is. It is
+a security feature, which allows our computer to decline booting
+operating systems that have not been signed by a key that the firmware
+trusts.
+On 2022-12-11, I decided to setup Secure Boot on my new desktop with a
+help of sbctl. Unfortunately I have
+found that my firmware was… accepting every OS image I gave it, no
+matter if it was trusted or not. It wasn't the first time that I have
+been self-signing Secure Boot, I wasn't doing it wrong.
+As I have later discovered on 2022-12-16, it wasn't just broken
+firmware, MSI had changed their Secure Boot defaults to allow booting on
+security violations(!!).
+This can be changed by going to the place where the settings are for
+Secure Boot on your motherboard. In my case it's in Security\Secure Boot. From this place, we can see a menu called ""Image Execution
+Policy"", which is the culprit.
+
+When we enter the menu, we can see the disappointing default settings.
+It's doing no verification. It's useless. It's just there to satisfy
+Windows 11 requirements. OS has no idea that Secure Boot is doing
+nothing, it just knows that it's ""enabled"".
+
+To change the settings to something saner, we have to change ""Always
+Execute"" to ""Deny Execute"" for ""Removable Media"" and ""Fixed Media"".
+What's funny is that ""Allow Execute"" and ""Query User"" options
+are breaking UEFI specification,
+though I'm not really sure what's the difference between ""Allow Execute""
+and ""Always Execute"".
+We can also change ""Option ROM"", about which you can read more about
+here:
+
+https://github.com/Foxboron/sbctl/wiki/FAQ#option-rom
+https://learn.microsoft.com/en-us/windows-hardware/manufacture/desktop/uefi-validation-option-rom-validation-guidance
+
+
+Case closed, everyone can move on, right?
+Well, not really. I needed to figure out if this is only affecting my
+motherboard or also other models and maybe even other vendors. And also
+we need to document this, because even if I know this, there is probably
+a lot of people that are not aware about this issue.
+I had asked 2 users of B450 TOMAHAWK MAX (thanks Sage Hane and Daniel
+Nathan Gray) to check their firmware and what? Unsurprisingly, it's also
+there. We were able to determine that version 7C02v3C from 2022-01-18
+introduced this issue.
+Is it mentioned in the changelog? Hah, nope.
+
+I have also received information from a user of B550-A PRO (CEC) (thanks
+Joseph Richey) that they have this issue from 7C56vH1 (2021-12-20)
+onwards.
+While I was able to extrapolate this information to guess which versions
+for other boards have introduced this issue, that isn't really enough.
+We need to go deeper.
+I have tried extracting some information from MSI's binary firmware
+files, but to no avail. I tried using binwalk, UEFITool and others, but
+I didn't really find what I wanted. Until one day I have found out that
+UEFI has a thing called ""UEFI Internal Form Representation"" or in short
+""IFR"". It's a way to describe firmware configuration options. This is
+exactly what I need to look for! Now, what do I do with this knowledge?
+Once we extract files from the firmware using UEFIExtract from
+UEFITool project, we can find a
+file called
+Section_PE32_image_899407D7-99FE-43D8-9A21-79EC328CAC21_Setup_body.bin.
+It contains most of UEFI GUI stuff and seems to be available on all
+firmware from all major desktop motherboard makers, though ASUS decided
+to remove ""Setup"" from the name for some reason or maybe it has to do
+something to do with the UEFIExtract, not sure.
+Now once we have this file, we have to extract IFR data from it, to do
+it we can use IFRExtractor RS.
+Funnily enough, it's made by the same people as UEFITool. Thanks guys
+for your hard work, otherwise I would have to do it myself ;p.
+Now with IFR extracted, we have what we wanted. We can see all the
+UEFI settings available, including ""Image Execution Policy"".
+Form FormId: 0x2A79, Title: ""Image Execution Policy""
+	Text Prompt: ""Internal FV"", Help: """", Text: ""Always Execute""
+	OneOf Prompt: ""Option ROM"", Help: ""Image Execution Policy on Security Violation per Device Path"", QuestionFlags: 0x10, QuestionId: 0x1116, VarStoreId: 0x28, VarOffset: 0x4, Flags: 0x10, Size: 8, Min: 0x0, Max: 0x5, Step: 0x0
+		Default DefaultId: 0x0 Value: 0
+		OneOfOption Option: ""Always Execute"" Value: 0
+		OneOfOption Option: ""Always Deny"" Value: 1
+		OneOfOption Option: ""Allow Execute"" Value: 2
+		OneOfOption Option: ""Defer Execute"" Value: 3
+		OneOfOption Option: ""Deny Execute"" Value: 4
+		OneOfOption Option: ""Query User"" Value: 5
+	End
+	OneOf Prompt: ""Removable Media"", Help: ""Image Execution Policy on Security Violation per Device Path"", QuestionFlags: 0x10, QuestionId: 0x1117, VarStoreId: 0x28, VarOffset: 0x5, Flags: 0x10, Size: 8, Min: 0x0, Max: 0x5, Step: 0x0
+		Default DefaultId: 0x0 Value: 0
+		OneOfOption Option: ""Always Execute"" Value: 0
+		OneOfOption Option: ""Always Deny"" Value: 1
+		OneOfOption Option: ""Allow Execute"" Value: 2
+		OneOfOption Option: ""Defer Execute"" Value: 3
+		OneOfOption Option: ""Deny Execute"" Value: 4
+		OneOfOption Option: ""Query User"" Value: 5
+	End
+	OneOf Prompt: ""Fixed Media"", Help: ""Image Execution Policy on Security Violation per Device Path"", QuestionFlags: 0x10, QuestionId: 0x1118, VarStoreId: 0x28, VarOffset: 0x6, Flags: 0x10, Size: 8, Min: 0x0, Max: 0x5, Step: 0x0
+		Default DefaultId: 0x0 Value: 0
+		OneOfOption Option: ""Always Execute"" Value: 0
+		OneOfOption Option: ""Always Deny"" Value: 1
+		OneOfOption Option: ""Allow Execute"" Value: 2
+		OneOfOption Option: ""Defer Execute"" Value: 3
+		OneOfOption Option: ""Deny Execute"" Value: 4
+		OneOfOption Option: ""Query User"" Value: 5
+	End
+End
+I have checked if other vendors (ASRock, ASUS, Biostar, EVGA, Gigabyte
+and NZXT) have the same thing and I wasn't able to find anything like
+that in their IFR. Also MSI's laptops are not affected by this issue.
+I'm gonna assume that they figured that Microsoft wouldn't approve it
+and/or that they had less tickets from people about Secure Boot related
+issues for their laptops.
+Now, doing this manually would be kinda annoying, so I made a small
+little shell script which checks if ""Image Execution Policy"" menu is
+available and if any of the three options are set to ""Always Execute"".
+#!/bin/sh
+
+if [ ! -d ""$1"" ]; then
+	[ ! -f ""$1.zip"" ] && curl ""https://download.msi.com/bos_exe/mb/$1.zip"" -O -#
+	bsdtar xf ""$1.zip""
+fi
+
+cd ""$1"" || exit
+UEFIExtract ./*MS.* unpack 1>/dev/null
+ifrextractor ./*.dump/Section_PE32_image_899407D7-99FE-43D8-9A21-79EC328CAC21_Setup_body.bin 1>/dev/null
+output=""$(grep -A1 -E 'OneOf Prompt: ""(Option ROM|Removable Media|Fixed Media)"", Help: ""Image Execution Policy' ./*.dump/Section_PE32_image_899407D7-99FE-43D8-9A21-79EC328CAC21_Setup_body.bin.*ifr.txt)""
+clear
+
+if echo ""$output"" | grep -q ""DefaultId: 0x0""; then
+	printf ""\033[1;31m%s: Bad\033[0m\n"" ""$1""
+else
+	printf ""\033[1;32m%s: Good\033[0m\n"" ""$1""
+fi
+Now this is where the fun part ends. Now I had to check firmware for
+MSI's somewhat recent boards.
+While we can get most of the firmware just by going to motherboard's
+support page, MSI usually only lists stable firmware and the newest
+beta. The problem is that I need to figure out the earliest affected
+version of the firmware for each board, which means that I have to guess
+what the betas were called (if they even existed). At least MSI doesn't
+remove most of its beta firmware from their servers, so they are still
+accessible if you know the link.
+For some AMD boards, I have found a list of beta firmware on some German
+forum. Thankfully, I didn't have to read any German, because contrary to
+the popular belief, I don't know German or Russian, I'm Polish.
+This… took forever. I checked every motherboard for:
+
+AMD: TRX40, X670, X570, X470, X370, B650, B550, B450, B350, A520, A320
+Intel: X399, X299, Z790, Z690, Z590, Z490, Z390, Z370, B760, B660, B560, B460, B360, H670, H510, H410, H370, H310
+
+It's… a lot of motherboards. For a full list of affected motherboards
+and their firmware versions, visit
+sbctl#181.
+And now it's time for some ""fun"" statistic:
+# The amount of times I ran the script
+$ history 0 | grep ""  msi "" | wc -l
+1989
+According to Wikipedia in 1989:
+
+The first commercial Internet service providers surfaced in this year,
+as well as the first written proposal for the World Wide Web and New
+Zealand, Japan and Australia's first Internet connections.
+
+Well, that was a mistake.
+You could ask me, why didn't I automate it? The reason is… well… some of
+it is not really easy to as some beta names have arbitrary suffixes
+which was faster for me to guess than having a script bruteforce its way
+in. Also some boards weren't listed on their motherboard list page.
+Now, after doing all the work for MSI, I think I should bill them, that
+or they should give me a lifetime supply of their motherboards.
+If you are curious, yes, I have tried contacting MSI about this issue,
+but they ignored my emails and other forms of communication I have
+tried.
+
+Conclusion
+
+Don't trust that whatever security features you enabled are working,
+TEST THEM! Somehow I was the first person to document this, even though
+it has been first introduced somewhere in 2021 Q3.
+
+Quiz time!
+
+What's the difference between these 3 boards:
+
+MSI B360 GAMING ARCTIC
+MSI B360 GAMING PLUS
+MSI B360-A PRO
+
+Heatsink and PCB colours! They are the same board and share the same
+firmware! But hey, the red and white one is only for gamers but black is
+only suitable for ""professionals"".
+
+"
+https://news.ycombinator.com/rss,Project Mage is an effort to build a power-user environment in Common Lisp,https://project-mage.org,Comments,"
+
+
+
+
+Project Mage
+
+
+
+
+
+
+
+
+
+
+
+
+
+Project Mage
+Home
+About
+Campaign
+Code
+Contact
+RSS
+
+
+
+
+
+
+
+
+
+nil
+
+
+The Power of Structure →
+
+
+
+Hi, and welcome! Project Mage is an effort to build a power-user environment and a set of applications in Common Lisp. To get an overview, see The Power of Structure. Otherwise, the essays listed below may be read in any order.
+
+
+
+
+
+
+
+
+The Power of Structure (12 January 2023) Emacs is Not Enough (12 January 2023) On Flexibility and Software Temples (12 January 2023) Overcoming the Print-Statement (12 January 2023) Data-Supplied Web as a Model of Free Web (12 January 2023) Isn't It Obvious That C Programmers Wrote Git? (12 January 2023) Epilogue (12 January 2023) [Appendix] Why Common Lisp for This Project (12 January 2023) [Appendix] All Else is Not Enough (12 January 2023)
+
+
+
+
+
+
+
+...proudly created, delivered and presented to you by: some-mthfka. Mthfka!
+
+
+
+"
+https://news.ycombinator.com/rss,Quitting the rat race,https://seanbarry.dev/posts/quitting-the-rat-race/,Comments,"Quitting the Rat Race - Seán BarryAll ArticlesQuitting the Rat RaceSome readers may be familiar with the cartoon “Happiness” by Steve Cutts. If you’re not, it’s embedded below. Please take four minutes to give it a watch if you haven’t already:
+  
+Around the 30 second mark is a scene where the protaganist rat is waiting for a train to arrive at a packed platform. I recently had a sobering realisation while standing waiting at the platform for the Waterloo & City Line: this had become my life.
+I grew up in one of the least densely populated parts of the United Kingdom. My childhood was a happy one: full of trees, hills, mountains, lakes, beaches, and all of the adventures to be found in such places. I now live in one of the most nature depleted parts of an already nature depleted country. 
+There’s so much noise in the city around me: planes approaching Heathrow, scooters whizzing around to deliver bags of fast food, cars revving while breaking the speed limit to get to the next red light, people playing music out loud while travelling and rowdy groups heading home from the pub.
+When I cycle I need to cycle through kilometre after kilometre of urban jungle before I see anything resembling a field. When I run I have to stop frequently to cross dangerous roads. I’m constantly aware that the air I’m breathing is polluted and the water I drink has been recycled many times.
+I’m currently working at a top tier investment bank as a software engineer. I’m an insignificant cog in a machine that skims the cream from the milk. I’m earning the most money I’ve ever made and yet I’m the least fulfilled I’ve ever been. 
+Almost everything around me is designed to addict me. Every storefront specifically engineered to attract me inside with gimics like flashing lights. There are countless places I can go to buy experiences - simulations supposed to release some chemicals in my brain and give me a thrill.
+The truth is: nothing I’ve done or experienced in this place has given me any experience comparable to walking along the ridge between two mountains. Nothing has made me feel alive like getting in to freezing cold water despite my body screaming at me not to. Nothing has made me feel anything like that feeling when you summit a mountain after 2 hours of solid climbing in the rain, and the clouds part to reveal the most spectacular and breathtaking view you’ve ever seen.
+The best part about those things is that there is no booking system. There is no door security choosing who gets in because there is no door. It’s all there, ready to be experienced, and free.
+Right now in the UK and across the world, things are uncertain. Companies are laying workers off, there’s a cost of living and energy crisis. I’m excruciatingly lucky to have been in the right place at the right time to develop the skillset I’ve got. In times like these every signal is telling me to stay on the path I’m on, enjoying the comfort and safety of a high paying job. 
+I’m not going to listen. I’m quitting and I’m leaving this place. I’ll see you in the mountains.
+
+
+
+If this resonated with you - reach out to me on Twitter - @SeanBarryUK.Get notified when I post a new articleYour email address will never be shared or spammed. You'll receive a notification when I post a new article and that's it.SubscribePublished 16 January 2023PersonalBlogI'm a front office Software Engineer, building risk systems in London. I've been coding since 2013 and have worked in a number of startups/scaleups.Seán Barry on Twitter"
+https://news.ycombinator.com/rss,Major standard library changes in Go 1.20,https://blog.carlmjohnson.net/post/2023/golang-120-arenas-errors-responsecontroller/,Comments,"What’s New in Go 1.20, Part II: Major Standard Library ChangesTuesday, January 17, 2023In the first part of What’s New in Go 1.20, we looked at language changes. For part two, I would like to introduce three changes to the standard library that address problems that the community has been thinking about and debating solutions to for years.First of all, a whole new package has been added. But you can’t import it by default, and you probably shouldn’t be using it at all. It’s the new experimental arena package.The arena package was proposed by Dan Scales and has been added to the Go standard library in 1.20. But if you just try to add import ""arena"" to a program, you get the following, somewhat cryptic error message:imports arena: build constraints exclude all Go files in GOROOT/src/arena
+To opt into using arenas, you need to set GOEXPERIMENT=arenas when calling the go tool, like GOEXPERIMENT=arenas go build ..So what are arenas and why is the Go team trying so hard to keep you from using them? I asked ChatGPT, and this is what it said (this is the equivalent of quoting Webster’s Dictionary for the 21st century):Memory arenas are a memory management technique used in some programming languages and libraries to allocate and deallocate large blocks of memory efficiently. They are typically used in situations where the program needs to frequently allocate and deallocate a large number of small objects. By allocating and deallocating memory in large blocks, rather than individually for each object, memory arenas can reduce the overhead associated with memory management and improve performance.If you want to go more in-depth, Uptrace has a nice guide to the arena package (presumably written by a human, but who knows nowadays), but I’ll try to just give a basic overview here.As you probably know, Go is a garbage collected language. This means that when you refer to a variable, the compiler and the runtime automatically keep track of the uses of that variable to see when it comes into use and when it is no longer being used. Once a variable is no longer used, it is “garbage” waiting to be collected.For many kinds of applications, garbage comes in waves. For example, if you have a web server, it may allocate a lot of memory in order to build up a response to some user request, but once it responds, it no longer needs any of the memory that it allocated, so it can all be returned to the system at once. Another example is a game might want to free all of the objects created for a level once the level is over. The arena package lets Gophers opt into this approach to memory management in performance critical code. Instead of having the garbage collector start a root and then travel down to “mark and sweep” the live memory and return the dead objects, the whole arena can be marked as dead all at once. The release notes for Go 1.20 claim thatWhen used appropriately, [using package arena] has the potential to improve CPU performance by up to 15% in memory-allocation-heavy applications.This is highly efficient, but also highly dangerous. What if the programmer makes a mistake, and for example, adds some strings to a logger call that outlives the request? The log might be overwritten by a subsequent request and the string become replaced with junk data, leading to crashes or worse—security exploits.To mitigate the risk of these kinds of bugs, the arena package will deliberately cause a panic if can detect someone reusing memory after it has been freed. Dan Scales explains,Each arena A uses a distinct range in the 64-bit virtual address spaceA.Free unmaps the virtual address range for arena AThe physical pages for the arena can then be reused by the operating system for other arenas.If a pointer to an object in arena A still exists and is dereferenced, it will get a memory access fault, which will cause the Go program to terminate. Because the implementation knows the address ranges of arenas, it can give an arena-specific error message during the termination.There is a similar comment in the Go runtime package that implements memory arenas:// What makes the arenas here safe is that once they are freed, accessing the
+// arena's memory will cause an explicit program fault, and the arena's address
+// space will not be reused until no more pointers into it are found. There's one
+// exception to this: if an arena allocated memory that isn't exhausted, it's placed
+// back into a pool for reuse. This means that a crash is not always guaranteed.
+So, it is still possible to write buggy code with arenas, but hopefully, the bugs will translate into simple crashes rather than full blown memory corruption or security exploits.The arena package has a fairly simple API. Here’s some example code from arenas_test.go:a := arena.NewArena()
+defer a.Free()
+
+tt := arena.New[T1](a)
+tt.n = 1
+
+ts := arena.MakeSlice[T1](a, 99, 100)
+// …
+There is also an arena.Clone function for when you want to move an object out of an arena and onto the regular Go memory heap.With luck, the arena experiment will succeed, and we will see it introduced as a regular package in a future version of Go.While most Go programmers probably will never need to use the arena package directly, I suspect virtually all Go programmers will have some occasion to use a different new feature in Go 1.20: multierrors.The concept of multierrors in Go is not new. Hashicorp’s go-multierror package goes all the way back to 2014 and there was at least one proposal to add multierrors to the standard library by 2017.Multierrors also exist in other languages. Python added exception groups to Python 3.11, for example. In the case of Python, while there was a popular third party MultiError class, it ultimately needed to be added to the language for full operability:Changes to the language are required in order to extend support for exception groups in the style of existing exception handling mechanisms. At the very least we would like to be able to catch an exception group only if it contains an exception of a type that we choose to handle. Exceptions of other types in the same group need to be automatically reraised, otherwise it is too easy for user code to inadvertently swallow exceptions that it is not handling.Unlike Python, in Go, errors are just values, so it was easy enough to create your own multierror type and expose it using errors.As. Indeed, I wrote my own multierror package that worked this same way. This was clearly an idea that was being created and recreated by the community, so did it really need to be solved at the level of the standard library?Suppose I have some code like this:a := errors.New(""a"")
+b := errors.New(""b"")
+c := join(a, b)
+d := fmt.Errorf(""more context: %w"", c)
+e := errors.New(""e"")
+f := join(d, e)
+If join flattens the error list, then d (“more context”) will be lost from the resulting multierror. Inside of f will be a, b, and e, but not d.afbeIf you are just using your own multierror package in your own application, this is basically a theoretical concern, because you can make sure not to add context around a multierror wherever it might be lost. But if multierrors are part of the standard library and can be expected to be used regularly, then losing d is a real problem that could pop up at unwanted times and places. This problem is what sunk one of the more recent multierror proposals.The reason that Damien Neil’s latest multierror proposal has succeeded where other multierror proposals did not is that it creates a tree of errors, rather than a slice. The accepted errors.Join code instead represents the error hierarchy like this:adcfbeThis means that all of the nodes in the tree are still available for inspection using errors.Is or errors.As.In Go 1.20, multierrors can be created either with errors.Join(errs ...error) error or by using multiple %w verbs with fmt.Errorf like fmt.Errorf(""%w: %w"", notFoundErr, dbErr). Once created, errors.Is and errors.As can extract any of the values in the tree, whether they are in a leaf like a, b and e or a branch like d. Users can also create their own multierror types by adding an Unwrap() []error method to their custom error type.One wrinkle in the implementation is that for now at least, there is no errors.Split(error) []error function. This is a deliberate omission, since that would flatten the tree. Instead, if you need to inspect every node in a tree (for example, for logging purposes), you are encouraged to traverse the tree yourself. I suspect that if we ever see a generic iterator type in Go, something that automatically walks the tree might be added then.Finally, lets look at http.ResponseController.Interfaces are one Go’s defining features as a language. With an interface, you can specify that your code can accept any value that has a certain method, no matter what its concrete type is.From the early days of Go, interfaces have also been used for what Chris Siebenmann has called “interface smuggling”:In interface smuggling, the actual implementation is augmented with additional well known APIs, such as io.ReaderFrom and io.WriterTo. Functions that want to work more efficiently when possible, such as io.Copy(), attempt to convert the io.Reader or io.Writer they obtained to the relevant API and then use it if the conversion succeeded:if wt, ok := src.(WriterTo); ok {
+   return wt.WriteTo(dst)
+}
+if rt, ok := dst.(ReaderFrom); ok {
+   return rt.ReadFrom(src)
+}
+[... do copy ourselves ...]
+I call this interface smuggling because we are effectively smuggling a different, more powerful, and broader API through a limited one. In the case of types supporting io.WriterTo and io.ReaderFrom, io.Copy completely bypasses the nominal API; the .Read() and .Write() methods are never actually used, at least directly by io.Copy (they may be used by the specific implementations of .WriteTo() or .ReadFrom(), or more interface smuggling may take place).Russ Cox deemed this pattern the somewhat less pejorative sounding “extension interface pattern”. Whatever you call it, this pattern can be a great way to expose a simple API and still leave room for adding more complicated extensions later.Extension interfaces are useful, but not without their pitfalls. There can be be cases where it would be good to implement an extended interface, but an implementation author isn’t aware of it, so they fail to implement it. This can be addressed with documentation, but it’s not as clear as using the type system directly.What if you want to create a wrapper a simple interface that you do know might also implement an extended interface? How to do this depends on what exactly you’re wrapping and why. If you were creating a new version of io.LimitedReader, it wouldn’t make sense to add a WriteTo method. The whole point is to put a cap on how much can be read from the source reader, not bypass it and hook it up to the writer directly. As an implementation author, you need to think carefully about how extended interfaces interact with your type.Another problem is if the extended interface can only be tested for through a type assertion. In that case, as the author of a wrapper, you need to provide two wrapping types: one that has the extended interface and passes calls through to the underlying type, and one that doesn’t have the method, so it won’t spuriously trigger the type assertion. Worse still, if there are multiple extended interfaces you want to be able to wrap, you need to provide a 2N number of types to provide for every variation of extended interfaces coexisting! This may seem absurd, but this is exactly the situation that library authors who wanted to wrap http.ResponseWriter found themselves in.http.ResponseWriter is a fairly simple interface used for HTTP servers in the Go standard library:type ResponseWriter interface {
+    Header() Header
+    WriteHeader(statusCode int)
+    io.Writer
+}
+You can set the headers on a response. You can set the status code on the response (which also causes the headers to be written on the wire). And you can write the body of a response. Simple!But of course, the Go http package also supports a number of extended interfaces for ResponseWriter. These are http.Flusher (which lets you flush an in progress write to its clients), http.Pusher (which lets you do HTTP/2 server push requests), http.Hijacker (which provides access to the underlying net.Conn), and io.ReaderFrom (which allows for nice things like automatic sendfile support). As a result, the go-chi project has six different types to implement its WrapResponseWriter interface type. (This is cut down from 24 to 23 on the theory that anything which implements HTTP/2 server push must be maximally fancy.)So then all the way back in 2016, Filippo Valsorda opened an issue about setting timeouts in an http.Handler. This was clearly a real need the Go community had, but it was hard to see how to make it work while retrofitting it into the existing http.ResponseWriter interface. It would be great to set server timeouts for a client based on what we know about that client, but how can this functionality be exposed? Do we just go straight from 3 to 5 optional methods defined in the http package?Despite a lot of careful thought about the problem, this was the situation until Go 1.20, when Damien Neil successfully landed the http.ResponseController proposal. As he wrote,A problem is that we have no good place at the moment to add functions that adjust these timeouts. We might add methods to the ResponseWriter implementation and access them via type assertions (as is done with the existing Flush and Hijack methods), but this proliferation of undiscoverable magic methods scales poorly and does not interact well with middleware which wraps the ResponseWriter type.The solution he came up with based on prior discussions was to add a new concrete type, http.ResponseController:// NewResponseController creates a ResponseController for a request.
+//
+// The ResponseWriter should be the original value passed to the Handler.ServeHTTP method,
+// or have an Unwrap method returning the original ResponseWriter.
+//
+// If the ResponseWriter implements any of the following methods, the ResponseController
+// will call them as appropriate:
+//
+//  Flush()
+//  FlushError() error // alternative Flush returning an error
+//  Hijack() (net.Conn, *bufio.ReadWriter, error)
+//  SetReadDeadline(deadline time.Time) error
+//  SetWriteDeadline(deadline time.Time) error
+//
+// If the ResponseWriter does not support a method, ResponseController returns
+// an error matching ErrNotSupported.
+func NewResponseController(rw ResponseWriter) *ResponseController
+There are two aspects of http.ResponseController that fix the problems with the earlier extension interfaces. One, the addition of an Unwrap() http.ResponseWriter method allows middleware to easily wrap a ResponseWriter without needing to provide all the extended interface methods. Two, the addition of ErrNotSupported makes it easy for types that do have extended methods to signal to their callers when the types they wrap don’t have the same extended methods they do. These are best practices for extended interfaces that have emerged from experience using them. If you provide an extended interface, also provide an escape hatch for wrapper types that don’t know if their wrapped types will have the extended types or not.This is my blog, so I will immodestly mention that I had a proposal for adding an Unwrap method to ResponseWriter back in 2020, but my proposal didn’t have a concrete type to handle the unwrapping or ErrNotSupported, and I’m not sufficiently in the weeds of the http package to have been able to implement read/write deadlines if I had known to suggest it as a motivating problem. The 3 line long http.MaxBytesHandler is about the limit of my ability to contribute. 😆For all three of these changes written about above, the moral of the story is that when it comes to the Go standard library, it can take sometimes years for all the pieces of a good solution to come together in one place, but when they do, it can solve a longstanding problem in a way that makes things easier for everyone involved going forward. Even the authors of Go didn’t know what idiomatic Go code looked like when they wrote the standard library, but working together today we can evolve the standard library in a way that adds new capabilities while preserving backwards compatibility, so that everyone benefits.See more in this series…ChatGPTChris SiebenmannDamien NeilFilippo ValsordagolangprogrammingRuss CoxUptraceRelated ArticlesWhat’s New in Go 1.20, Part I: Language ChangesWhat’s new in Go 1.19?Three Minor Features in Go 1.18Adding Some Func to Go’s Flag PackageEven More Minor Features in Go 1.18
+SubscribeComments"
+https://news.ycombinator.com/rss,TI-Basic interpreter written in JavaScript,https://www.davidtorosyan.com/ti-js/,Comments,"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+TI-JS | TI-Basic interpreter written in JavaScript
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+TI-JS
+
+TI-Basic interpreter written in JavaScript
+
+View on GitHub
+
+
+
+
+
+
+
+
+
+
+
+What is this?
+If you’re familiar with the TI-84 graphing calculator,
+you might know that you can program it with code that looks like this:
+
+Input
+
+2->X
+Disp X+3
+Well, this project aims to implement that language in JavaScript
+so that it can run in the browser.
+Try changing the input above to see this output change:
+
+Output
+
+
+
+ERR: Looks like JavaScript is disabled. As this is a JS library, the demo won't work!
+
+
+But why?
+I wrote a lot of programs in TI-Basic a long time ago,
+and I’d like to be able to preserve and look back on them.
+You can see my collection at
+ti84-entertainment;
+I hope to show all of those off here some day.
+And it works?
+Kinda. Check out the tests to see what’s supported,
+or experiment in the playground.
+Can I use this?
+Sure, check out the README on GitHub
+for instructions.
+Note that it’s still in prerelease and isn’t even versioned yet.
+Also maybe reach out and tell me why you want to!
+What’s next?
+I’ve got some of TI-Basic implemented, but there’s more to be done.
+As certain milestones are hit I’ll update this page.
+Anything else?
+See the rest of my projects at davidtorosyan.com
+
+
+
+
+"
+https://news.ycombinator.com/rss,Intel Core i9-13900T CPU benchmarks show faster than 12900K 125W performance,https://wccftech.com/intel-core-i9-13900t-cpu-benchmarks-show-faster-than-12900k-125w-performance-at-35w/,Comments,"
+
+HardwareReport
+Intel Core i9-13900T CPU Benchmarks Show Faster Than 12900K 125W Performance at 35W
+
+Hassan Mujtaba •
+Jan 14, 2023 02:44 PM EST
+
+•
+Copy Shortlink
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Intel recently introduced brand new 13th Gen T-series chips which feature the Core i9-13900T that operates at a 35W TDP. The new chip has been benchmarked within Geekbench 5 and showcases impressive performance given its limited power budget.
+Intel's 13th Gen Core i9-13900T 35W CPU Beats The 125W Core i9-12900K In Geekbench 5 Benchmark
+Starting with the specifications, the Intel Core i9-13900T is a variation of the Core i9-13900 series that comes with a limited TDP design. While the standard chips boast 125W TDP in the unlocked and 65W TDP on the Non-K SKUs, the T-series chip is limited to a 35W TDP.  The Unlocked CPU is rated at up to 253W, the Non-K is rated at up to 219W while the T-series chip is rated at up to 106 Watts which is less than half the power budget of its higher-end siblings.
+Related StoryHassan MujtabaIntel Core i9-13900KS, World’s First 6 GHz CPU, Now Available For $699 USThe Intel Core i9-13900T retains the same core configuration with 24 cores that are made up of 8 P-Cores and 16 E-Cores with 32 threads, a base clock of 1.10 GHz, a boost of up to 5.30 GHz & 68 MB of cache (L2+L3). The CPU also comes at a slightly lower price point of $549.00 US. Now the CPU is tested within the Geekbench 5 benchmark using an ASUS TUF Gaming B660M-PLUS WIFI board and coupled with 64 GB of DDR5 memory.
+
+The CPU scored 2178 points in the single-core and 17339 points in the multi-core tests. We used the Intel Core i9-12900K for comparison which scores 1901 points in single-core and 17272 points in multi-core tests. This puts the Intel Core i9-13900T up to 15% faster in single-core and slightly faster in multi-threaded tests which is very impressive considering the Core i9-12900K also has a higher 125W base TDP (3.58x higher) and a peak TDP rating of 241W (2.27x higher).
+
+Intel Core i9-13900KS Single-Thread CPU Benchmark (Geekbench 5)
+
+Single-Core
+
+
+050010001500200025003000
+
+
+
+
+050010001500200025003000
+
+
+
+
+
+Core i9-13900KS
+
+2.3k
+
+
+Core i9-13900K
+
+2.2k
+
+
+Ryzen 9 7900X
+
+2.2k
+
+
+Ryzen 9 7950X
+
+2.2k
+
+
+Ryzen 7 7700X
+
+2.2k
+
+
+Core i9-13900T
+
+2.2k
+
+
+Ryzen 5 7600X
+
+2.2k
+
+
+Ryzen 9 7900
+
+2.1k
+
+
+Core i9-13900
+
+2.1k
+
+
+Ryzen 7 7700
+
+2.1k
+
+
+Core i9-12900KS
+
+2.1k
+
+
+Core i9-13900HX
+
+2k
+
+
+Ryzen 5 7600
+
+2k
+
+
+Core i7-13700K
+
+2k
+
+
+Core i5-13600K
+
+1.9k
+
+
+Core i9-12900K
+
+1.9k
+
+
+Core i7-12700K
+
+1.9k
+
+
+M2 Max
+
+1.9k
+
+
+M1 Max
+
+1.8k
+
+
+Core i5-12600K
+
+1.7k
+
+
+Ryzen 9 5950X
+
+1.7k
+
+
+Ryzen 7 5800X
+
+1.7k
+
+
+Ryzen 9 5900X
+
+1.7k
+
+
+Ryzen 5 5600X
+
+1.6k
+
+
+
+
+
+
+
+Intel Core i9-13900KS Multi-Thread CPU Benchmark (Geekbench 5)
+
+Multi-Core
+
+
+050001000015000200002500030000
+
+
+
+
+050001000015000200002500030000
+
+
+
+
+
+Core i9-13900KS
+
+26.8k
+
+
+Core i9-13900K
+
+24.3k
+
+
+Ryzen 9 7950X
+
+24.4k
+
+
+Core i9-13900HX
+
+20.9k
+
+
+Core i9-13900
+
+20.1k
+
+
+Core i7-13700K
+
+19.8k
+
+
+Ryzen 9 7900X
+
+19.3k
+
+
+Core i9-12900KS
+
+19k
+
+
+Ryzen 9 7900
+
+18.6k
+
+
+Core i9-13900T
+
+17.3k
+
+
+Core i9-12900K
+
+17.3k
+
+
+Ryzen 9 5950X
+
+16.5k
+
+
+Core i5-13600K
+
+16.1k
+
+
+M2 Max
+
+14.6k
+
+
+Core i7-12700K
+
+14.1k
+
+
+Ryzen 7 7700X
+
+14.1k
+
+
+Ryzen 9 5900X
+
+14k
+
+
+Ryzen 7 7700
+
+12.7k
+
+
+M1 Max
+
+12.3k
+
+
+Core i5-12600K
+
+11.6k
+
+
+Ryzen 5 7600X
+
+11.4k
+
+
+Ryzen 5 7600
+
+11.3k
+
+
+Ryzen 7 5800X
+
+10.3k
+
+
+Ryzen 5 5600X
+
+8.2k
+
+
+
+
+
+
+This goes off to show the immense efficiency that Intel's 10nm ESF process node and the new hybrid architecture packs and we will also get to see some similar results with the mobility lineup, especially the 13th Gen HX parts which are going to ship in enthusiast-grade gaming laptops in the coming months. AMD also introduced its brand new 65W Ryzen 7000 Non-X CPUs which have been showcasing some impressive efficiency feats on their own with the Zen 4 core architecture.
+News Source: Benchleaks
+				
+				Share this story
+				 Facebook
+ Twitter
+
+
+
+
+
+
+Deal of the Day
+
+
+
+
+
+
+
+
+
+
+
+Further Reading
+
+
+
+
+ AMD Ryzen 9 7950X3D CPU Shown To Beat Intel Core i9-13900K In Games With Up To 24% Lead
+
+
+ Intel Core i9-13980HX CPU Powered MSI Raider GE78HX Laptop Matches High-End Desktop CPUs In Performance
+
+
+ Intel Core i9-13980HX Flagship Raptor Lake-HX CPU Spotted In ASUS’s Next-Gen ROG STRIX Laptop
+
+
+ It’s Over 9000! Intel Core i9-13900KS Becomes The First CPU To Achieve 9 GHz Frequency World Record
+
+
+
+
+
+
+
+
+
+
+
+
+
+Comments
+
+
+
+
+Please enable JavaScript to view the comments.
+
+
+
+
+
+
+
+
+
+
+Trending Stories
+
+
+NASA Captures Star Eaten By Black Hole 300 Million Light Years Away
+
+
+
+				86 Active Readers
+
+
+
+SpaceX’s Rockets Split Up In Mid Air For Rare & Stunning Views At 5,000 Km/h+
+
+
+
+				78 Active Readers
+
+
+
+Apple To Bring microLED Technology To All Products Eventually, Starting With Apple Watch Ultra; Complete Transition May Take 10 Years
+
+
+
+				54 Active Readers
+
+
+
+PlayStation 5 Vertical Orientation Issue Clarified by Technician; Issue Happens on “Unopened” Consoles
+
+
+
+				41 Active Readers
+
+
+
+Intel Core i9-13900T CPU Benchmarks Show Faster Than 12900K 125W Performance at 35W
+
+
+
+				30 Active Readers
+
+
+
+
+
+
+
+
+Popular Discussions
+
+
+AMD Radeon RX 7900 XTX Failure Rates Reportedly At 11%, RMA’s Piling Up But Users Not Receiving Cards
+
+
+
+				3100 Comments
+
+
+
+AMD Radeon RX 6000 GPUs Mysteriously Start Dying, German Repair Shop Receives 48 Cards With Cracked Chips
+
+
+
+				3020 Comments
+
+
+
+Intel Lunar Lake To Feature A Brand New CPU Architecture Built From The Ground-Up, Perf/Watt Focused at Mobile
+
+
+
+				2757 Comments
+
+
+
+AMD To Give The Love of 3D V-Cache This Valentines With Its Ryzen 7000 X3D CPUs Launch
+
+
+
+				2021 Comments
+
+
+
+Intel Arc A770 Performs Above AMD & NVIDIA In DirectStorage 1.1 Performance Benchmark
+
+
+
+				1802 Comments
+
+
+
+
+
+
+
+
+	 
+
+
+
+
+
+
+
+"
+https://news.ycombinator.com/rss,Show HN: Sketch – AI code-writing assistant that understands data content,https://github.com/approximatelabs/sketch,Comments,"
+
+
+
+
+
+
+
+
+approximatelabs
+
+/
+
+sketch
+
+Public
+
+
+
+
+ 
+
+Notifications
+
+
+
+ 
+
+Fork
+    9
+
+
+
+
+ 
+
+
+          Star
+ 346
+  
+
+
+
+
+
+
+
+
+
+        AI code-writing assistant that understands data content
+      
+
+
+
+
+
+346
+          stars
+ 
+
+
+
+9
+          forks
+ 
+
+
+
+ 
+
+
+          Star
+
+  
+
+
+
+
+
+ 
+
+Notifications
+
+
+
+
+
+
+
+
+
+
+
+
+Code
+
+
+
+
+
+
+
+Issues
+0
+
+
+
+
+
+
+Pull requests
+0
+
+
+
+
+
+
+Actions
+
+
+
+
+
+
+
+Projects
+0
+
+
+
+
+
+
+Security
+
+
+
+
+
+
+
+Insights
+
+
+
+ 
+ 
+
+
+
+More
+
+
+ 
+
+
+                  Code
+ 
+
+
+                  Issues
+ 
+
+
+                  Pull requests
+ 
+
+
+                  Actions
+ 
+
+
+                  Projects
+ 
+
+
+                  Security
+ 
+
+
+                  Insights
+ 
+
+
+
+
+
+
+
+approximatelabs/sketch
+
+
+
+
+
+
+
+
+
+This commit does not belong to any branch on this repository, and may belong to a fork outside of the repository.
+
+
+
+
+
+
+
+
+
+
+
+main
+
+
+
+
+
+Switch branches/tags
+
+
+
+
+
+
+
+
+
+
+Branches
+Tags
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+View all branches
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+View all tags
+
+
+
+
+
+
+
+
+
+
+
+
+
+Name already in use
+
+
+
+
+
+
+
+
+
+      A tag already exists with the provided branch name. Many Git commands accept both tag and branch names, so creating this branch may cause unexpected behavior. Are you sure you want to create this branch?
+
+
+
+    Cancel
+
+    Create
+
+
+
+
+
+
+
+
+1
+branch
+
+
+
+
+
+6
+tags
+
+
+
+
+
+
+
+    Code
+ 
+
+
+
+
+
+
+
+Local
+
+
+
+ Codespaces
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  Clone
+
+
+
+
+
+            HTTPS
+ 
+            GitHub CLI
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+        Use Git or checkout with SVN using the web URL.
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+      Work fast with our official CLI.
+      Learn more.
+    
+
+
+
+
+
+
+
+
+    Open with GitHub Desktop
+
+
+
+
+
+
+    Download ZIP
+
+
+
+ 
+Sign In Required
+
+                Please
+                sign in
+                to use Codespaces.
+              
+
+
+
+Launching GitHub Desktop
+
+    If nothing happens, download GitHub Desktop and try again.
+  
+
+
+
+
+Launching GitHub Desktop
+
+    If nothing happens, download GitHub Desktop and try again.
+  
+
+
+
+
+Launching Xcode
+
+    If nothing happens, download Xcode and try again.
+  
+
+
+
+
+
+Launching Visual Studio Code
+Your codespace will open once ready.
+There was a problem preparing your codespace, please try again.
+
+
+
+
+
+
+
+
+
+
+Latest commit
+
+
+
+
+
+
+ 
+
+
+
+
+bluecoconut
+
+update readme wording
+
+
+
+
+        …
+      
+
+
+
+
+        9d567ec
+      
+
+Jan 16, 2023
+
+
+
+
+
+update readme wording
+
+
+9d567ec
+
+
+
+Git stats
+
+
+
+
+
+
+
+133
+
+                      commits
+                    
+
+
+
+
+
+
+
+Files
+Permalink
+
+
+
+
+  
+    Failed to load latest commit information.
+
+
+  
+ 
+
+
+Type
+Name
+Latest commit message
+Commit time
+
+
+
+
+
+
+
+
+.github/workflows
+
+
+
+remove python 3.7, add tests, remove uneeded code
+
+
+
+Dec 15, 2022
+
+
+
+
+
+
+
+
+
+sketch
+
+
+
+some bug fix and copy addition
+
+
+
+Jan 16, 2023
+
+
+
+
+
+
+
+
+
+tests
+
+
+
+remove python 3.7, add tests, remove uneeded code
+
+
+
+Dec 15, 2022
+
+
+
+
+
+
+
+
+
+.gitignore
+
+
+
+update with edit and work on text2sql
+
+
+
+Oct 13, 2022
+
+
+
+
+
+
+
+
+
+README.md
+
+
+
+update readme wording
+
+
+
+Jan 16, 2023
+
+
+
+
+
+
+
+
+
+dev-requirements.txt
+
+
+
+starting to rebuild sketch
+
+
+
+Dec 15, 2022
+
+
+
+
+
+
+
+
+
+pyproject.toml
+
+
+
+rename to pandas extension, add missing requirement, use base64 encoding
+
+
+
+Jan 11, 2023
+
+
+
+
+
+
+
+
+
+setup.py
+
+
+
+starting to rebuild sketch
+
+
+
+Dec 15, 2022
+
+
+
+
+    View code
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+sketch
+Demo
+How to use
+.sketch.ask
+.sketch.howto
+.sketch.apply
+Sketch currently uses prompts.approx.dev to help run with minimal setup
+How it works
+
+
+
+
+
+README.md
+
+
+
+
+sketch
+Sketch is an AI code-writing assistant for pandas users that understands the context of your data, greatly improving the relevance of suggestions. Sketch is usable in seconds and doesn't require adding a plugin to your IDE.
+pip install sketch
+Demo
+Here we follow a ""standard"" (hypothetical) data-analysis workflow, showing a Natural Language interace that successfully navigates many tasks in the data stack landscape.
+
+Data Catalogging:
+
+General tagging (eg. PII identification)
+Metadata generation (names and descriptions)
+
+
+Data Engineering:
+
+Data cleaning and masking (compliance)
+Derived feature creation and extraction
+
+
+Data Analysis:
+
+Data questions
+Data visualization
+
+
+
+
+
+
+
+
+sketch-demo.mp4
+
+
+
+
+
+Try it out in colab: 
+How to use
+It's as simple as importing sketch, and then using the .sketch extension on any pandas dataframe.
+import sketch
+Now, any pandas dataframe you have will have an extension registered to it. Access this new extension with your dataframes name .sketch
+.sketch.ask
+Ask is a basic question-answer system on sketch, this will return an answer in text that is based off of the summary statistics and description of the data.
+Use ask to get an understanding of the data, get better column names, ask hypotheticals (how would I go about doing X with this data), and more.
+df.sketch.ask(""Which columns are integer type?"")
+.sketch.howto
+Howto is the basic ""code-writing"" prompt in sketch. This will return a code-block you should be able to copy paste and use as a starting point (or possibly ending!) for any question you have to ask of the data. Ask this how to clean the data, normalize, create new features, plot, and even build models!
+df.sketch.howto(""Plot the sales versus time"")
+.sketch.apply
+apply is a more advanced prompt that is more useful for data generation. Use it to parse fields, generate new features, and more. This is built directly on lambdaprompt. In order to use this, you will need to set up a free account with OpenAI, and set an environment variable with your API key. OPENAI_API_KEY=YOUR_API_KEY
+df['review_keywords'] = df.sketch.apply(""Keywords for the review [{{ review_text }}] of product [{{ product_name }}] (comma separated):"")
+df['capitol'] = pd.DataFrame({'State': ['Colorado', 'Kansas', 'California', 'New York']}).sketch.apply(""What is the capitol of [{{ State }}]?"")
+Sketch currently uses prompts.approx.dev to help run with minimal setup
+In the future, we plan to update the prompts at this endpoint with our own custom foundation model, built to answer questions more accurately than GPT-3 can with its minimal data context.
+You can also directly call OpenAI directly (and not use our endpoint) by using your own API key. To do this, set 2 environment variables.
+(1) SKETCH_USE_REMOTE_LAMBDAPROMPT=False
+(2) OPENAI_API_KEY=YOUR_API_KEY
+How it works
+Sketch uses efficient approximation algorithms (data sketches) to quickly summarize your data, and feed that information into language models. Right now it does this by summarizing the columns and writing these summary statistics as additional context to be used by the code-writing prompt. In the future we hope to feed these sketches directly into custom made ""data + language"" foundation models to get more accurate results.
+
+
+
+
+
+
+
+
+
+About
+
+      AI code-writing assistant that understands data content
+    
+Topics
+
+
+
+  python
+
+
+  data-science
+
+
+  data
+
+
+  ai
+
+
+  tabular-data
+
+
+  pandas
+
+
+  df
+
+
+  sketches
+
+
+  dataframe
+
+
+  copilot
+
+
+  codex
+
+
+  ds
+
+
+  datasketches
+
+
+  gpt3
+
+
+  lambdaprompt
+
+
+  datasketch
+
+
+
+Resources
+
+
+
+
+
+      Readme
+ 
+
+
+Stars
+
+
+
+
+
+346
+    stars
+
+Watchers
+
+
+
+
+
+4
+    watching
+
+Forks
+
+
+
+
+
+9
+    forks
+
+
+
+
+
+
+
+    Releases
+
+
+
+
+
+6
+tags
+
+
+
+
+
+
+
+    Packages 0
+
+
+        No packages published 
+
+
+
+
+
+
+
+        Used by 22
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            + 14
+          
+
+
+
+
+
+
+
+    Contributors 2
+
+
+
+
+
+
+
+
+bluecoconut
+Justin Waugh
+
+ 
+
+
+
+
+
+
+jmbiven
+Mike Biven
+
+ 
+
+
+
+
+
+Languages
+
+
+
+
+
+
+
+
+
+
+Python
+100.0%
+
+
+
+
+
+
+
+
+
+
+
+"
+https://news.ycombinator.com/rss,The hardest part of being a junior developer,https://rachsmith.com/the-hardest-part-of-being-a-jnr/,Comments,"
+
+
+
+The hardest part of being a Junior Developer
+
+
+Added:
+        January 16, 2023
+      
+
+Tags:
+
+  work
+
+
+  development
+
+
+
+
+
+Even though it was 12 years ago, I still remember what the most stressful part of being a junior developer was. I was reminded of it when I saw this meme in my Twitter timeline yesterday:
+
+In my first developer job, I had no previous experience - just some basic front-end coding and design classes at Uni. I had been hired by an advertising agency to animate flash banners and code marketing emails. The work atmosphere was fast-paced but I enjoyed the challenge. There was a lot to learn but I was loving everything I was learning. A lot of the people who worked there - ‘ad people’ were intense personalities but I grew used to working with them.
+I loved that job, and couldn’t believe I was being paid more to do it than in any hospitality role I had worked prior. There was just one part that stressed me out: knowing how long I should work on figuring out something by myself vs. asking for help. I had no context for how long anything should take. I didn’t want to be judged harshly for asking too many dumb questions, but I also didn’t want to appear to be slow. I had the added pressure of feeling like I was representing my entire gender with my performance.
+My manager at the time must have noticed my anxiety around this, and he did a wonderful thing. He made the timing aspect of it super explicit for me. He would do things like give me my next task and then say “try and get this done, if at any point you have spent an hour without making any progress, come and ask for help”. Then I knew how long was too long to spin my wheels on something on my own. Most of the time, I could keep figuring things out on my own, but when I couldn’t I could approach my manager without worrying whether I was bothering him “too soon”.
+By the time I moved on from that job, with the help of that manager, I had enough experience to be able to judge when it is time to ask for help on something and didn’t have to worry about it again.
+As I’ve always worked on small teams, I haven’t had the opportunity to manage a green developer that needs a lot of direction. But I thought I would just share this in case it is useful to anyone who does. Try and be very specific when you share your expectations around timing, it might help them out. It certainly helped me.
+
+
+
+Thanks for reading! If you'd like to share your thoughts you can leave a comment, send me an email, Tweet at me, or add an issue on GitHub.
+
+
+
+  Comments
+
+
+
+Please enable Javascript to view comments.
+
+          The Comments system is powered by a third party service - Talkyard. Sometimes they don't load 😞. If you're having trouble leaving a comment you can send me an email.
+        
+
+
+
+"
+https://news.ycombinator.com/rss,Show HN: Cross-Platform GitHub Action,https://github.com/marketplace/actions/cross-platform-action,Comments,"
+
+
+
+
+
+Marketplace
+Actions
+Cross Platform Action
+
+
+
+
+
+
+play-circle
+
+
+
+
+
+GitHub Action
+Cross Platform Action
+
+
+
+
+v0.9.0
+Latest version
+
+
+
+
+
+
+
+    Use latest version
+ 
+
+
+
+
+
+
+
+
+
+play-circle
+
+
+
+
+
+
+Cross Platform Action
+Provides cross platform runner
+
+
+Installation
+Copy and paste the following snippet into your .yml file.
+
+
+
+
+
+
+
+
+
+
+
+
+- name: Cross Platform Action
+  uses: cross-platform-actions/action@v0.9.0
+
+
+
+          Learn more about this action in cross-platform-actions/action
+
+
+
+
+
+
+
+
+
+
+
+
+Choose a version
+
+
+
+
+
+
+
+v0.9.0
+
+                Cross Platform Action 0.9.0
+              
+
+ 
+
+
+
+
+v0.8.0
+
+                Cross Platform Action 0.8.0
+              
+
+ 
+
+
+
+
+v0.7.0
+
+                Cross Platform Action 0.7.0
+              
+
+ 
+
+
+
+
+v0.6.2
+
+                Cross Platform Action 0.6.2
+              
+
+ 
+
+
+
+
+v0.6.1
+
+                Cross Platform Action 0.6.1
+              
+
+ 
+
+
+
+
+v0.6.0
+
+                Cross Platform Action 0.6.0
+              
+
+ 
+
+
+
+
+v0.5.0
+
+                Cross Platform Action 0.5.0
+              
+
+ 
+
+
+
+
+v0.4.0
+
+                Cross Platform Action 0.4.0
+              
+
+ 
+
+
+
+
+v0.3.1
+
+                Cross Platform Action 0.3.1
+              
+
+ 
+
+
+
+
+v0.3.0
+
+                Cross Platform Action 0.3.0
+              
+
+ 
+
+
+
+
+
+
+
+
+Cross-Platform GitHub Action
+This project provides a GitHub action for running GitHub Action workflows on
+multiple platforms. This includes platforms that GitHub Actions doesn't
+currently natively support.
+Features
+Some of the features that are supported include:
+
+Multiple operating system with one single action
+Multiple versions of each operating system
+Allows to use default shell or Bash shell
+Low boot overhead
+Fast execution
+
+Usage
+Here's a sample workflow file which will setup a matrix resulting in four jobs.
+One which will run on FreeBSD 13.1, one which runs OpenBSD 7.2, one which runs
+NetBSD 9.2 and one which runs OpenBSD 7.2 on ARM64.
+name: CI
+
+on: [push]
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os.host }}
+    strategy:
+      matrix:
+        os:
+          - name: freebsd
+            architecture: x86-64
+            version: '13.1'
+            host: macos-12
+
+          - name: openbsd
+            architecture: x86-64
+            version: '7.2'
+            host: macos-12
+
+          - name: openbsd
+            architecture: arm64
+            version: '7.2'
+            host: ubuntu-latest
+
+          - name: netbsd
+            architecture: x86-64
+            version: '9.2'
+            host: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Test on ${{ matrix.os.name }}
+        uses: cross-platform-actions/action@v0.9.0
+        env:
+          MY_ENV1: MY_ENV1
+          MY_ENV2: MY_ENV2
+        with:
+          environment_variables: MY_ENV1 MY_ENV2
+          operating_system: ${{ matrix.os.name }}
+          architecture: ${{ matrix.os.architecture }}
+          version: ${{ matrix.os.version }}
+          shell: bash
+          run: |
+            uname -a
+            echo $SHELL
+            pwd
+            ls -lah
+            whoami
+            env | sort
+Different platforms need to run on different runners, see the
+Runners section below.
+Inputs
+This section lists the available inputs for the action.
+
+
+
+Input
+Required
+Default Value
+Description
+
+
+
+
+run
+✓
+✗
+Runs command-line programs using the operating system's shell. This will be executed inside the virtual machine.
+
+
+operating_system
+✓
+✗
+The type of operating system to run the job on. See Supported Platforms.
+
+
+version
+✓
+✗
+The version of the operating system to use. See Supported Platforms.
+
+
+shell
+✗
+default
+The shell to use to execute the commands. Defaults to the default shell for the given operating system. Allowed values are: default, sh and bash
+
+
+environment_variables
+✗
+""""
+A list of environment variables to forward to the virtual machine. The list should be separated with spaces.
+
+
+
+All inputs are expected to be strings. It's important that especially the
+version is explicitly specified as a string, using single or double quotes.
+Otherwise YAML might interpet the value as a numeric value instead of a string.
+This might lead to some unexpected behavior. If the version is specified as
+version: 13.0, YAML will interpet 13.0 as a floating point number, drop the
+fraction part (because 13 and 13.0 are the same) and the GitHub action will
+only see 13 instead of 13.0. The solution is to explicitly state that a
+string is required by using quotes: version: '13.0'.
+Supported Platforms
+This sections lists the currently supported platforms by operating system. Each
+operating system will list which versions are supported.
+OpenBSD (openbsd)
+
+
+
+Version
+x86-64
+arm64
+
+
+
+
+7.2
+✓
+✓
+
+
+7.1
+✓
+✓
+
+
+6.9
+✓
+✓
+
+
+6.8
+✓
+✗
+
+
+
+FreeBSD (freebsd)
+
+
+
+Version
+x86-64
+
+
+
+
+13.1
+✓
+
+
+13.0
+✓
+
+
+12.4
+✓
+
+
+12.2
+✓
+
+
+
+NetBSD (netbsd)
+
+
+
+Version
+x86-64
+
+
+
+
+9.2
+✓
+
+
+
+Runners
+This section list the different combinations of platforms and on which runners
+they can run.
+
+
+
+Runner
+OpenBSD
+FreeBSD
+NetBSD
+
+
+
+
+Linux
+✓
+✓
+✓
+
+
+macos-10.15, macos-11, macos-12
+✓
+✓
+✗
+
+
+
+Under the Hood
+GitHub Actions currently only support the following platforms: macOS, Linux and
+Windows. To be able to run other platforms, this GitHub action runs the
+commands inside a virtual machine (VM). If the host platform is macOS the
+hypervisor can take advantage of nested virtualization.
+The FreeBSD and OpenBSD VMs run on the xhyve hypervisor (on a macOS
+host), while the other platforms run on the QEMU hypervisor (on a Linux
+host). xhyve is built on top of Apple's Hypervisor
+framework. The Hypervisor framework allows to implement hypervisors with
+support for hardware acceleration without the need for kernel extensions. xhyve
+is a lightweight hypervisor that boots the guest operating systems quickly and
+requires no dependencies outside of what's provided by the system. QEMU is a
+more general purpose hypervisor that runs on most host platforms and supports
+most guest systems. It's a bit slower than xhyve because it's general purpose
+and it cannot use nested virtualization on the Linux hosts provided by GitHub.
+The VM images running inside the hypervisor are built using Packer.
+It's a tool for automatically creating VM images, installing the guest
+operating system and doing any final provisioning.
+The GitHub action uses SSH to communicate and execute commands inside the VM.
+It uses rsync to share files between the guest VM and the host. xhyve
+does not have any native support for sharing files. To authenticate the SSH
+connection a unique key pair is used. This pair is generated each time the
+action is run. The public key is added to the VM image and the private key is
+stored on the host. Since xhyve does not support file sharing, a secondar hard
+drive, which is backed by a file, is created. The public key is stored on this
+hard drive, which is then mounted by the VM. At boot time, the secondary hard
+drive will be identified and the public key will be copied to the appropriate
+location.
+To reduce the time it takes for the GitHub action to start executing the
+commands specified by the user, it aims to boot the guest operating systems as
+fast as possible. This is achieved in a couple of ways:
+
+
+By downloading resources, like the hypervisor and a few other
+tools, instead of installing them through a package manager
+
+
+No compression is used for the resources that are downloaded. The size is
+small enough anyway and it's faster to download the uncompressed data than
+it is to download compressed data and then uncompress it.
+
+
+It leverages async/await to perform tasks asynchronously. Like
+downloading the VM image and other resources at the same time
+
+
+It performs as much as possible of the setup ahead of time when the VM image
+is provisioned
+
+
+Local Development
+Prerequisites
+
+NodeJS
+npm
+git
+
+Instructions
+
+
+Install the above prerequisites
+
+
+Clone the repository by running:
+git clone https://github.com/cross-platform-actions/action
+
+
+
+Navigate to the newly cloned repository: cd action
+
+
+Install the dependencies by running: npm install
+
+
+Run any of the below npm commands
+
+
+npm Commands
+The following npm commands are available:
+
+build - Build the GitHub action
+format - Reformat the code
+lint - Lint the code
+package - Package the GitHub action for distribution and end to end testing
+test - Run unit tests
+all - Will run all of the above commands
+
+Running End to End Tests
+The end to end tests can be run locally by running it through Act. By
+default, resources and VM images will be downloaded from github.com. By running
+a local HTTP server it's possible to point the GitHub action to local resources.
+Prerequisites
+
+Docker
+Act
+
+Instructions
+
+
+Install the above prerequisites
+
+
+Copy test/workflows/ci.yml.example to
+test/workflows/ci.yml
+
+
+Make any changes you like to test/workflows/ci.yml, this is file ignored by
+Git
+
+
+Build the GitHub action by running: npm run build
+
+
+Package the GitHub action by running: npm run package
+
+
+Run the GitHub action by running: act --privileged -W test/workflows
+
+
+Providing Resources Locally
+The GitHub action includes a development dependency on a HTTP server. The
+test/http directory contains a skeleton of a directory structure
+which matches the URLs that the GitHub action uses to download resources. All
+files within the test/http are ignore by Git.
+
+
+Add resources as necessary to the test/http directory
+
+
+In one shell, run the following command to start the HTTP server:
+./node_modules/http-server/bin/http-server test/http -a 127.0.0.1
+
+The -a flag configures the HTTP server to only listen for incoming
+connections from localhost, no external computers will be able to connect.
+
+
+In another shell, run the GitHub action by running:
+act --privileged -W test/workflows --env CPA_RESOURCE_URL=<url>
+
+Where <url> is the URL inside Docker that points to localhost of the host
+machine, for macOS, this is http://host.docker.internal:8080. By default,
+the HTTP server is listening on port 8080.
+
+
+
+
+
+
+Stars
+
+ 
+
+
+          Star
+ 40
+  
+
+
+
+
+
+Contributors
+
+
+
+ 
+
+ 
+
+
+Categories
+
+
+  Continuous integration
+
+
+  Testing
+
+
+
+
+Links
+
+
+
+cross-platform-actions/action
+    
+
+
+
+Open issues
+        1
+
+
+
+
+Pull requests
+      1
+
+
+
+
+Report abuse
+ 
+
+Cross Platform Action is not certified by GitHub. It is provided by a third-party and is governed by separate terms of service, privacy policy, and support documentation.
+    
+
+
+
+
+"
+https://news.ycombinator.com/rss,Will Floating Point 8 Solve AI/ML Overhead?,https://semiengineering.com/will-floating-point-8-solve-ai-ml-overhead/,Comments,"
+
+
+
+
+
+
+
+
+
+
+
+
+Will Floating Point 8 Solve AI/ML Overhead?
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+ 
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+Search for:
+
+
+
+ Subscribe
+
+中文 English 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Home
+Systems & Design
+Low Power - High Performance
+Manufacturing, Packaging & Materials
+Test, Measurement & Analytics
+Auto, Security & Pervasive Computing
+
+
+
+
+Special Reports
+
+Business & Startups
+Jobs
+Knowledge Center
+Technical Papers 
+
+Home';
+				AI/ML/DLArchitecturesAutomotiveCommunication/Data MovementDesign & VerificationLithographyManufacturingMaterialsMemoryOptoelectronics / PhotonicsPackagingPower & PerformanceQuantumSecurityTest & AnalyticsTransistorsZ-End Applications
+
+
+Events & Webinars 
+
+Events
+Webinars
+
+
+
+Videos & Research
+
+Videos
+Industry Research
+
+
+
+Newsletters
+
+
+
+
+
+MENU 
+
+Home
+Special Reports
+Systems & Design
+Low Power-High Performance
+Manufacturing, Packaging & Materials
+Test, Measurement & Analytics
+Auto, Security & Pervasive Computing
+Knowledge Center
+Videos
+Startup Corner
+Business & Startups
+Jobs
+Technical Papers 
+Events
+Webinars
+Industry Research
+Special Reports
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Home >
+                                                                    Low Power-High Performance >
+                                                                Will Floating Point 8 Solve AI/ML Overhead?                                                    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Low Power-High Performance
+
+Will Floating Point 8 Solve AI/ML Overhead?
+
+
+
+
+
+
+
+
+
+Less precision equals lower power, but standards are required to make this work.
+
+
+
+
+
+								January 12th, 2023 - 
+
+								By: Karen Heyman
+
+
+
+
+
+
+
+
+While the media buzzes about the Turing Test-busting results of ChatGPT, engineers are focused on the hardware challenges of running large language models and other deep learning networks. High on the ML punch list is how to run models more efficiently using less power, especially in critical applications like self-driving vehicles where latency becomes a matter of life or death.
+AI already has led to a rethinking of computer architectures, in which the conventional von Neumann structure is replaced by near-compute and at-memory floorplans. But novel layouts aren’t enough to achieve the power reductions and speed increases required for deep learning networks. The industry also is updating the standards for floating-point (FP) arithmetic.
+“There is a great deal of research and study on new data types in AI, as it is an area of rapid innovation,” said David Bell, product marketing director, Tensilica IP at Cadence. “Eight-bit floating-point (FP8) data types are being explored as a means to minimize hardware — both compute resources and memory — while preserving accuracy for network models as their complexities grow.”
+As part of that effort, researchers at Arm, Intel, and Nvidia published a white paper proposing “FP8 Formats for Deep Learning.” [1]
+“Bit precision has been a very active topic of debate in machine learning for several years,” said Steve Roddy, chief marketing officer at Quadric. “Six or eight years ago when models began to explode in size (parameter count), the sheer volume of shuffling weight data into and out of training compute (either CPU or GPU) became the performance limiting bottleneck in large training runs. Faced with a choice of ever more expensive memory interfaces, such as HBM, or cutting bit precision in training, a number of companies experimented successfully with lower-precision floats. Now that networks have continued to grow exponentially in size, the exploration of FP8 is the next logical step in reducing training bandwidth demands.”
+How we got here
+Floating-point arithmetic is a kind of scientific notation, which condenses the number of digits needed to represent a number. This trick is pulled off by an arithmetic expression first codified by IEEE working group 754 in 1986, when floating-point operations generally were performed on a co-processor.
+IEEE 754 describes how the radix point (more commonly known in English as the “decimal” point) doesn’t have a fixed position, but rather “floats” where needed in the expression. It allows numbers with extremely long streams of digits (whether originally to the left or right of a fixed point) to fit into the limited bit-space of computers. It works in either base 10 or base 2, and it’s essential for computing, given that binary numbers extend to many more digits than decimal numbers (100 = 1100100).
+ 
+
+Fig. 1: 12.345 as a base-10 floating-point number. Source: Wikipedia
+ 
+While this is both an elegant solution and the bane of computer science students worldwide, its terms are key to understanding how precision is achieved in AI. The statement has three parts:
+
+A sign bit, which determines whether the number is positive (0) or negative (1);
+An exponent, which determines the position of the radix point, and
+A mantissa, or significand, which represents the most significant digits of the number.
+
+
+Fig. 2: IEEE 754 floating-point scheme. Source: WikiHow
+As shown in figure 2, while the exponent gains 3 bits in a 64-bit representation, the mantissa jumps from 32 bits to 52 bits. Its length is key to precision.
+IEEE 754, which defines FP32 bit and FP64, was designed for scientific computing, in which precision was the ultimate consideration. Currently, IEEE working group P3109 is developing a new standard for machine learning, aligned with the current (2019) version of 754. P3109 aims to create a floating-point 8 standard.
+Precision tradeoffs
+Machine learning often needs less precision than a 32-bit scheme. The white paper proposes two different flavors of FP8: E4M3 (4-bit exponent and 3-bit mantissa) and E5M2 (5-bit exponent and 2-bit mantissa).
+“Neural networks are a bit strange in that they are actually remarkably tolerant to relatively low precision,” said Richard Grisenthwaite, executive vice president and chief architect at Arm. “In our paper, we showed you don’t need 32 bits of mantissa for precision. You can use only two or three bits, and four or five bits of exponent will give you sufficient dynamic range. You really don’t need the massive precision that was defined in 754, which was designed for finite element analysis and other highly precise arithmetic tasks.”
+Consider a real-world example: A weather forecast needs the extreme ranges of 754, but a self-driving car doesn’t need the fine-grained recognition of image search. The salient point is not whether it’s a boy or girl in the middle of the road. It’s just that the vehicle must immediately stop, with no time to waste on calculating additional details. So it’s fine to use a floating point with a smaller exponent and much smaller mantissa, especially for edge devices, which need to optimize energy usage.
+“Energy is a fundamental quantity and no one’s going to make it go away as an issue,” said Martin Snelgrove, CTO of Untether AI. “And it’s also not a narrow one. Worrying about energy means you can’t afford to be sloppy in your software or your arithmetic. If doing a 32-bit floating point makes everything easier, but massively more power consuming, you just can’t do it. Throwing an extra 1,000 layers at something makes it slightly more accurate, but the value for power isn’t there. There’s an overall discipline about energy — the physics says you’re going to pay attention to this, whether you like it or not.”
+In fact, to save energy and performance overhead, many deep learning networks had already shifted to an IEEE-approved 16-bit floating point and other formats, including mantissa-less integers. [2]
+“Because compute energy and storage is at a premium in devices, nearly all high-performance device/edge deployments of ML always have been in INT8,” Quadric’s Roddy said. “Nearly all NPUs and accelerators are INT-8 optimized. An FP32 multiply-accumulate calculation takes nearly 10X the energy of an INT8 MAC, so the rationale is obvious.”
+Why FP8 is necessary
+The problem starts with the basic design of a deep learning network. In the early days of AI, there were simple, one-layer models that only operated in a feedforward manner. In 1986, David Rumelart, Geoffrey Hinton, and Ronald Williams published a breakthrough paper on back-propagation [3] that kicked off the modern era of AI. As their abstract describes, “The procedure repeatedly adjusts the weights of the connections in the network so as to minimize a measure of the difference between the actual output vector of the net and the desired output vector. As a result of the weight adjustments, internal ‘hidden’ units, which are not part of the input or output, come to represent important features of the task domain, and the regularities in the task are captured by the interactions of these units.”
+In other words, they created a system in which better results could be achieved by adding more and more layers into a model, which would be improved by incorporating “learned” adjustments. Decades later, their ideas so vastly improved machine translation and transcription that college professors remain unsure whether undergraduates’ essays have been written by bots.
+But additional layers require additional processing power. “Larger networks with more and more layers were found to be progressively more successful at neural networks tasks, but in certain applications this success came with an ultimately unmanageable increase in memory footprint, power consumption, and compute resources. It became imperative to reduce the size of the data elements (activations, weights, gradients) from 32 bits, and so the industry started using 16-bit formats, such as Bfloat16 and IEEE FP16,” according to the paper jointly written by Arm/Intel/Nvidia.
+“The tradeoff fundamentally is with an 8-bit floating-point number compared to a 32-bit one,” said Grisenthwaite. “I can have four times the number of weights and activations in the same amount of memory, and I can get far more computational throughput as well. All of that means I can get much higher performance. I can make the models more involved. I can have more weights and activations at each of the layers. And that’s proved to be more useful than each of the individual points being hyper-accurate.”
+Behind these issues are the two basic functions in machine learning, training and inference. Training is the first step in which, for example, the AI learns to classify features in an image by reviewing a dataset. With inference, the AI is given novel images outside of the training set and asked to classify them. If all goes as it should, the AI should distinguish that tails and wings are not human features, and at finer levels, that airplanes do not have feathers and a tube with a tail and wings is not a bird.
+“If you’re doing training or inference, the math is identical,” said Ron Lowman, strategic marketing manager for IoT at Synopsys. “The difference is you do training over a known data set thousands of times, maybe even millions of times, to train what the results will be. Once that’s done, then you take an unknown picture and it will tell you what it should be. From a math perspective, a hardware perspective, that’s the big difference. So when you do training, you want to do that in parallel, rather than doing it in a single hardware implementation, because the time it takes to do training is very costly. It could take weeks or months, or even years in some cases, and that just costs too much.”
+In industry, training and inference have become separate specialties, each with its own dedicated teams.
+“Most companies that are deploying AI have a team of data scientists that create neural network architectures and train the networks using their datasets,” said Bob Beachler, vice president of product at Untether AI. “Most of the autonomous vehicle companies have their own data sets, and they use that as a differentiating factor. They train using their data sets on these novel network architectures that they come up with, which they feel gives them better accuracy. Then that gets taken to a different team, which does the actual implementation in the car. That is the inference portion of it.”
+Training requires a wide dynamic range for the continual adjustment of coefficients that is the hallmark of backpropagation. The inference phase is computing on the inputs, rather than learning, so it needs much less dynamic range. “Once you’ve trained the network, you’re not tweaking the coefficients, and the dynamic range required is dramatically reduced,” explained Beachler.
+For inference, continuing operations in FP32 or FP16 is just unnecessary overhead, so there’s a quantization step to shift the network down to FP8 or Integer 8 (Int8), which has become something of a de facto standard for inference, driven largely by TensorFlow.
+“The idea of quantization is you’re taking all the floating point 32 bits of your model and you’re essentially cramming it into an eight-bit format,” said Gordon Cooper, product manager for Synopsys’ Vision and AI Processor IP. “We’ve done accuracy tests and for almost every neural network-based object detection. We can go from 32-bit floating point to Integer 8 with less than 1% accuracy loss.”
+For quality/assurance, there’s often post-quantization retraining to see how converting the floating-point value has affected the network, which could iterate through several passes.
+This is why training and inference can be performed using different hardware. “For example, a common pattern we’ve seen is accelerators using NVIDIA GPUs, which then end up running the inference on general purpose CPUs,” said Grisenthwaite.
+The other approach is chips purpose-built for inference.
+“We’re an inference accelerator. We don’t do training at all,” says Untether AI’s Beachler. “We place the entire neural network on our chip, every layer and every node, feed data at high bandwidth into our chip, resulting in each and every layer of the network computed inside our chip. It’s massively parallelized multiprocessing. Our chip has 511 processors, each of them with single instruction multiple data (SIMD) processing. The processing elements are essentially multiply/accumulate functions, directly attached to memory. We call this the Energy Centric AI computing architecture. This Energy Centric AI Computing architecture results in a very short distance for the coefficients of a matrix vector to travel, and the activations come in through each processing element in a row-based approach. So the activation comes in, we load the coefficients, do the matrix mathematics, do the multiply/accumulate, store the value, move the activation to the next row, and move on. Short distances of data movement equates to low power consumption.”
+In broad outline, AI development started with CPUs, often with FP co-processors, then moved to GPUs, and now is splitting into a two-step process of GPUs (although some still use CPUs) for training and CPUs or dedicated chips for inference.
+The creators of general-purpose CPU architectures and dedicated inference solutions may disagree on which approach will dominate. But they all agree that the key to a successful handoff between training and inference is a floating-point standard that minimizes the performance overhead and risk of errors during quantization and transferring operations between chips. Several companies, including NVIDIA, Intel, and Untether, have brought out FP8-based chips.
+“It’s an interesting paper,” said Cooper. “8-bit floating point, or FP8, is more important on the training side. But the benefits they’re talking about with FP8 on the inference side is that you possibly can skip the quantization. And you get to match the format of what you’ve done between training and inference.”
+Nevertheless, as always, there are still many challenges still to consider.
+“The cost is one of model conversion — FP32 trained model converted to INT8. And that conversion cost is significant and labor intensive,” said Roddy. “But if FP8 becomes real, and if the popular training tools begin to develop ML models with FP8 as the native format, it could be a huge boon to embedded inference deployments. Eight-bit weights take the same storage space, whether they are INT8 or FP8. The energy cost of moving 8 bits (DDR to NPU, etc.) is the same, regardless of format. And a Float8 multiply-accumulate is not significantly more power consumptive than an INT8 MAC. FP8 would rapidly be adopted across the silicon landscape.  But the key is not whether processor licensors would rapidly adopt FP8. It’s whether the mathematicians building training tools can and will make the switch.”
+Conclusion
+As the quest for lower power continues, there’s debate about whether there might even be a FP4 standard, in which only 4 bits carry a sign, an exponent, and mantissa. People who follow a strict neuromorphic interpretation have even discussed binary neural networks, in which the input functions like an axon spike, just 0 or 1.
+“Our sparsity level is going to go up,” said Untether’s Snelgrove. “There are hundreds of papers a day on new neural net techniques. Any one of them could completely revolutionize the field. If you talk to me in a year, all of these words could mean different things.”
+At least at the moment, it’s hard to imagine that lower FPs or integer schemes could contain enough information for practical purposes. Right now, various flavors of FP8 are undergoing the slow grind towards standardization. For example, Graphcore, AMD, and Qualcomm have also brought a detailed FP8 proposal to the IEEE. [4]
+“The advent of 8-bit floating point offers tremendous performance and efficiency benefits for AI compute,” said Simon Knowles, CTO and co-founder of Graphcore. “It is also an opportunity for the industry to settle on a single, open standard, rather than ushering in a confusing mix of competing formats.”
+Indeed, everyone is optimistic there will be a standard — eventually. “We’re involved in IEEE P3109, as are many, many companies in this industry,” said Arm’s Grisenthwaite. “The committee has looked at all sorts of different formats. There are some really interesting ones out there. Some of them will stand the test of time, and some of them will fall by the wayside. We all want to make sure we’ve got complete compatibility and don’t just say, ‘Well, we’ve got six different competing formats and it’s all a mess, but we’ll call it a standard.”
+References 
+
+Micikevicius, P., et al. FP8 Formats for Deep Learning. Last revised Sep 29 2022 arXiv:2209.05433v2. https://doi.org/10.48550/arXiv.2209.05433
+Sapunov, G. FP64, FP32, FP16, BFLOAT16, TF32, and other members of the ZOO. Medium. May 16, 2020. https://moocaholic.medium.com/fp64-fp32-fp16-bfloat16-tf32-and-other-members-of-the-zoo-a1ca7897d407
+Rumelhart, D., Hinton, G. & Williams, R. Learning representations by back-propagating errors. Nature 323, 533–536 (1986). https://doi.org/10.1038/323533a0
+Noune, B. 8-bit Numerical Formats for Deep Neural Networks. Submitted June 6 2022 arXiv:2206.02915 https://doi.org/10.48550/arXiv.2206.02915
+
+Additional Reading:
+How to convert a number from decimal to IEEE 754 Floating Point Representation.
+Number Representation and Computer Arithmetic
+https://web.ece.ucsb.edu/~parhami/pubs_folder/parh02-arith-encycl-infosys.pdf
+Computer Representation of Numbers and Computer Arithmetic
+https://people.cs.vt.edu/~asandu/Courses/CS3414/comp_arithm.pdf
+
+
+
+
+
+
+
+
+
+
+
+ Tags: 8-bit floating point AI AI models AI/ML/DL AMD ARM base 10 base 2 BFLOAT16 Cadence Cadence Design Systems ChatGPT deep learning E4M3 E5M2 edge inference floating point FP16 FP32 FP64 FP8 Graphcore IEEE 754 inference INT8 Integer 8 Intel machine learning mantissa ML training neural network Nvidia P3109 Quadric Quadric.io Qualcomm Synopsys training Untether AI
+
+
+
+
+
+Karen Heyman   (all posts)
+
+
+							Karen Heyman is a technology editor at Semiconductor Engineering.
+						
+
+
+
+
+
+Leave a Reply Cancel replyComment * Name*(Note: This name will be displayed publicly)
+Email*(This will not be displayed publicly) 
+ 
+
+Δ 
+
+
+
+
+ Knowledge Centers Blogs 
+Spiking Neural Network (SNN)
+
+Published on June 23, 2021
+
+
+
+Recurrent Neural Network (RNN)
+
+Published on June 25, 2019
+
+
+
+Edge Computing
+
+Published on April 4, 2019
+
+
+
+Neural Networks
+
+Published on July 25, 2017
+
+
+
+Architectures
+
+Published on 
+
+
+
+Machine Learning (ML)
+
+Published on May 10, 2017
+
+
+
+Convolutional Neural Network (CNN)
+
+Published on 
+
+
+
+Artificial Intelligence (AI)
+
+Published on 
+
+
+
+
+Technical Papers
+Manycore-FPGA Architecture Employing Novel Duet Adapters To Integrate eFPGAs in a Scalable, Non-Intrusive, Cache-Coherent Manner (Princeton) January 16, 2023 by Technical Paper LinkHardware Trojan Detection Case Study Based on 4 Different ICs Manufactured in Progressively Smaller CMOS Process Technologies January 11, 2023 by Technical Paper LinkQuantum Computing Architecture Enabling  Communication Between Superconducting Quantum Processors (MIT) January 11, 2023 by Technical Paper LinkArbitrary Precision DNN Accelerator Controlled by a RISC-V CPU (Ecole Polytechnique Montreal, IBM, Mila, CMC) January 10, 2023 by Technical Paper LinkTechnique For Printing Electronic Circuits Onto Curved & Corrugated Surfaces Using Metal Nanowires (NC State) January 10, 2023 by Technical Paper Link 
+
+  Trending Articles
+
+RISC-V Pushes Into The Mainstream
+
+Open-source processor cores are beginning to show up in heterogeneous SoCs and packages.
+
+
+by Marie C. Baca and Ed Sperling
+
+
+
+How Secure Are RISC-V Chips?
+
+Open source by itself doesn’t guarantee security. It still comes down to the fundamentals of design.
+
+
+by Jeff Goldman
+
+
+
+Will Floating Point 8 Solve AI/ML Overhead?
+
+Less precision equals lower power, but standards are required to make this work.
+
+
+by Karen Heyman
+
+
+
+RISC-V decoupled Vector Processing Unit (VPU) For HPC
+
+
+
+by Technical Paper Link
+
+
+
+Startup Funding: December 2022
+
+Wafer manufacturing and GPUs draw investment; 106 companies raise $2.8B.
+
+
+by Jesse Allen
+
+
+
+
+
+
+Knowledge Centers Entities, people and technologies explored
+Learn More
+
+
+
+Related Articles
+
+Foundational Changes In Chip Architectures
+
+New memory approaches and challenges in scaling CMOS point to radical changes — and potentially huge improvements — in semiconductor designs. 
+
+
+by Brian Bailey
+
+
+
+How Memory Design Optimizes System Performance
+
+Changes are steady in the memory hierarchy, but how and where that memory is accessed is having a big impact.
+
+
+by John Koon
+
+
+
+Will Floating Point 8 Solve AI/ML Overhead?
+
+Less precision equals lower power, but standards are required to make this work.
+
+
+by Karen Heyman
+
+
+
+Startup Funding: October 2022
+
+113 startups raise $3.5B; batteries, AI, and new architectures top the list.
+
+
+by Jesse Allen
+
+
+
+Startup Funding: November 2022
+
+127 startups raise $2.6B; data center connectivity, quantum computing, and batteries draw big funding.
+
+
+by Jesse Allen
+
+
+
+IC Stresses Affect Reliability At Advanced Nodes
+
+Thermal mismatch in heterogeneous designs, different use cases, can impact everything from accelerated aging to warpage and system failures.
+
+
+by Ann Mutschler
+
+
+
+3D-IC Reliability Degrades With Increasing Temperature
+
+Electromigration and other aging factors become more complicated along the z axis.
+
+
+by Ann Mutschler
+
+
+
+On-Chip Power Distribution Modeling Becomes Essential Below 7nm
+
+Why and when it’s needed, and what tools and technologies are required.
+
+
+by Ann Mutschler
+
+
+
+
+
+
+
+
+
+
+
+Sponsors
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Advertise with us
+
+
+
+
+
+Advertise with us
+
+
+
+
+
+Advertise with us
+
+
+
+
+
+Newsletter Signup
+
+
+
+Popular Tags2.5D
+5G
+7nm
+advanced packaging
+AI
+ANSYS
+Apple
+Applied Materials
+ARM
+Atrenta
+automotive
+business
+Cadence
+EDA
+eSilicon
+EUV
+finFETs
+GlobalFoundries
+Google
+IBM
+imec
+Intel
+IoT
+IP
+Lam Research
+machine learning
+memory
+Mentor
+Mentor Graphics
+MIT
+Moore's Law
+Nvidia
+NXP
+Qualcomm
+Rambus
+Samsung
+security
+SEMI
+Siemens
+Siemens EDA
+software
+Sonics
+Synopsys
+TSMC
+verification
+Recent CommentsWZIS on Arbitrary Precision DNN Accelerator Controlled by a RISC-V CPU (Ecole Polytechnique Montreal, IBM, Mila, CMC)Rama Chaganti on Growing System Complexity Drives More IP ReuseTL on How Secure Are RISC-V Chips?Frank on The Good And Bad Of Bi-Directional ChargingSandeep Dixit on The Good And Bad Of Bi-Directional ChargingHertz on How Secure Are RISC-V Chips?Andrew on How Software Utilizes CoresAsaf Jivilik on Cybord: Electronic Component TraceabilitySantosh Kurinec on Where All The Semiconductor Investments Are Goingdick freebird on Designing And Securing Chips For Outer SpaceAkshay on Designing And Securing Chips For Outer SpaceRaj on Is UCIe Really Universal?Andrew TAM on How Software Utilizes CoresRiko R on Designing For Multiple DieDan Ganousis on RISC-V Pushes Into The MainstreamIvan Batinic on IC Stresses Affect Reliability At Advanced NodesGiovanni Lostumbo on A Power-First ApproachMohammed Zakir Hussain on Embracing the Challenges Of Cybersecurity In Automotive ApplicationsLaura Peters on Week In Review: Manufacturing, TestAiv on Week In Review: Manufacturing, TestRoss Youngblood on High Voltage Testing Races AheadMark Olivas on Cybord: Electronic Component TraceabilityKarl Stevens on The Drive Toward Virtual PrototypesRon Lavallee on The Politics Of StandardsDenis McCarthy on Hot Trends In Semiconductor Thermal ManagementTom Smith on Are We Too Hard On Artificial Intelligence For Autonomous Driving?Maya F on Where All The Semiconductor Investments Are GoingSaikatm on Balancing Power And Heat In Advanced Chip DesignsDoug L. on Holistic 3D-IC Interposer Analysis In Product DesignsAndy Deng on Post-Quantum And Pre-Quantum Security Issues GrowJohn Dunn on Post-Quantum And Pre-Quantum Security Issues Growmadmax2069 on Chip Design Shifts As Fundamental Laws Run Out Of SteamMatthew Slyman on Chip Design Shifts As Fundamental Laws Run Out Of SteamDouglas MacIntyre on Chip Design Shifts As Fundamental Laws Run Out Of SteamJose on Universal Verification Methodology Running Out Of SteamZhengji Lu on Moving From AMBA ACE to CHI For CoherencyJohn Bennice on A Power-First Approach[email protected] on Chip Design Shifts As Fundamental Laws Run Out Of SteamMatthew on Chip Design Shifts As Fundamental Laws Run Out Of SteamKarthik Krishnamoorthy on AI-Powered VerificationCPlusPlus4Ever on Chip Design Shifts As Fundamental Laws Run Out Of SteamDouglas on Chip Design Shifts As Fundamental Laws Run Out Of SteamBowie Poag on Chip Design Shifts As Fundamental Laws Run Out Of SteamEugene on Startup Funding: October 2022Wesley Sung on Fan-Out And Packaging ChallengesHong Xiao on Chip Design Shifts As Fundamental Laws Run Out Of SteamRobert Anderson on Chip Design Shifts As Fundamental Laws Run Out Of SteamMike Frank on A Power-First ApproachWilliam Ruby on A Power-First ApproachPeter C Salmon on A Power-First ApproachDr. Dev Gupta on Which Foundry Is In The Lead? It Depends.Steve Hoover on A Power-First ApproachDylanP on Which Foundry Is In The Lead? It Depends.Asaf Jivilik on Cybord: Electronic Component TraceabilityChris @ crossPORt on Foundational Changes In Chip ArchitecturesMark Olivas on Cybord: Electronic Component TraceabilityAri ben David on Constraints On The Electricity GridJeff Zika on Auto Safety Tech Adds New IC Design ChallengesJung Yoon on Foundational Changes In Chip ArchitecturesSchrodinger's Cat's Advocate on Foundational Changes In Chip ArchitecturesRigTig on Foundational Changes In Chip ArchitecturesSteve on Foundational Changes In Chip ArchitecturesPrashant Purwar on Why Mask Blanks Are CriticalMostafa Abdelgawwad on Radar For Automotive: How Far Can A Radar See?yieldWerx on Managing Wafer RetestJohn Horner on A Brief History of TestLakshm J on ESD Requirements Are ChangingDr. Dev Gupta on Improving Redistribution Layers for Fan-out Packages And SiPsAkarsh on Better PMIC Design Using Multi-Physics SimulationTodd Bermensolo on Reducing Schedule Slips With Automated Post-Route Verification Of SerDes High Speed Serial LinksLaur Rizzatti on Why Geofencing Will Enable L5Raj Raghuram on The Complex Art Of Handling S-ParametersStevo on CHIPS Act: U.S. Releases New Implementation StrategySantosh Kurinec on Quantum Research Bits: Sept. 12Lewis Sternberg on ML And UVM Share Same FlawsRoger Stierman on L5 Adoption Hinges on 5G/6GMarcel on MicroLEDs Move Toward CommercializationRagu Athreya on Is There A Limit To The Number of Layers In 3D-NAND?Brian Bailey on AI Power Consumption ExplodingDavid S on AI Power Consumption ExplodingMike Cormack on Cryogenic CMOS Becomes CoolLance Harvie on New Uses For AI In ChipsDoc R on Electronics And Its Role In Climate ChangeMagdy Abadir on Is Standardization Required For Security?guest on How Overlay Keeps Pace With EUV PatterningSantosh Kurinec on Week In Review, Manufacturing, Testsravani on Timing Library LVF Validation For Production Design FlowsDr. F on A Sputnik Moment For ChipsGary Dagastine on A Sputnik Moment For ChipsMike Sottak on A Sputnik Moment For ChipsRobert Pearson on A Sputnik Moment For ChipsRaye E. Ward on A Sputnik Moment For ChipsMichael Williams on A Look Inside RF DesignSURESHBABU CHILUGODU on Week In Review: Manufacturing, TestJC Bouzigues, Menta on Customizing ProcessorsSteve Swendrowski on IC Package Illustrations, From 2D To 3DEMV on Hybrid Bonding Moves Into The Fast LaneDr. Appo van der Wiel on Variation Making Trouble In Advanced Packageswang yu on Verification Of Functional SafetyFrederick Chen on High-NA EUV May Be Closer Than It AppearsFact Cheq on The Week In Review: DesignShiwen Huang on E-beam’s Role Grows For Detecting IC DefectsAdele Hars on Wafer Shortage Improvement In Sight For 300mm, But Not 200mmDavid A. Humphreys on IMS2022 Booth Tour: EDA And Measurement Science ConvergeMerritt on Can Analog Make A Comeback?subra ganesan on Meeting Processor Performance And Safety Requirements For New ADAS & Autonomous Vehicle SystemsGeorge on Building A More Secure SoCAmit Garg on A New Breed Of EDA RequiredKarl Stevens on A Minimal RISC-VKarl Stevens on EDA Gaps At The Leading EdgeMicah Forstein MS. on Risks Rise As Robotic Surgery Goes MainstreamDr. Punam Raskar on Who Does Processor Validation?Dr. Dev Gupta on Variation Making Trouble In Advanced PackagesCox on DRAM Thermal Issues Reach Crisis PointDavid Leary on DRAM Thermal Issues Reach Crisis PointGeeeeeee on DRAM Thermal Issues Reach Crisis PointPedro Ferro Laks on SOT-MRAM To Challenge SRAMObviously silly on DRAM Thermal Issues Reach Crisis PointSimon on DRAM Thermal Issues Reach Crisis PointGareth on Energy Harvesting Starting To Gain Traction
+
+ 
+
+
+
+
+
+Manycore-FPGA Architecture Emplo... Technical Paper LinkSelecting The Right RISC-V Core Brian Bailey 
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+About
+
+About us
+Contact us
+Advertising on SemiEng
+Newsletter SignUp
+
+
+
+Navigation
+
+
+
+Homepage
+Special Reports
+Systems & Design
+Low Power-High Perf
+Manufacturing, Packaging & Materials
+Test, Measurement & Analytics
+Auto, Security & Pervasive Computing
+
+
+
+
+Videos
+Jobs
+Technical Papers
+Events
+Webinars
+Knowledge Centers
+
+Industry Research
+Business & Startups
+Newsletters
+
+
+
+
+
+Connect With Us
+
+Facebook
+Twitter  @semiEngineering
+LinkedIn
+YouTube
+
+
+
+
+Copyright ©2013-2023 SMG   |  Terms of Service  |  Privacy Policy
+
+
+
+
+
+This site uses cookies. By continuing to use our website, you consent to our Cookies PolicyACCEPT Manage consent
+
+
+
+
+Close
+
+
+
+
+
+
+Privacy Overview 
+This website uses cookies to improve your experience while you navigate through the website. The cookies that are categorized as necessary are stored on your browser as they are essential for the working of basic functionalities of the website. We also use third-party cookies that help us analyze and understand how you use this website. We do not sell any personal information.
+
+By continuing to use our website, you consent to our Privacy Policy. If you access other websites using the links provided, please be aware they may have their own privacy policies, and we do not accept any responsibility or liability for these policies or for any personal data which may be collected through these sites. Please check these policies before you submit any personal information to these sites.
+
+ 
+
+
+
+
+
+								Necessary							
+
+
+Necessary
+
+Always Enabled
+
+
+
+
+									Necessary cookies are absolutely essential for the website to function properly. This category only includes cookies that ensures basic functionalities and security features of the website. These cookies do not store any personal information.								
+
+
+
+
+
+
+								Non-necessary							
+
+
+Non-necessary
+
+
+
+
+
+									Any cookies that may not be particularly necessary for the website to function and is used specifically to collect user personal data via analytics, ads, other embedded contents are termed as non-necessary cookies. It is mandatory to procure user consent prior to running these cookies on your website.								
+
+
+
+
+
+
+
+
+
+
+
+
+SAVE & ACCEPT
+
+
+
+
+
+
+
+
+
+
+ 
+
+ 
+ 
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+"
+https://news.ycombinator.com/rss,Microsoft returns to the Altair,https://hackaday.com/2023/01/15/microsoft-returns-to-the-altair/,Comments,"
+
+
+Microsoft Returns To The Altair
+
+
+                18 Comments            
+
+by:
+Al Williams
+
+
+
+January 15, 2023
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Title:
+
+
+Copy
+
+Short Link:
+
+
+Copy
+
+
+
+
+
+
+The Altair 8800 arguably launched Microsoft. Now [Dave Glover] from Microsoft offers an emulated and potentially cloud-based Altair emulation with CP/M and Microsoft Basic. You can see a video of the project below. One thing that makes it a bit odd compared to other Altair clones we’ve seen is that the emulator runs in a Docker environment and is fully cloud-enabled. You can interact with it via a PCB front panel, or a terminal running in a web browser.
+The core emulator is MIT-licensed and seems like it would run nearly everywhere. We were a little surprised there wasn’t an instance in the Azure cloud that you could spin up to test drive. Surely a few hundred Altairs running at once wouldn’t even make a dent in a modern CPU.
+
+There are plenty of Altair emulators and even replicas with authentic CPUs out there. But we have to admit the Wiki documentation on this one is uncommonly well done. Even if you don’t want to use this emulator, you might find the collection of data about the Altair useful.
+Don’t know how to use a computer front panel? Learn on the Altair or a PDP/8, even if you don’t have a real one. For simulated hardware, the project that turns an Arduino Due into an Altair works well. If you just want to play Zork, you can do that in your browser, for sure.
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Posted in RetrocomputingTagged altair 8800 
+
+
+Post navigation
+
+← A Number Maze For Younger HackersA Flex Sensor For A Glove Controller Using An LDR → 
+
+
+
+
+
+
+            18 thoughts on “Microsoft Returns To The Altair”        
+
+
+
+
+
+paulvdh says: 
+
+
+
+							January 15, 2023 at 1:24 am						
+
+
+
+
+@05:42 “I don’t have the source code for CP/M, I’m not even sure it exists anymore.
+https://hackaday.com/2014/10/06/cpm-source-code-released/
+This video is apparently only made as entertainment, just some guys blabbing and not caring about facts, That may be all right for some, it makes me wonder what else is off and  I lost interest.
+
+
+Report comment 
+Reply 
+
+
+
+
+
+MG says: 
+
+
+
+							January 15, 2023 at 1:51 am						
+
+
+
+
+Even just off the top of my head, the fact that it’s MIT-licensed is nothing special; the entire core of MAME and a significant number of machine drivers are all MIT/3-clause BSD, which includes the Intel 8080A core that one would need to spin up an Altair 8800 emulator as well.
+
+
+Report comment 
+Reply 
+
+
+
+
+
+stappers says: 
+
+
+
+							January 15, 2023 at 3:59 am						
+
+
+
+
+Thanks for the click bait warning.
+
+
+Report comment 
+Reply 
+
+
+
+
+
+me says: 
+
+
+
+							January 16, 2023 at 2:33 am						
+
+
+
+
+fortunately i read here, so i re-read witho more attention the initial post, so I avoid to lose some minutes of my life looking at another-not-wanted-at-all-cliclbite video. Thanks yo you, dude!
+
+
+Report comment 
+Reply 
+
+
+
+
+
+
+
+Joshua says: 
+
+
+
+							January 15, 2023 at 1:58 pm						
+
+
+
+
+What’s also kind of forgotten:
+CP/M was thoroughly understood.
+It was cloned and derived a dozen times, if not more.
+People who worked with assembly language could literally “read” how CP/M worked and flowed through the system.
+My father, among many others, wrote his own floppy controller routines for CP/M.
+It’s kind of sad to see how incompetent the matter is being handled these days. Such a blunder. *sigh*
+Back in the 70s and 80s, it was just natural to know about the internals of the Z-80 and/or CP/M. 
+There were hundreds of books being written about all the deepest mechanisms of them.
+
+
+Report comment 
+Reply 
+
+
+
+
+
+bruceeifler@gmail.com says: 
+
+
+
+							January 15, 2023 at 6:15 pm						
+
+
+
+
+“How to program the z80.  Roger Zaks
+
+
+Report comment 
+Reply 
+
+
+
+
+
+Mr Name Required says: 
+
+
+
+							January 15, 2023 at 11:14 pm						
+
+
+
+
+Rodnay Zaks, with the ‘a’. A well-thumbed book for me.
+
+
+Report comment 
+Reply 
+
+
+
+
+
+
+
+
+
+
+
+daveboltman says: 
+
+
+
+							January 15, 2023 at 4:50 am						
+
+
+
+
+Has Bill Gates really got over himself now?
+https://en.wikipedia.org/wiki/An_Open_Letter_to_Hobbyists
+
+
+Report comment 
+Reply 
+
+
+
+
+
+Ken says: 
+
+
+
+							January 15, 2023 at 7:37 am						
+
+
+
+
+You must not have been involved in the hobby “back in the day” – the copying of commercial products like Microsoft BASIC was rampant, almost celebrated in the community.
+This was before Microsoft had even started licensing ROM BASIC to the major home/personal computer manufacturers, so stolen paper tapes were a serious hit to MS revenues.
+
+
+Report comment 
+Reply 
+
+
+
+
+
+stappers says: 
+
+
+
+							January 15, 2023 at 7:53 am						
+
+
+
+
+And the problem of lack of wallet-voting still exists.  Might be because of the same word for libre and gratuit.
+Where I do agree with https://justforfunnoreally.dev/  I also do agree with young Bill Gates that people should do some kind of payment for what they want.
+
+
+Report comment 
+Reply 
+
+
+
+
+
+
+
+Joshua says: 
+
+
+
+							January 15, 2023 at 1:48 pm						
+
+
+
+
+Out of context. 
+I’m no expert of American copyright law, but as far as I understand:
+Material released before 1977 was considered Public Domain, unless the copyright is/was explicitly expressed.
+I assume this covers material/works of engineers, students, universities etc. which didn’t mention the copyright in their papers. 
+Go double check yourself, if you wish. I’m lazy right now. 😁
+
+
+Report comment 
+Reply 
+
+
+
+
+
+The Commenter Formerly Known As Ren says: 
+
+
+
+							January 15, 2023 at 4:29 pm						
+
+
+
+
+No, he hasn’t, he is now a James Bond level super villain.
+
+
+Report comment 
+Reply 
+
+
+
+
+
+
+
+Sok Puppette says: 
+
+
+
+							January 15, 2023 at 6:39 am						
+
+
+
+
+If it cannot play tunes on an AM radio, it is not a satisfying Altair emulator
+
+
+Report comment 
+Reply 
+
+
+
+
+
+Ken says: 
+
+
+
+							January 15, 2023 at 8:13 am						
+
+
+
+
+Neat project, I too am impressed by the level of documentation. While I’m not too interested in running weather/climate change analysis programs on an emulated 50 year-old system, I realize it was important to inject some cloud activity to jazz up the project.
+Interesting to note that you need to install Linux on a windows machine to run the code.
+Neat how the sense hat reduces the need for ‘blinkin lights’ to its most basic elements, like the computer prop in the bat cave or any 1960s sci-fi movie/tv show…
+
+
+Report comment 
+Reply 
+
+
+
+
+
+paulvdh says: 
+
+
+
+							January 15, 2023 at 9:25 am						
+
+
+
+
+At 5:42 he says he does not know whether the CP/M source code still exists…
+He clearly has not checked Hackaday lately…
+https://hackaday.com/2014/10/06/cpm-source-code-released/
+
+
+Report comment 
+Reply 
+
+
+
+
+
+Joshua says: 
+
+
+
+							January 15, 2023 at 1:51 pm						
+
+
+
+
+Not just CP/M, also MP/M, the power user version of CP/M. The real thing, so to say. :)
+
+
+Report comment 
+Reply 
+
+
+
+
+
+
+
+SayWhat? says: 
+
+
+
+							January 15, 2023 at 12:16 pm						
+
+
+
+
+I remember hacking “protected” MS Basic programs back in the day. All it took was finding the one byte in memory  that set the code to be not listable LOL.
+
+
+Report comment 
+Reply 
+
+
+
+
+
+demon256 says: 
+
+
+
+							January 15, 2023 at 3:45 pm						
+
+
+
+
+Heh, my first computer ran CP/M.
+
+
+Report comment 
+Reply 
+
+
+
+Leave a Reply					Cancel reply
+
+
+
+
+
+
+
+
+
+
+Please be kind and respectful to help make the comments section excellent. (Comment Policy)This site uses Akismet to reduce spam. Learn how your comment data is processed.
+
+
+
+
+
+
+
+Search
+
+Search for:
+
+
+
+Never miss a hack
+Follow on facebook
+Follow on twitter
+Follow on youtube
+Follow on rss
+Contact us
+Subscribe
+
+
+
+
+
+
+
+
+
+
+If you missed it
+
+
+
+
+
+
+
+AI-Controlled Twitch V-Tuber Has More Followers Than You
+
+
+ 39 Comments				
+
+
+
+
+
+
+
+
+Ask Hackaday: What’s Your Worst Repair Win?
+
+
+ 173 Comments				
+
+
+
+
+
+
+
+
+The Surprisingly Simple Way To Steal Cryptocurrency
+
+
+ 65 Comments				
+
+
+
+
+
+
+
+
+Excuse Me, Your Tie Is Unzipped
+
+
+ 100 Comments				
+
+
+
+
+
+
+
+
+All About USB-C: Resistors And Emarkers
+
+
+ 16 Comments				
+
+
+
+More from this category
+
+
+
+
+
+Our Columns
+
+
+
+
+
+
+
+2022 FPV Contest: Congratulations To The Winners!
+
+
+ 1 Comment				
+
+
+
+
+
+
+
+
+Machining With Electricity Hack Chat
+
+
+ 5 Comments				
+
+
+
+
+
+
+
+
+Hackaday Links: January 15, 2023
+
+
+ 16 Comments				
+
+
+
+
+
+
+
+
+Too Many Pixels
+
+
+ 34 Comments				
+
+
+
+
+
+
+
+
+Hackaday Podcast 201: Faking A Transmission, Making Nuclear Fuel, And A Slidepot With A Twist
+
+
+ 2 Comments				
+
+
+
+More from this category
+
+"
+https://news.ycombinator.com/rss,How my brother's iCloud account was stolen,https://7c0h.com/blog/new/stolen_iphone.html,Comments,"
+
+
+
+
+
+
+Martin's blog - How my brother's iCloud account was stolen
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Martin's blog 
+
+
+
+april_2020
+april_2022
+august_2015
+august_2018
+august_2020
+december_2018
+december_2020
+december_2021
+december_2022
+february_2017
+february_2018
+february_2020
+february_2022
+january_2016
+january_2020
+january_2021
+january_2022
+january_2023
+july_2015
+july_2016
+july_2019
+july_2020
+july_2021
+july_2022
+june_2015
+june_2018
+june_2020
+june_2021
+march_2015
+march_2018
+march_2020
+march_2021
+may_2015
+may_2016
+may_2020
+may_2021
+misc
+november_2017
+november_2019
+november_2020
+november_2021
+november_2022
+october_2015
+october_2020
+october_2021
+october_2022
+september_2015
+september_2016
+september_2021
+september_2022
+
+
+
+
+
+
+7c0h
+
+Home
+About me
+Blog
+Projects
+Research
+
+
+
+
+
+Martin's blog
+
+
+
+
+
+
+
+RSS
+
+
+Archive
+
+
+Mastodon
+
+
+
+
+
+
+
+
+
+
+
+
+How my brother's iCloud account was stolen
+
+				Posted on 2023-01-16 under 					iphone
+support
+
+
+
+
+My brother got his iPhone stolen at gunpoint. This is the story of how he lost
+control of his iCloud account first (along with years of priceless memories,
+including my nephew's first steps) and how this couldn't have happened without
+Apple's incompetent support.
+But before that, a plea for help: if you know of anyone who can help us get
+the account back (or rather, the priceless photos locked inside) please
+get in touch with the links at the end of the article.
+Part 1: Locked out of iCloud
+The first thing the thieves did (after running away, of course) was changing
+the phone number associated with the iCloud account. I do not know how they
+did this - it has been suggested that Apple will send a code to your phone,
+which the thieves obviously had. In any case, as soon as my brother tried to
+log into ""Find my Phone"" he was faced with a screen asking him to verify
+the phone number associated with the account, which was set to a number we
+do not recognize.
+It didn't matter that we still had the proper password for the iCloud account,
+nor that we still have control of the e-mail associated with the account.
+As far as Apple is concerned, if you don't know the phone number (which, again,
+the thieves changed) you cannot access your iCloud account.
+This is a known issue with iCloud security.
+Next we got in touch with Apple, both via phone and Twitter.
+Phone support was useless, as all they would say was that they couldn't help
+us unless we knew the phone number. The closest I got to a victory was
+getting the phone representative to say out loud that she wanted me to provide
+the phone number the thieves gave, but that's about it.
+Even if we have the old phone number, the iCloud e-mail, the iCloud
+password, a police report and multiple IDs, Apple will not budge.
+Twitter support was even worse: after repeatedly asking them to read what I
+said two messages ago, I ended up getting this pointless, infuriating response:
+
+We completely understand the concern with how important it is to have this resolved as soon as possible, and we were able to locate the cases from when you had previously reached out. Based on the information that you've provided, and the steps you and your brother have gone through, if your brother is unable to regain access to his Apple ID we would be unable to provide any additional methods to regain access to the account, and we would be unable to change the trusted phone number on the account. If you have any other questions or concerns regarding this issue, the best option would be to reach back out to our Apple ID experts at the link provided in our previous message (Note: that's the phone we called
+before).
+
+Part 2: Losing iCloud for good
+But the story gets even worse (better?). While we were stuck in phone support
+hell, my brother got a phishing SMS. He didn't recognize it as such, and lost
+the phone for good. The trick works like this: once you get a new SIM card
+(which the thieves can tell because the old one stops working) the
+thieves send you a phishing e-mail pretending to be from Apple.
+You follow the link, give your iCloud username and password,
+and now the thieves can unlock your iPhone and resell it.
+Crucially, this step only works because thieves know that Apple support will
+not help you: if Apple had been of ANY help then we would have recovered
+access long before the SMS and my brother wouldn't have followed the link.
+According to Gizmodo (in Spanish) the next step would have been
+a phishing call with spoofed caller ID. But we will never know.
+Sidenote: I reported both URLs (https://apple.iforgot-ip.info and
+https://apple.located-maps.info) to their hosting providers.
+Results have been mixed. PublicDomainRegistry.com (which belongs to
+Webhostbox) will not take down the hosting addresses unless they can see the
+phishing attack themselves (they won't check logs), but good luck getting
+a one-time link to work twice. UnifiedLayer.com was helpful,
+and I believe that GoDaddy revoked their domains.
+Part 3: No more Apple
+The iCloud website promises
+""all your stuff — photos, files, notes, and more — is safe, up to date, and available wherever you are"".
+You have now seen what ""safe"" means in this context: it will be in the cloud,
+yes, but that doesn't mean you'll have access to it.
+The question now is: would my brother choose Apple again?
+An iPhone is not cheap in general, and in Argentina less so. The current price
+for an iPhone 13 is ca. 400.000 ARS, which roughly translates to 2200 USD
+or 1300 USD at the unofficial rate (it's complicated). With an average
+monthly salary of 427 USD (according to Numbeo) you can see that getting a new
+iPhone is not a choice to take lightly.
+What will my brother do? Paraphrasing from a conversation we had:
+""if I could get my account back I could consider getting a new iPhone.
+But if I have to start from scratch then it doesn't make sense.
+If I can't get my data back I'll probably get an Android phone instead"".
+Part 4: Conclusion and next steps
+I have not entirely given up, but I'm not keeping my hopes up either. We are
+currently looking into whether my brother's wife can get access to his files
+(they had some kind of shared access), whether his iWatch can be of any use
+(it was logged into the iCloud account), whether small claims court is likely to help (I know
+it would work in the EU but
+Argentina is trickier), and whether anyone in my extended network can reach
+someone at Apple who is not an AI (thanks for nothing, LinkedIn).
+As for next steps, I will be gifting my family access to some cloud storage,
+but unless I can get a service with competent tech support
+I may end up setting up a cloud of my own.
+Hopefully the loss of my nephew's first steps will not be in vain.
+Do you have any ideas? Do you work for Apple? Then send
+me an e-mail or get in
+touch in Mastodon or even
+Twitter.
+
+
+
+
+
+
+
+
+Pure.css
+Pelican
+
+
+
+
+
+
+					All content in this blog is licensed under a
+Creative Commons Attribution-ShareAlike 4.0 International License
+
+
+
+
+
+
+"
+https://news.ycombinator.com/rss,Marriage rules in Minoan Crete revealed by ancient DNA analysis,https://phys.org/news/2023-01-marriage-minoan-crete-revealed-ancient.html,Comments,"400 Bad request
+Your browser sent an invalid request.
+
+"
+https://news.ycombinator.com/rss,Boris Yeltsin's visit to a suburban Houston supermarket in 1989,http://beelineblogger.blogspot.com/2016/01/how-supermarket-visit-brought-down.html,Comments,"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+BeeLine: How A Supermarket Visit Brought Down The Soviet Union
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+BeeLine
+
+
+
+
+The Shortest Route To What You Need To Know
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Scott Beeken
+
+
+
+
+
+BeeLine
+
+
+
+View my complete profile
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Tuesday, January 5, 2016
+
+
+
+
+
+
+
+
+How A Supermarket Visit Brought Down The Soviet Union
+
+
+
+
+
+Many point to the fact that the Soviet Union collapse occurred as the Soviets were baited into trying to compete with the defense build-up instituted by Ronald Reagan.
+
+The Soviets just did not have the financial resources to match the United States in defense spending while also tending to the needs of its citizenry. The Soviets spent money on guns rather than butter. Something had to give and the Soviet people were the ones that suffered.
+
+However, a little known visit to a suburban Houston supermarket in 1989 by Boris Yeltsin appears to have been the catalyst that ended up bringing down the Soviet Union.
+
+Yeltsin visited the Johnson Space Center in Houston in September, 1989 to tour mission control and to view a model of the planned International Space Station.
+
+After visiting the Space Center, Yeltsin made an unplanned stop at a local Randall's grocery store that was close by before heading to the airport.
+
+That visit changed the course of history.
+
+At the time, Yeltsin was a newly elected member of the Soviet Parliament and the Supreme Soviet and had been a key ally of the General Secretary of the Communist Party Mikhail Gorbachev, who was initiating reforms but the pace of which was too slow for Yeltsin.
+
+Houston Chronicle reporter Stephanie Asin was with Yeltsin on the visit to the grocery store that day.
+
+
+Yeltsin, then 58, “roamed the aisles of Randall’s nodding his head in amazement,” wrote Asin. He told his fellow Russians in his entourage that if their people, who often must wait in line for most goods, saw the conditions of U.S. supermarkets, “there would be a revolution.”
+
+“Even the Politburo doesn’t have this choice. Not even Mr. Gorbachev,” he said.
+
+The fact that stores like these were on nearly every street corner in America amazed him. They even offered free cheese samples. According to Asin, Yeltsin didn’t leave empty-handed, as he was given a small bag of goodies to enjoy on his trip.
+
+This is a picture of Yeltsin touring the grocery store.
+
+
+
+Credit: Houston Chronicle
+
+
+This Houston Chronicle story from 2014 fills in the rest of the story.
+
+
+About a year after the Russian leader left office, a Yeltsin biographer later wrote that on the plane ride to Yeltsin’s next destination, Miami, he was despondent. He couldn’t stop thinking about the plentiful food at the grocery store and what his countrymen had to subsist on in Russia.
+
+In Yeltsin’s own autobiography, he wrote about the experience at Randall’s, which shattered his view of communism, according to pundits. Two years later, he left the Communist Party and began making reforms to turn the economic tide in Russia. 
+
+“When I saw those shelves crammed with hundreds, thousands of cans, cartons and goods of every possible sort, for the first time I felt quite frankly sick with despair for the Soviet people,” Yeltsin wrote. “That such a potentially super-rich country as ours has been brought to a state of such poverty! It is terrible to think of it.”
+
+To give you some perspective on what was available in the Soviet Union at that time, here is a picture of a Russian store from that era.
+
+
+
+
+Credit: Gennady Galperin/Reuters
+
+
+An aide to Yeltsin later reported that in that visit to the grocery store in Houston “the last vestige of Bolshevism collapsed” inside his boss.
+
+Two years later Yeltsin was elected to the newly created office of President of the Russian Federation after the collapse of the Soviet Union with Gorbachev.
+
+Yeltsin immediately began dismantling the socialist economic system and introducing capitalism to the Russians. In the process he attempted to convert the world's largest command economy into a free-market one. 
+
+The results of that transition were rocky in large part to cronyism in the break-up of many of the large state-owned businesses. In the process, many Russian oligarchs were created and Yeltsin eventually resigned his office in 1999 haunted by charges of corruption and incompetence.
+
+His successor?
+
+Vladimir Putin.
+
+The falling price of oil has put a similar squeeze on Putin and the Russians today. Putin has been popular with the Russian people based on his macho style and nationalistic bombast. However, potential trouble lurks for Putin because of the Russian economy.
+
+The Russian consumer is being squeezed with annual inflation of almost 20% and the average Russian spends about 50% of their income on food.
+
+By comparison, the average American spends only 8% of income on groceries.
+
+Will groceries once again determine the future of Russia?
+
+
+
+
+
+
+Posted by
+
+
+
+BeeLine
+
+
+
+
+at
+
+8:21 PM
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Email ThisBlogThis!Share to TwitterShare to FacebookShare to Pinterest
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+42 comments:
+
+
+
+
+andreSeptember 14, 2017 at 4:52 AMobat viagraviagra asliReplyDeleteRepliesUnknownOctober 29, 2021 at 10:14 AMGreat Article Artificial Intelligence Projects Project Center in Chennai JavaScript Training in Chennai JavaScript Training in Chennai Project Centers in Chennai DeleteRepliesReplyReplychegekhanMarch 28, 2018 at 8:11 AMUseful Information, your blog is sharing unique information....Thanks for sharing!!! buy bakery products online south-cbuy branded food online in panganiReplyDeleteRepliesReplyUnknownSeptember 27, 2018 at 7:24 AMThank you for your post. This is excellent information. It is amazing and wonderful to visit your site.buy bakery products online south-c ReplyDeleteRepliesReplyYK AgencyDecember 25, 2018 at 11:30 AMSupermarket in Dubai Great article. Cool.ReplyDeleteRepliesReplyLuck CityFebruary 11, 2019 at 3:50 AMWithin this webpage, you'll see the page, you need to understand this data. https://digitalglobal.comReplyDeleteRepliesReplyjames brownNovember 22, 2019 at 6:45 AMAwesome blog. I enjoyed reading your articles. This is truly a read for me. I have bookmarked it and I am looking forward to reading new articles. Keep up the good work!Kroger customer surveyReplyDeleteRepliesReplyKroger experienceDecember 10, 2019 at 8:05 AMPlease share more like that.Kroger experienceReplyDeleteRepliesReplyAnonymousDecember 30, 2019 at 7:47 PMGreat article! Yeltsin revealed as a realist! I never knew this ...ReplyDeleteRepliesReplyDavid Grant Stewart, Sr., EgyptologistJanuary 1, 2020 at 3:17 PMWho paid you to write this drivel? You are either incredibly gullible or on the take from the USSR propaganda machine. You look and say the Soviet civilian economy is bad. There is no civilian economy in the USSR. The country does not have a war machine. The country is a war machine.ReplyDeleteRepliesReplyNeha UppalJanuary 9, 2020 at 3:33 AMThanks for sharing such beautiful information with us. I hope you will share some more information about best grocery shopping app. Please keep sharing.ReplyDeleteRepliesReplyjames brownFebruary 13, 2020 at 1:15 PMHey There. I found your blog using This is a very well written article. I’ll be sure to bookmark it and come back to read more of your useful info. Thanks for the post. I’ll definitely return.https://krogerexperiencee.com/ReplyDeleteRepliesReplyjames brownFebruary 18, 2020 at 7:24 AMGreat post I would like to thank you for the efforts you have made in writing this interesting and knowledgeable article.https://tellthebelll.usReplyDeleteRepliesReplysurvey monkey usaFebruary 19, 2020 at 7:45 AMGreat things you’ve always with us. Just keep writing this kind of posts.The time which was wasted in traveling for tuition now it can be used for studies.Thankssurvey monkey usaReplyDeleteRepliesReplydanielwilsonnFebruary 19, 2020 at 3:43 PM Thank you again for all the knowledge u distribute,Good post. I was very interested in the article, it's quite inspiring I should admit. I like visiting you site since I always come across interesting articles like this one.Great Job, I greatly appreciate that.Do Keep sharing! Regards,https://krogerfeeedback.us/ReplyDeleteRepliesReplydahliaApril 23, 2020 at 3:21 AM Thanks for sharing this information. I really like your post very much. You have really shared an informative and interesting post with people  TellTheBell ReplyDeleteRepliesReplypatronsurveysApril 24, 2020 at 8:23 AMAfter Kroger and Walmart, I prefer to go to Tesco supermarket. Do you know what? there is quality in products with an extraordinary service tescoviews com offers a platform to complete the Tesco customer satisfaction survey to win £1000 Gift Card & 25 Club Points. Survey site is giving a lot of store surveys at one place to complete.ReplyDeleteRepliesReplyjames brownJuly 14, 2020 at 3:24 AMThis comment has been removed by the author.ReplyDeleteRepliesReplyjames brownJuly 14, 2020 at 3:25 AMIts a great pleasure reading your post.Its full of information I am looking for and I love to post a comment that ""The content of your post is awesome"" Great work.https://krogerexperiencee.com/greatpeople-me-kroger-employee-login-portal/ReplyDeleteRepliesReplyNFL FanSeptember 20, 2020 at 4:46 PMThe official source for NFL news, video highlights, fantasy football, game-day coverage, schedules, stats, scores and more. Ravens FootballReplyDeleteRepliesReplytellthebellSeptember 22, 2020 at 11:42 AM Excellent website you have  so much cool information!..tellthebellReplyDeleteRepliesReplydgcustomerfirstJune 25, 2021 at 6:49 AMTo take an interest in the Dollar general super market survey, it is important to arrange a few things at one of its Branches initially. Visit the authority survey site of Dollar General survey at Dgcustomerfirst.Com and Win A $100 gift voucher. Then, at that point, you need to save the receipt of the store. Then, at that point, go to the authority survey site of dollar general. The Dg survey is accessible in both English or Spanish.ReplyDeleteRepliesReplymybkexperienceAugust 3, 2021 at 2:30 AMDollar general survey is an online platform that collects customers' most recent shopping experiences and overall customer satisfaction. Participate in the survey and be the lucky person to get enlisted in dg customer first winners. ReplyDeleteRepliesReplyarnavharperAugust 30, 2021 at 12:33 PMRemote for Fire TV is designed specifically to control Fire TV, Fire TV Cube and Fire TV Stick. Just connect mobile device and a TV or media player to the Firestick Remote.ReplyDeleteRepliesReplySEOOctober 12, 2021 at 3:37 AMdelta international recruitment agency in pakistanReplyDeleteRepliesReplyHealthandBeautyTipsNovember 6, 2021 at 5:24 PMEmployees can Perform Kroger E-Schedule Login at the Feed Kroger Login Portal once their Schedule Credentials are verified. If you are unable to sign in to Kroger Login then you need to contact the branch manager.Feed KrogerReplyDeleteRepliesReplyUnknownJanuary 27, 2022 at 5:48 AMThe NASA dark Brant IX sounding rocket conveyed the payload to an apogee of 177 miles prior to plunging by parachute and arriving at White Sands. Dgcustomerfirst.com Survey ReplyDeleteRepliesReplydgcustomerfirst.comMay 19, 2022 at 3:35 AMThe dgcustomerfirst.com criticism review permits customers to enter the Dollar General Sweepstakes of Cash $100 in the wake of finishing the overview.dgcustomerfirstwin.shop Survey  ReplyDeleteRepliesReplywww.DGCustomerFirst.comJune 6, 2022 at 10:50 AMDollar general survey is an online platform that collects customers' most recent shopping experiences and overall customer satisfaction. https://idgcustomerfirst.org/ReplyDeleteRepliesReplydgcustomerfirsts.shopJune 10, 2022 at 6:07 AMAlso, you have a superb opportunity to partake in the client criticism overview. DGCustomerFirst 2022 or Dollar General Survey is a study led by Dollar General's authorities for all United States inhabitants.dgcustomerfirsts executed a connected with the WWW review to take an arrangement about dgcustomerfirsts Helpline notwithstanding your support level thereafter visiting service  Click here dgcustomerfirsts ReplyDeleteRepliesReplySteveJune 16, 2022 at 9:58 AMGreat Article, it was very informative. That was such thought-provoking content. I enjoyed reading your content. Every week, I look forward to your column. In my opinion, this one is one of the best articles you have written so far.How to Change Instagram PasswordChange Windows 10 PasswordSubwaylistensHome Depot SurveyDQFanFeedback.com ReplyDeleteRepliesReplyUmairJune 30, 2022 at 6:44 AMirescopk.comReplyDeleteRepliesReplyDgcustomerfirstscom.shopJuly 9, 2022 at 6:51 AMFormerly referred to as J L Turner, Dollar General has numerous subsidiaries viz Dollar General Market, Dollar General Financial, Dollar General Global Sourcing, and lots extra.dgcustomerfirstscom executed a connected with the WWW review to take an arrangement about dgcustomerfirstscom Helpline notwithstanding your support level thereafter visiting service  Click here dgcustomerfirstscom ReplyDeleteRepliesReplyAnonymousJuly 19, 2022 at 1:35 PMLiveTheOrangeLife – Official Portal www.LiveTheOrangeLife.comWalmartOne Login - Walmartone.com Login Guidemyaccountaccess.comonevanillaJCP Associate KioskReplyDeleteRepliesReplySmith AdomJuly 30, 2022 at 12:03 PMTalkToWendys executed a connected with the WWW review to take an arrangement about TalkToWendys Helpline notwithstanding your support level thereafter visiting service  Click here TalkToWendys  It is mandatory to make a purchase at Wendy’s once before being a participant in this survey.ReplyDeleteRepliesReplyInformTarget.comAugust 10, 2022 at 3:38 AMRules are guidelines, and they are set to be accompanied. If you want to participate within the survey effectively, you need to adhere to the rules and policies set apart via the informtarget.Com remarks survey.informtargets executed a connected with the WWW review to take an arrangement about informtargets Helpline notwithstanding your support level thereafter visiting service  Click here informtargets.shop ReplyDeleteRepliesReplyTellBaskinRobbinsAugust 19, 2022 at 5:39 AMThere are some basic rules and requirements of this Baskin Robbins Customer Satisfaction Survey which I even have furnished in this newsletter. tellbaskinrobbins executed a connected with the WWW review to take an arrangement about tellbaskinrobbins Helpline notwithstanding your support level thereafter visiting service  Click here tellbaskinrobbins ReplyDeleteRepliesReplyTalktofoodlionAugust 20, 2022 at 2:37 AMTalktofoodlion The company's full name is general Dollar, and it is offering a $100 incentive to customers who take the time to participate in this little survey. visit here Talktofoodlion ReplyDeleteRepliesReplyFaiz IsrailiAugust 21, 2022 at 5:02 AMThe procedure is requesting information from individuals using a questionnaire, which may be completed offline or online. New technologies, however, are frequently disseminated via digital channels like social media, email, QR codes, or URLs. dgcustomerfirstReplyDeleteRepliesReplyTellBaskinRobbinsSeptember 8, 2022 at 7:11 AMTellBaskinRobbins After responding to the feedback questions, participants are expected to rate their experience shopping at Baskin Robbins.The feedback survey is sponsored by Baskin Robbins in order to better understand its service quality TellBaskinRobbinsReplyDeleteRepliesReplyNikithaOctober 8, 2022 at 1:31 AMmybkexperience customer satisfaction survey which is an online platform to get timely feedback from their customers about the food and services. This can improve their services according to customer’s needs and at the same time, rewards their customer for their time and loyalty towards the restaurant. So you can answer the questions and eat delicious food for free at the same time. Now you might be wondering about how to participate in the survey or what are the requirements and much more.ReplyDeleteRepliesReplySEOOctober 14, 2022 at 5:59 AMtop recruitment agencies in pakistan for saudi arabiaReplyDeleteRepliesReplyAdd commentLoad more...
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Newer Post
+
+
+Older Post
+
+Home
+
+
+
+
+Subscribe to:
+Post Comments (Atom)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+BeeLine Email Subscription
+
+Get new posts by email:  Subscribe
+
+
+
+
+Follow @BeeLineBlog
+
+
+
+
+Followers
+
+
+
+
+
+
+
+
+
+
+
+Blog Archive
+
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+2023
+
+(5)
+
+
+
+
+
+        ► 
+      
+
+
+
+January
+
+(5)
+
+
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+2022
+
+(139)
+
+
+
+
+
+        ► 
+      
+
+
+
+December
+
+(11)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+November
+
+(10)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+October
+
+(12)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+September
+
+(12)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+August
+
+(13)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+July
+
+(11)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+June
+
+(12)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+May
+
+(12)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+April
+
+(12)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+March
+
+(12)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+February
+
+(10)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+January
+
+(12)
+
+
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+2021
+
+(131)
+
+
+
+
+
+        ► 
+      
+
+
+
+December
+
+(15)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+November
+
+(12)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+October
+
+(9)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+September
+
+(13)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+August
+
+(14)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+July
+
+(11)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+June
+
+(10)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+May
+
+(6)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+April
+
+(10)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+March
+
+(11)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+February
+
+(7)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+January
+
+(13)
+
+
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+2020
+
+(154)
+
+
+
+
+
+        ► 
+      
+
+
+
+December
+
+(11)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+November
+
+(12)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+October
+
+(14)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+September
+
+(11)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+August
+
+(12)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+July
+
+(13)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+June
+
+(14)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+May
+
+(12)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+April
+
+(16)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+March
+
+(16)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+February
+
+(10)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+January
+
+(13)
+
+
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+2019
+
+(145)
+
+
+
+
+
+        ► 
+      
+
+
+
+December
+
+(14)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+November
+
+(11)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+October
+
+(9)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+September
+
+(12)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+August
+
+(13)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+July
+
+(12)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+June
+
+(12)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+May
+
+(14)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+April
+
+(13)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+March
+
+(12)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+February
+
+(10)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+January
+
+(13)
+
+
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+2018
+
+(139)
+
+
+
+
+
+        ► 
+      
+
+
+
+December
+
+(11)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+November
+
+(10)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+October
+
+(10)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+September
+
+(10)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+August
+
+(12)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+July
+
+(13)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+June
+
+(12)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+May
+
+(12)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+April
+
+(13)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+March
+
+(12)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+February
+
+(9)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+January
+
+(15)
+
+
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+2017
+
+(132)
+
+
+
+
+
+        ► 
+      
+
+
+
+December
+
+(9)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+November
+
+(10)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+October
+
+(15)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+September
+
+(9)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+August
+
+(13)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+July
+
+(12)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+June
+
+(9)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+May
+
+(13)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+April
+
+(12)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+March
+
+(10)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+February
+
+(10)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+January
+
+(10)
+
+
+
+
+
+
+
+
+
+        ▼ 
+      
+
+
+
+2016
+
+(119)
+
+
+
+
+
+        ► 
+      
+
+
+
+December
+
+(11)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+November
+
+(15)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+October
+
+(15)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+September
+
+(10)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+August
+
+(2)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+July
+
+(9)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+June
+
+(11)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+May
+
+(6)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+April
+
+(9)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+March
+
+(11)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+February
+
+(12)
+
+
+
+
+
+
+
+        ▼ 
+      
+
+
+
+January
+
+(8)
+
+In the Middle of 5th Avenue
+Risky Business
+That's for the Birds
+An Inconvenient Truth +10
+Citizen Cruz
+Context on Guns
+How A Supermarket Visit Brought Down The Soviet Union
+A Humble Servant?
+
+
+
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+2015
+
+(71)
+
+
+
+
+
+        ► 
+      
+
+
+
+December
+
+(9)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+November
+
+(5)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+October
+
+(2)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+September
+
+(2)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+August
+
+(9)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+July
+
+(7)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+June
+
+(6)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+May
+
+(3)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+April
+
+(10)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+March
+
+(6)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+February
+
+(4)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+January
+
+(8)
+
+
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+2014
+
+(88)
+
+
+
+
+
+        ► 
+      
+
+
+
+December
+
+(5)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+November
+
+(7)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+October
+
+(10)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+September
+
+(9)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+August
+
+(5)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+July
+
+(8)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+June
+
+(7)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+May
+
+(9)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+April
+
+(7)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+March
+
+(6)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+February
+
+(5)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+January
+
+(10)
+
+
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+2013
+
+(115)
+
+
+
+
+
+        ► 
+      
+
+
+
+December
+
+(8)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+November
+
+(5)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+October
+
+(13)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+September
+
+(9)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+August
+
+(7)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+July
+
+(10)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+June
+
+(10)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+May
+
+(9)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+April
+
+(13)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+March
+
+(10)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+February
+
+(7)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+January
+
+(14)
+
+
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+2012
+
+(139)
+
+
+
+
+
+        ► 
+      
+
+
+
+December
+
+(6)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+November
+
+(16)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+October
+
+(16)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+September
+
+(9)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+August
+
+(14)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+July
+
+(13)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+June
+
+(8)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+May
+
+(11)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+April
+
+(9)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+March
+
+(9)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+February
+
+(11)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+January
+
+(17)
+
+
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+2011
+
+(188)
+
+
+
+
+
+        ► 
+      
+
+
+
+December
+
+(12)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+November
+
+(10)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+October
+
+(10)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+September
+
+(10)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+August
+
+(17)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+July
+
+(18)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+June
+
+(11)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+May
+
+(3)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+April
+
+(16)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+March
+
+(19)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+February
+
+(25)
+
+
+
+
+
+
+
+        ► 
+      
+
+
+
+January
+
+(37)
+
+
+
+
+
+
+
+
+
+About Me
+
+
+
+
+
+BeeLine
+
+
+Scott Beeken has practiced as an attorney, CPA and has been an officer with two Fortune 500 companies overseeing diverse functions such as Taxation, Employee Benefits, Human Resources, Real Estate Facilities, Risk Management, Corporate Communications, Marketing and Advertising. In addition to writing BeeLine, he is a Keynote Speaker, Author  and Strategic Consultant.
+
+View my complete profile
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Total Pageviews
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Theme images by luoman. Powered by Blogger.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+"
+https://news.ycombinator.com/rss,"Show HN: Vento, Screen Recorder that lets you rewind and re-record over mistakes",https://vento.so,Comments,"ventoNew RecordingLog inStress-free Screen Recording Constantly restarting your screen recordings? With Vento, just pause, rewind, and carry on instead - keeping calm helps too :)Come back on a desktop computer to try us out!Install Chrome ExtensionStart Recording“To record great videos, one must first rewind.” - Ghandi, probably.Video Not Availablevento© 2023 Vento. All rights reserved.Say hello! We don’t bite. Well, maybe one of us does.hello@vento.so"
+https://news.ycombinator.com/rss,Granian – a Rust HTTP server for Python applications,https://github.com/emmett-framework/granian,Comments,"
+
+
+
+
+
+
+
+
+emmett-framework
+
+/
+
+granian
+
+Public
+
+
+
+
+
+
+
+ 
+
+Notifications
+
+
+
+ 
+
+Fork
+    9
+
+
+
+
+ 
+
+
+          Star
+ 475
+  
+
+
+
+
+
+
+
+
+
+        A Rust HTTP server for Python applications
+      
+License
+
+
+
+
+
+     BSD-3-Clause license
+    
+
+
+
+
+
+
+475
+          stars
+ 
+
+
+
+9
+          forks
+ 
+
+
+
+ 
+
+
+          Star
+
+  
+
+
+
+
+
+ 
+
+Notifications
+
+
+
+
+
+
+
+
+
+
+
+
+Code
+
+
+
+
+
+
+
+Issues
+7
+
+
+
+
+
+
+Pull requests
+0
+
+
+
+
+
+
+Discussions
+
+
+
+
+
+
+
+Actions
+
+
+
+
+
+
+
+Security
+
+
+
+
+
+
+
+Insights
+
+
+
+ 
+ 
+
+
+
+More
+
+
+ 
+
+
+                  Code
+ 
+
+
+                  Issues
+ 
+
+
+                  Pull requests
+ 
+
+
+                  Discussions
+ 
+
+
+                  Actions
+ 
+
+
+                  Security
+ 
+
+
+                  Insights
+ 
+
+
+
+
+
+
+
+emmett-framework/granian
+
+
+
+
+
+
+
+
+
+This commit does not belong to any branch on this repository, and may belong to a fork outside of the repository.
+
+
+
+
+
+
+
+
+
+
+
+master
+
+
+
+
+
+Switch branches/tags
+
+
+
+
+
+
+
+
+
+
+Branches
+Tags
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+View all branches
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+View all tags
+
+
+
+
+
+
+
+
+
+
+
+
+
+Name already in use
+
+
+
+
+
+
+
+
+
+      A tag already exists with the provided branch name. Many Git commands accept both tag and branch names, so creating this branch may cause unexpected behavior. Are you sure you want to create this branch?
+
+
+
+    Cancel
+
+    Create
+
+
+
+
+
+
+
+
+1
+branch
+
+
+
+
+
+14
+tags
+
+
+
+
+
+
+
+    Code
+ 
+
+
+
+
+
+
+
+Local
+
+
+
+ Codespaces
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  Clone
+
+
+
+
+
+            HTTPS
+ 
+            GitHub CLI
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+        Use Git or checkout with SVN using the web URL.
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+      Work fast with our official CLI.
+      Learn more.
+    
+
+
+
+
+
+
+
+
+    Open with GitHub Desktop
+
+
+
+
+
+
+    Download ZIP
+
+
+
+ 
+Sign In Required
+
+                Please
+                sign in
+                to use Codespaces.
+              
+
+
+
+Launching GitHub Desktop
+
+    If nothing happens, download GitHub Desktop and try again.
+  
+
+
+
+
+Launching GitHub Desktop
+
+    If nothing happens, download GitHub Desktop and try again.
+  
+
+
+
+
+Launching Xcode
+
+    If nothing happens, download Xcode and try again.
+  
+
+
+
+
+
+Launching Visual Studio Code
+Your codespace will open once ready.
+There was a problem preparing your codespace, please try again.
+
+
+
+
+
+
+
+
+
+
+Latest commit
+
+
+
+
+
+
+ 
+
+
+
+
+gi0baro
+
+Refactor response build in RSGI protocol
+
+
+
+
+        …
+      
+
+
+
+
+        e5139e2
+      
+
+Jan 16, 2023
+
+
+
+
+
+Refactor response build in RSGI protocol
+
+
+e5139e2
+
+
+
+Git stats
+
+
+
+
+
+
+
+136
+
+                      commits
+                    
+
+
+
+
+
+
+
+Files
+Permalink
+
+
+
+
+  
+    Failed to load latest commit information.
+
+
+  
+ 
+
+
+Type
+Name
+Latest commit message
+Commit time
+
+
+
+
+
+
+
+
+.github
+
+
+
+Update CI release workflow
+
+
+
+Jan 13, 2023
+
+
+
+
+
+
+
+
+
+benchmarks
+
+
+
+Update benchmarks
+
+
+
+Jan 13, 2023
+
+
+
+
+
+
+
+
+
+docs/spec
+
+
+
+Fix typos (#14)
+
+
+
+Nov 17, 2022
+
+
+
+
+
+
+
+
+
+granian
+
+
+
+wsgi: ensure to close the app response iterator (#29)
+
+
+
+Jan 16, 2023
+
+
+
+
+
+
+
+
+
+lib/pyo3-asyncio
+
+
+
+Bump pyo3-asyncio to 0.17
+
+
+
+Oct 25, 2022
+
+
+
+
+
+
+
+
+
+src
+
+
+
+Refactor response build in RSGI protocol
+
+
+
+Jan 16, 2023
+
+
+
+
+
+
+
+
+
+tests
+
+
+
+Fix wsgi.input out of spec (close #24)
+
+
+
+Jan 12, 2023
+
+
+
+
+
+
+
+
+
+.gitignore
+
+
+
+first implementation
+
+
+
+Apr 15, 2022
+
+
+
+
+
+
+
+
+
+Cargo.lock
+
+
+
+Upgrade cargo dependencies
+
+
+
+Jan 16, 2023
+
+
+
+
+
+
+
+
+
+Cargo.toml
+
+
+
+Upgrade cargo dependencies
+
+
+
+Jan 16, 2023
+
+
+
+
+
+
+
+
+
+LICENSE
+
+
+
+first implementation
+
+
+
+Apr 15, 2022
+
+
+
+
+
+
+
+
+
+README.md
+
+
+
+Update benchmarks results
+
+
+
+Dec 24, 2022
+
+
+
+
+
+
+
+
+
+build.rs
+
+
+
+Add PyPy support
+
+
+
+Jan 3, 2023
+
+
+
+
+
+
+
+
+
+pyproject.toml
+
+
+
+Add PyPy support
+
+
+
+Jan 3, 2023
+
+
+
+
+
+
+
+
+
+setup.py
+
+
+
+review package meta
+
+
+
+Apr 18, 2022
+
+
+
+
+    View code
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Granian
+Rationale
+Features
+Quickstart
+Project status
+License
+
+
+
+
+
+README.md
+
+
+
+
+Granian
+A Rust HTTP server for Python applications.
+Rationale
+The main reasons behind Granian design are:
+
+Have a single, correct HTTP implementation, supporting versions 1, 2 (and eventually 3)
+Provide a single package for several platforms
+Avoid the usual Gunicorn + uvicorn + http-tools dependency composition on unix systems
+Provide stable performance when compared to existing alternatives
+
+Features
+
+Supports ASGI/3, RSGI and WSGI interface applications
+Implements HTTP/1 and HTTP/2 protocols
+Supports HTTPS
+Supports Websockets over HTTP/1 and HTTP/2
+
+Quickstart
+You can install Granian using pip:
+$ pip install granian
+
+Create an ASGI application in your main.py:
+async def app(scope, receive, send):
+    assert scope['type'] == 'http'
+
+    await send({
+        'type': 'http.response.start',
+        'status': 200,
+        'headers': [
+            [b'content-type', b'text/plain'],
+        ],
+    })
+    await send({
+        'type': 'http.response.body',
+        'body': b'Hello, world!',
+    })
+and serve it:
+$ granian --interface asgi main:app
+
+You can also create an app using the RSGI specification:
+async def app(scope, proto):
+    assert scope.proto == 'http'
+
+    proto.response_str(
+        status=200,
+        headers=[
+            ('content-type', 'text/plain')
+        ],
+        body=""Hello, world!""
+    )
+and serve it using:
+$ granian --interface rsgi main:app
+
+Project status
+Granian is currently under active development.
+Granian is compatible with Python 3.7 and above versions on unix platforms and 3.8 and above on Windows.
+License
+Granian is released under the BSD License.
+
+
+
+
+
+
+
+
+
+About
+
+      A Rust HTTP server for Python applications
+    
+Topics
+
+
+
+  python
+
+
+  rust
+
+
+  http
+
+
+  http-server
+
+
+  asyncio
+
+
+  asgi
+
+
+
+Resources
+
+
+
+
+
+      Readme
+ 
+License
+
+
+
+
+
+     BSD-3-Clause license
+    
+
+
+
+Stars
+
+
+
+
+
+475
+    stars
+
+Watchers
+
+
+
+
+
+7
+    watching
+
+Forks
+
+
+
+
+
+9
+    forks
+
+
+
+
+
+
+
+    Releases
+      14
+
+
+
+
+
+
+
+Granian 0.2.2
+
+          Latest
+ 
+Jan 16, 2023
+
+ 
+
+        + 13 releases
+
+
+
+
+
+Sponsor this project
+
+
+
+ 
+
+ 
+
+ Sponsor
+ 
+Learn more about GitHub Sponsors
+
+
+
+
+
+
+
+    Packages 0
+
+
+        No packages published 
+
+
+
+
+
+
+
+        Used by 6
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    Contributors 4
+
+
+
+
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+
+
+
+
+
+Languages
+
+
+
+
+
+
+
+
+
+
+
+
+Rust
+83.1%
+
+
+
+
+
+
+
+Python
+16.5%
+
+
+
+
+
+
+
+Other
+0.4%
+
+
+
+
+
+
+
+
+
+
+
+"
+https://news.ycombinator.com/rss,"Late Hokusai: Thought, technique, society",https://www.britishmuseum.org/research/projects/late-hokusai-thought-technique-society,Comments,"
+
+
+
+
+405 Not allowed
+
+
+Error 405 Not allowed
+Not allowed
+Error 54113
+Details: cache-sjc10059-SJC 1673915968 1469586448
+
+Varnish cache server
+
+
+"
+https://news.ycombinator.com/rss,Apple TV prompt requires another Apple device,https://twitter.com/hugelgupf/status/1614794516309118977,Comments,"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+JavaScript is not available.
+We’ve detected that JavaScript is disabled in this browser. Please enable JavaScript or switch to a supported browser to continue using twitter.com. You can see a list of supported browsers in our Help Center.
+Help Center
+
+Terms of Service
+Privacy Policy
+Cookie Policy
+Imprint
+Ads info
+      © 2023 Twitter, Inc.
+    
+
+Something went wrong, but don’t fret — let’s give it another shot."
