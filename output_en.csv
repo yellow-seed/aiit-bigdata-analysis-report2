@@ -53245,3 +53245,4745 @@ Hackaday Podcast 201: Faking A Transmission, Making Nuclear Fuel, And A Slidepot
 More from this category
 
 "
+https://news.ycombinator.com/rss,Show HN: Otterkit – COBOL compiler for .NET,https://github.com/otterkit/otterkit,Comments,"
+
+
+
+
+
+
+
+
+otterkit
+
+/
+
+otterkit
+
+Public
+
+
+
+
+ 
+
+Notifications
+
+
+
+ 
+
+Fork
+    1
+
+
+
+
+ 
+
+
+          Star
+ 64
+  
+
+
+
+
+
+
+
+
+
+        Otterkit COBOL Compiler
+      
+
+
+
+
+
+otterkit.com
+
+
+License
+
+
+
+
+
+     Apache-2.0 license
+    
+
+
+
+
+
+
+64
+          stars
+ 
+
+
+
+1
+          fork
+ 
+
+
+
+ 
+
+
+          Star
+
+  
+
+
+
+
+
+ 
+
+Notifications
+
+
+
+
+
+
+
+
+
+
+
+
+Code
+
+
+
+
+
+
+
+Issues
+1
+
+
+
+
+
+
+Pull requests
+0
+
+
+
+
+
+
+Discussions
+
+
+
+
+
+
+
+Actions
+
+
+
+
+
+
+
+Projects
+0
+
+
+
+
+
+
+Security
+
+
+
+
+
+
+
+Insights
+
+
+
+ 
+ 
+
+
+
+More
+
+
+ 
+
+
+                  Code
+ 
+
+
+                  Issues
+ 
+
+
+                  Pull requests
+ 
+
+
+                  Discussions
+ 
+
+
+                  Actions
+ 
+
+
+                  Projects
+ 
+
+
+                  Security
+ 
+
+
+                  Insights
+ 
+
+
+
+
+
+
+
+otterkit/otterkit
+
+
+
+
+
+
+
+
+
+This commit does not belong to any branch on this repository, and may belong to a fork outside of the repository.
+
+
+
+
+
+
+
+
+
+
+
+main
+
+
+
+
+
+Switch branches/tags
+
+
+
+
+
+
+
+
+
+
+Branches
+Tags
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+View all branches
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+View all tags
+
+
+
+
+
+
+
+
+
+
+
+
+
+Name already in use
+
+
+
+
+
+
+
+
+
+      A tag already exists with the provided branch name. Many Git commands accept both tag and branch names, so creating this branch may cause unexpected behavior. Are you sure you want to create this branch?
+
+
+
+    Cancel
+
+    Create
+
+
+
+
+
+
+
+
+4
+branches
+
+
+
+
+
+0
+tags
+
+
+
+
+
+
+
+    Code
+ 
+
+
+
+
+
+
+
+Local
+
+
+
+ Codespaces
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  Clone
+
+
+
+
+
+            HTTPS
+ 
+            GitHub CLI
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+        Use Git or checkout with SVN using the web URL.
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+      Work fast with our official CLI.
+      Learn more.
+    
+
+
+
+
+
+
+
+
+    Open with GitHub Desktop
+
+
+
+
+
+
+    Download ZIP
+
+
+
+ 
+Sign In Required
+
+                Please
+                sign in
+                to use Codespaces.
+              
+
+
+
+Launching GitHub Desktop
+
+    If nothing happens, download GitHub Desktop and try again.
+  
+
+
+
+
+Launching GitHub Desktop
+
+    If nothing happens, download GitHub Desktop and try again.
+  
+
+
+
+
+Launching Xcode
+
+    If nothing happens, download Xcode and try again.
+  
+
+
+
+
+
+Launching Visual Studio Code
+Your codespace will open once ready.
+There was a problem preparing your codespace, please try again.
+
+
+
+
+
+
+
+
+
+
+Latest commit
+
+
+
+
+
+
+ 
+
+
+
+
+KTSnowy
+
+[Update]: Added SourceId, LevelStack and FileIndex comments
+
+
+
+
+        …
+      
+
+
+
+
+        2365003
+      
+
+Jan 16, 2023
+
+
+
+
+
+[Update]: Added SourceId, LevelStack and FileIndex comments
+
+
+2365003
+
+
+
+Git stats
+
+
+
+
+
+
+
+175
+
+                      commits
+                    
+
+
+
+
+
+
+
+Files
+
+Permalink
+
+
+
+
+  
+    Failed to load latest commit information.
+
+
+  
+ 
+
+
+Type
+Name
+Latest commit message
+Commit time
+
+
+
+
+
+
+
+
+.github/ISSUE_TEMPLATE
+
+
+ 
+
+
+ 
+
+
+
+
+
+
+
+
+
+Assets
+
+
+ 
+
+
+ 
+
+
+
+
+
+
+
+
+
+OtterkitTemplatePack
+
+
+ 
+
+
+ 
+
+
+
+
+
+
+
+
+
+libotterkit @ a0256a7
+
+
+ 
+
+
+ 
+
+
+
+
+
+
+
+
+
+src
+
+
+ 
+
+
+ 
+
+
+
+
+
+
+
+
+
+.gitattributes
+
+
+ 
+
+
+ 
+
+
+
+
+
+
+
+
+
+.gitignore
+
+
+ 
+
+
+ 
+
+
+
+
+
+
+
+
+
+.gitmodules
+
+
+ 
+
+
+ 
+
+
+
+
+
+
+
+
+
+LICENSE
+
+
+ 
+
+
+ 
+
+
+
+
+
+
+
+
+
+README.md
+
+
+ 
+
+
+ 
+
+
+
+
+
+
+
+
+
+SECURITY.md
+
+
+ 
+
+
+ 
+
+
+
+
+
+
+
+
+
+THIRD-PARTY-LICENSES
+
+
+ 
+
+
+ 
+
+
+
+
+    View code
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ Otterkit COBOL Compiler
+About
+Installation
+Quick Install
+Build from Source
+Standard Acknowledgement
+
+
+
+
+
+README.md
+
+
+
+
+ Otterkit COBOL Compiler
+Otterkit is a free and open source compiler for the COBOL Programming Language on the .NET platform.
+Warning: The project is currently in pre-release, so not all of the standard has been implemented.
+About
+COBOL was created in 1959 by the CODASYL Committee (With Rear Admiral Grace Hopper as a technical consultant to the committee), its design follows Grace Hopper's belief that programs should be written in a language that is close to English. It prioritizes readability, reliability, and long-term maintenance. The language has been implemented throughout the decades on many platforms with many dialects, and the Otterkit COBOL compiler is a free and open source implementation of the ISO COBOL 2022 Standard on the .NET platform.
+Installation
+Quick Install
+Otterkit is available to install on the Nuget package manager (.NET 7 is required). To install, type into the command line:
+dotnet tool install --global Otterkit --version 1.0.15-alpha
+
+Build from Source
+First, clone the git repo from https://github.com/otterkit/otterkit.git to get the source code. To access the libotterkit submodule inside, use the --recurse-submodules --remote-submodules flag on the clone command. To run, navigate into the src folder (for the compiler, not libotterkit) and then type dotnet run into the command line.
+Standard Acknowledgement
+Any organization interested in reproducing the COBOL standard and specifications in whole or in part,
+using ideas from this document as the basis for an instruction manual or for any other purpose, is free
+to do so. However, all such organizations are requested to reproduce the following acknowledgment
+paragraphs in their entirety as part of the preface to any such publication (any organization using a
+short passage from this document, such as in a book review, is requested to mention ""COBOL"" in
+acknowledgment of the source, but need not quote the acknowledgment):
+COBOL is an industry language and is not the property of any company or group of companies, or of any
+organization or group of organizations.
+No warranty, expressed or implied, is made by any contributor or by the CODASYL COBOL Committee
+as to the accuracy and functioning of the programming system and language. Moreover, no
+responsibility is assumed by any contributor, or by the committee, in connection therewith.
+The authors and copyright holders of the copyrighted materials used herein:
+
+FLOW-MATIC® (trademark of Sperry Rand Corporation), Programming for the 'UNIVAC® I and
+II, Data Automation Systems copyrighted 1958,1959, by Sperry Rand Corporation;
+IBM Commercial Translator Form No F 28-8013, copyrighted 1959 by IBM;
+FACT, DSI 27A5260-2760, copyrighted 1960 by Minneapolis-Honeywell
+
+Have specifically authorized the use of this material in whole or in part, in the COBOL specifications.
+Such authorization extends to the reproduction and use of COBOL specifications in programming
+manuals or similar publications.
+
+
+
+
+
+
+
+
+
+About
+
+      Otterkit COBOL Compiler
+    
+
+
+
+
+
+otterkit.com
+
+
+Topics
+
+
+
+  compiler
+
+
+  dotnet
+
+
+  cobol
+
+
+
+Resources
+
+
+
+
+
+      Readme
+ 
+License
+
+
+
+
+
+     Apache-2.0 license
+    
+
+Security policy
+
+
+
+
+
+      Security policy
+    
+
+
+
+Stars
+
+
+
+
+
+64
+    stars
+
+Watchers
+
+
+
+
+
+3
+    watching
+
+Forks
+
+
+
+
+
+1
+    fork
+
+
+
+
+
+
+
+    Releases
+
+No releases published
+
+
+
+
+
+
+    Contributors 3
+
+
+
+
+
+
+
+
+KTSnowy
+Gabriel Gonçalves
+
+ 
+
+
+
+
+
+
+TriAttack238
+Sean Vo
+
+ 
+
+
+
+
+
+
+gabrielesilinic
+Gabriele Silingardi
+
+ 
+
+
+
+
+
+Languages
+
+
+
+
+
+
+
+
+
+
+C#
+100.0%
+
+
+
+
+
+
+
+
+
+
+
+"
+https://news.ycombinator.com/rss,Elliptic Curves: The Great Mystery,https://www.cantorsparadise.com/elliptic-curves-the-great-mystery-61599a93c61d,Comments,"Published inCantor’s ParadiseKasper MüllerFollowJan 14·11 min read·Member-onlySaveElliptic Curves: The Great MysteryA surprisingly beautiful blend of algebra, geometry, and number theoryImage from Wikimedia CommonsThese curves defined by very simple equations are shrouded in mystery and elegance. In fact, the equations describing them are so simple that even high-school students would be able to understand them.However, a ton of simple questions about them remain unsolved despite tenacious efforts by some of the greatest mathematicians in the world. But that’s not all. As you will soon see, this theory connects various important fields of mathematics because it turns out that elliptic curves are more than just plane curves!Let’s grab a cup of coffee and start from the beginning.Introduction and MotivationIn mathematics, we often solve problems by stating them in a different setting than they originally occurred in. An example of this is that some geometric problems can be turned into algebraic problems and vice versa.A classical problem going back thousands of years is whether a positive integer n is the area of some right triangle with rational side lengths, that is such that the lengths of all three sides are expressible as fractions of whole numbers. In this case, n is called a congruent number). For instance, 6 is a congruent number because it is the area of the right triangle with side lengths 3, 4 and 5.In 1640, Fermat famously proved that 1 is not a congruent number. He did so using his famous method of proof by infinite descent.As the amazing mathematician, Keith Conrad notes about the result:This leads to a weird proof that √2 is irrational. If √2 were rational then √2, √2 and 2 would be the sides of a rational right triangle with area 1. This is a contradiction of 1 not being a congruent number!Since Fermat’s proof, the hunt for proving or disproving that numbers are congruent has been ongoing.Amazingly, one can show by elementary methods that for each triple of rational numbers (a, b, c) such that a² + b² = c² and 1/2 ab = n, we can find two rational numbers x and y such that y² = x³ - n²x and y ≠ 0 and conversely for each rational pair (x, y) such that y² = x³ - n²x and y ≠ 0, we can find three rational numbers a, b, c such that a² + b² = c² and 1/2 ab = n.That is, right triangles with area n correspond exactly to rational solutions to the equation y² = x³ - n²x with y ≠ 0 and vice versa. A mathematician would say that there is a bijection between the two sets.Therefore, a rational number n > 0 is congruent if and only if the equation y² = x³ - n²x has a rational solution (x, y) with y ≠ 0. For example, since 1 is not congruent, the only rational solutions to y² = x² - x have y = 0.For the interested reader, the exact correspondence is the following.If we try this correspondence on the triangle with side lengths 3, 4, and 5, and with area 6, then the corresponding solution is (x, y) = (12, 36).To me, this is absolutely amazing. One starts with a problem in number theory and geometry and through algebra, transforms it into a problem about rational points on plane curves!The equation y² = x³ - n²x is an example of an elliptic curve.Elliptic CurvesIn general, if f(x) denotes a third-degree polynomial with a non-zero discriminant (i.e. all the roots are distinct), then y² = f(x) describes an elliptic curve except for one important addition to this object, namely what is called a “point at infinity”.Basically, a point at infinity is a point where parallel lines can meet. It is out of the scope of this article to go into projective geometry to proper define it but this is a wonderful and exciting subject that I strongly encourage you to look up.Now, by a minor algebraic miracle, it turns out that we can make a suitable (rational) change of coordinates, and get a new curve on the form y² = x³ + ax + b such that rational points on the two curves are in one-to-one correspondence. The second transformed curve however is typically easier to work with.Because of this, we sometimes assume that an elliptic curve is on this form and so from now on we will assume that too, that is, when we say “elliptic curve”, we mean a curve on the form y² = x³ + ax + b together with a point 𝒪 at infinity.Throughout this article, unless otherwise stated, we’ll assume that the coefficients a and b are rational numbers.Elliptic curves take on two typical shapes which are graphed below.Image from Wikimedia CommonsHowever, if we consider x and y as complex variables, the curves will look entirely different. In fact, they will then take the form of a complex torus or doughnut!So why do we study elliptic curves and what can we do with them?First of all, many number theoretic problems can be translated into problems about Diophantine equations, secondly, it turns out that elliptic curves are related to discrete geometric objects called lattices and deeply connected to some very important objects called modular forms which are certain extremely symmetric complex functions with a lot of number theoretic information in them.Actually, the connection between elliptic curves and modular forms turned out to be the key to proving Fermat’s Last Theorem which Andrew Wiles achieved in the 90s through several years of intensive work on this connection.The story about this quest and the proof of the Theorem is in my opinion one of the most beautiful pursuits in all of science - unfortunately, as pointed out by my friend Kenneth Nielsen, the margin in this Medium post is too narrow to contain it!So I guess I’ll have to write another article.Elliptic curves are also used in cryptography to encrypt messages and online transactions.The most important feature of them, however, is the mind-blowing fact that they are more than just curves and more than just geometry. In fact, they have an algebraic structure on them called an Abelian group structure with respect to a cool geometric operation - a kind of geometric addition rule for how to add points on the curve together.If you don’t know what an Abelian group is, you can think about it as a set of objects with an operation defined on them such that they have the same kind of structure as the integers with respect to addition (except they can be finite).More specifically, for a group with the operation *, it needs to be stable with respect to the operation (i.e. if a is in the group and b is in the group, then a * b is in the group), there is an identity element e (0 for the integers) such that a * e = a for all elements a in the group, and for each element a, there is an inverse element c, such that when you operate them together you get back the identity element (a * c = e). Furthermore, the group operation has to be associative i.e. a * (b * c) = (a * b) * c. That is, it doesn’t matter which elements you add together first. If the commutative law holds ( i.e. a * b = b * a) then the group is called an Abelian group.Examples of Abelian groups are:The integers ℤ with respect to the operation +.The action of rotating a square clockwise by 90 degreesVector spaces with vectors as elements and vector addition as the operationThe fancy terminology for a curve with an Abelian group structure is Abelian variety.What is so amazing about elliptic curves is that we can define an operation (let’s denote it ⊕) between rational points on them (that is, both the x and y coordinates are rational numbers) such that the set of those points on the curve becomes an Abelian group with respect to the operation ⊕ and with identity element 𝒪 (the point at infinity).Let’s define the operation.If you take two rational points on the curve (for example P and Q) and consider a line through them, then the line intersects the curve at another rational point (possibly the point at infinity). Let’s call this point -R.Now, because the curve is symmetric about the x-axis, we get another rational point R when we reflect -R about it. There is a drawing of this below.Addition rule for elliptic curves - image from Wikimedia CommonsThis reflected point (R in the above image) is the addition of the two aforementioned points (P and Q above). We can write P ⊕ Q = R.One can prove (and this is actually not easy) that this operation is associative, which is really surprising, at least to me. Also, the point at infinity acts as a (unique) identity for this operation and each point has an inverse point (which is just the point you get by reflecting about the x-axis). It is also Abelian (i.e. P ⊕ Q = Q ⊕ P).The MysteryIt turns out that two different elliptic curves can have vastly different groups associated with them. An important invariant that in some sense is the most defining feature is what is known as the rank of the curve (or group).A curve can have a finite or an infinite number of rational points on them. This can be hard to handle, so what we are interested in, is how many points we need in order to generate all the others by the aforementioned addition rule. These generators are called basis points.The rank is a dimensionality measure like the dimension of a vector space and indicates how many independent basis points (on the curve) have infinite order (i.e. we can keep adding it without getting our starting point back). If the curve only contains a finite amount of rational points on it, then the rank is zero. There is still a group but it is finite.Calculating the rank of an elliptic curve is notoriously difficult but we have a nice result due to Mordell which tells us that the rank is always finite. That is, we only need a finite amount of basis points in order to generate all the rational points on the curve.One of the most important and interesting problems in number theory is called the Birch and Swinnerton-Dyer Conjecture and it is all about the rank of elliptic curves. In fact, it is so difficult and important that it is one of the Millenium Problems.You actually get a million dollars if you solve it!Finding rational points on elliptic curves with rational coefficients is hard. One way to approach this is by reducing the curve modulo p where p is a prime number. This means that instead of considering the rational solution set of the equation y² = x³ + ax + b, we consider the rational solution set of the congruence y² ≡ x³ + ax + b (mod p) where for this to make sense we might have to clear denominators by multiplying by an integer on both sides.So we are considering two numbers with the same remainder when divided by p to be equal in this new space. The great thing about this is that now there are only a finite number of things to check. Let’s denote the number of rational solutions to such a reduced curve modulo p, by Np.In the early 1960s, Peter Swinnerton-Dyer used the EDSAC-2 computer (not exactly a Macbook!) at the University of Cambridge Computer Laboratory to calculate the number of points modulo p on elliptic curves with known rank. He worked together with the mathematician Bryan John Birch in understanding elliptic curves and after the computer had crunched a bunch of products of the formfor growing x, they got the following output taken from data associated with the curve E: y² = x³ − 5x (as an example). I should note that the x-axis is really log log x and the y-axis is log y.The curve in question is y² = x³ − 5x. This is a curve of rank 1 and one of the curves originally looked at by Birch and Swinnerton-Dyer.Now, I am a mathematician and not a statistician but even I can see a clear trend and it does seem that the regression line has slope 1 on this plot.The curve E has rank 1 and when they tried different curves of varying ranks, they found the same pattern every time. The slope of the fitted regression line, it seemed, was always equal to the rank of the curve in question.More precisely, they stated the bold conjecture thatHere C is some constant.This computer crunching adventure combined with a great deal of far-sightedness led them to make a general conjecture about the behavior of a curve’s Hasse–Weil L-function L(E, s) at s = 1.This L-function is defined as follows. Letand let the discriminant of the curve be denoted Δ. Then we can define the L-function associated with E as the following Euler productWe view this as a function of the complex variable s.Their conjecture now has the form:Conjecture (Birch and Swinnerton-Dyer): Let E be any elliptic curve over ℚ. The rank of the abelian group E(ℚ) of rational points of the curve E is equal to the order of the zero of L(E, s) at s = 1.The reason why it was quite far-sighted is that, at the time, they didn’t even know if a so-called analytic continuation existed for all such L-functions. The problem was that L(E, s) as defined above only converges when Re(s) > 3/2.That they can all be evaluated at s = 1 by analytic continuation was first proved in 2001 again by using the close connection to modular forms that Andrew Wiles proved.Sometimes the conjecture is stated using the Taylor expansion of the L-function, but it is saying the same thing in a different way. The field of rational numbers can be replaced by a more general field but I didn’t want to go into more abstraction than necessary.The subject of Elliptic Curves is a beautiful dance between number theory, abstract algebra and geometry. There is a lot more to say about them than what I have sketched here, but I hope that you got a feeling or a glimpse of something that one could call astounding.We reached the end of this article…If you have any questions, comments or concerns, then please reach out.If you like to read articles like this one on Medium, you can get a membership for full access: simply click here.Thanks for reading.MathematicsMathScienceTechnologyHistory----6More from Cantor’s ParadiseFollowMedium’s #1 Math PublicationRead more from Cantor’s ParadiseRecommended from MediumKasper MüllerinCantor’s ParadiseSums of Odd Numbers Have Interesting PropertiesJesus NajerainCantor’s ParadiseMandelbulb: Three Dimensional FractalsCristian Miguel LunaGeometric DistributionKasper MüllerinCantor’s ParadiseThe Insect That Discovered the Prime NumbersEliran TurgemaninMath SimplifiedMultiply Numbers By Drawing LinesKasper MüllerinCantor’s ParadiseThe Beauty of MathematicsNishesh GogiainAnalytics VidhyaTHE STORY OF LOGISTIC REGRESSION CONTINUES…Eliran TurgemaninCantor’s ParadiseCity Planning Using Graph TheoryAboutHelpTermsPrivacyGet the Medium app"
+https://news.ycombinator.com/rss,One man’s two-decade quest to let the ‘Irish Giant’ rest in peace,https://www.theguardian.com/culture/2023/jan/14/he-did-not-want-this-one-mans-two-decade-quest-to-let-the-irish-giant-rest-in-peace,Comments,"Museums‘He did not want this’: one man’s two-decade quest to let the ‘Irish Giant’ rest in peaceResearchers spurred by injustice explain why 18th century Irish man famed for his exceptional height deserves burial he wanted The skeleton of Charles Byrne (centre) on display at the Hunterian Museum in London before a six-year revamp which will see his remains removed to storage. Photograph: David Gee/AlamyThe skeleton of Charles Byrne (centre) on display at the Hunterian Museum in London before a six-year revamp which will see his remains removed to storage. Photograph: David Gee/AlamyAlexandra ToppingSat 14 Jan 2023 03.00 ESTLast modified on Mon 16 Jan 2023 09.41 ESTThomas Muinzer recalls the day when, as a bored student in Belfast learning about property law, a few sentences about the 18th century “Irish Giant” Charles Byrne caught his eye.“I saw a footnote about a celebrity Irish giant from present day Northern Ireland whose remains were stolen on the way to his funeral – querying whether or not that was the theft of property, because it was a dead body,” he says.Muinzer learned that for more than 200 years Byrne’s skeleton – despite his fervent and explicit wishes – had been on display at the Hunterian Museum at Lincoln’s Inn Fields, central London, and became “convinced that something very unfortunate had been done to his remains and his posthumous memory”.It was a the start of a two decades long obsession, as Muinzer, now co-Director of Aberdeen University’s Centre for Energy Law, teamed up with leading medical ethicist Prof Len Doyal, and other campaigners including the late Dame Hilary Mantel, to request Byrne’s remains to be removed from public display.This week, they finally achieved that goal. The Royal College of Surgeons, which runs the museum, announced that when it reopens after a six-year revamp this spring, Byrne’s remains will no longer be displayed but will be kept in storage and be available for “bona fide medical research”.A 1784 posthumous sketch of Charles Byrne, known as the Irish Giant, depicted with Edinburgh notables. Photograph: AlamyAt least 2.3 metres (7ft 7in) in stature, Byrne made a living exhibiting himself in the years before his death, aged 22. But historical records reveal he was horrified by the idea that after his death his body would be put on display, says Doyal, emeritus professor of medical ethics at Queen Mary University in London, who co-authored a paper about Byrne with Muinzer in 2011.“Everything that has happened, to this point, went against Byrne’s explicit wishes,” he says. “There was no question that Byrne did not want this to happen. And it did.”Born in County Derry in 1761, Byrne, who had acromegaly (overgrowth of the bones) and gigantism, set off for London in his late teens. “He was not just, as it were, a fairground celebrity,” says Doyal, who added that Byrne was seen as a gentleman giant. “He mixed with quite well known and wealthy people.”When he died in 1783 a newspaper of the time noted that “a whole tribe of surgeons put in a claim for the poor departed Irishman surrounding his house just as harpooners would an enormous whale”. Before Byrne could be buried, Hunter reportedly bribed one of his friends to secretly swap the corpse for dead weight and bring the body to him. Four years later Hunter put Byrne’s skeleton on display.Byrne’s popularity in fashionable London society is remembered in this cartoon The Surprising Irish Giant of St James’s Street from 1785. Photograph: AlamyThe way Byrne’s remains were obtained was “absolutely wrong”, says Dawn Kemp, Director of Museums at the Royal College of Surgeons, but the argument about what should now happen was not black and white.Kemp says the college’s decision to retain the skeleton should not be considered “definitive”, but says since 1799 its trustees had been legally bound to preserve the collection of John Hunter – the pioneering Scottish surgeon and anatomist who the museum is named after – in its entirety. She also argues that, in 2023, it cannot be predicted how the remains could be useful to medical research in the future.Stephen Fry calls for return of Parthenon marbles to AthensRead moreLike the debate over the Parthenon marbles in the British Museum, the museum has reluctantly found itself at the frontline of a cultural battle which has little taste for measured debate. Kemp believes some people “think that we’re being curatorial cowards and that this is the dumbing down of museums”, while others had called the decision to retain Byrne’s remains and not carry out his last wishes of being buried at sea “evil”, she says.“I don’t want to be part of this move on social media to polarise the debate, because I think it’s nuanced, [and] it’s really important,” she says. “The wrong has been done to Byrne in 1783, we’re not going to right it by making a quick decision now.”Doyal and Muinzer argue that DNA from the skeleton has already been obtained, and they suspect the museum would allow medical students to see the skeleton in private. Kemp insists this is not the case and says a new programme of talks called Hunterian Provocations will explore issues around the display of human remains and the acquisition of specimens during British colonial expansion.The late Queen on a visit to Hunterian Museum in London in 1962 views the skeleton of Charles Bryne, acquired by a collector by subterfuge, researchers say. Photograph: PA Media“There’s no need for the Hunterian to keep this body,” says Doyal. “Byrne’s original wish was to be buried at sea. That’s what he wanted, that’s what he should get.”Muinzer recalls that when he first saw Byrne’s remains in 2011 it was alongside a quotation from the contemporary diarist Sylas Neville calling Byrne an ill-bred, disagreeable beast, while Hunter’s involvement had been “air-brushed” out of the story. Now, perhaps, there is a chance for the Irish Giant to be seen in a new light. “His is a remarkable story that captures the imagination,” Muinzer says. “And there may be more to come.” This article was amended on 16 January 2023. A speaker referred to “a celebrity Irish giant from present day Northern Ireland”, but in the writing process, “present day” was omitted from the quote; it has been restored.TopicsMuseumsHistory of scienceMedical researchParthenon marblesIrelandNorthern IrelandHeritagefeaturesReuse this contentMost viewedMost viewed"
+https://news.ycombinator.com/rss,"Show HN: Vento, a screen recorder that lets you rewind and record over mistakes",https://vento.so,Comments,"ventoNew RecordingLog inStress-free Screen Recording Constantly restarting your screen recordings? With Vento, just pause, rewind, and carry on instead - keeping calm helps too :)Install Chrome ExtensionStart Recording“To record great videos, one must first rewind.” - Gandhi, probably.Video Not Availablevento© 2023 Vento. All rights reserved.Say hello! We don’t bite. Well, maybe one of us does.hello@vento.so"
+https://news.ycombinator.com/rss,Project Mage is an effort to build a power-user environment in Common Lisp,https://project-mage.org,Comments,"
+
+
+
+
+Project Mage
+
+
+
+
+
+
+
+
+
+
+
+
+
+Project Mage
+Home
+About
+Campaign
+Code
+Contact
+RSS
+
+
+
+
+
+
+
+
+
+nil
+
+
+Project Mage: The Elevator Pitch →
+
+
+
+Hi, and welcome! Project Mage is an effort to build a power-user environment and a set of applications in Common Lisp. For a comprehensive discussion, see The Power of Structure. But to get a brief idea of what this project is about, you just might want to check out Project Mage: The Elevator Pitch first. Otherwise, the essays listed below may be read in any order.
+
+
+
+
+
+
+
+
+Project Mage: The Elevator Pitch (17 January 2023) The Power of Structure (12 January 2023) Emacs is Not Enough (12 January 2023) On Flexibility and Software Temples (12 January 2023) Overcoming the Print-Statement (12 January 2023) Data-Supplied Web as a Model of Free Web (12 January 2023) Isn't It Obvious That C Programmers Wrote Git? (12 January 2023) Epilogue (12 January 2023) [Appendix] Why Common Lisp for This Project (12 January 2023) [Appendix] All Else is Not Enough (12 January 2023)
+
+
+
+
+
+
+
+...proudly created, delivered and presented to you by: some-mthfka. Mthfka!
+
+
+
+"
+https://news.ycombinator.com/rss,Memory Safety Approaches Speed Up and Slow Down Development Velocity,https://verdagon.dev/blog/when-to-use-memory-safe-part-2,Comments,"
+
+
+
+
+
+
+
+How Memory Safety Approaches Speed Up and Slow Down Development Velocity
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Languages ∩ Architecture
+
+
+RSS
+Github
+
+
+
+
+            Sponsor us on GitHub!
+          
+r/Vale
+Twitter
+Discord
+
+
+
+
+
+
+
+
+How Memory Safety Approaches Speed Up and Slow Down Development Velocity
+Part 2 of the Memory Safety Expedition
+
+Jan 16, 2023
+ — 
+Evan Ovadia
+ — 
+Sponsor us on GitHub!
+
+
+
+
+Every March, developers worldwide each try to make a roguelike game in less than 168 hours as part of the 7DRL Challenge. Roguelike games are hard, involving procedural level generation, pathfinding, line-of-sight algorithms, and more dijkstra maps than you can imagine.
+
+
+
+
+
+
+
+
+
+Most people don't survive the week. 0
+
+
+
+
+Years of 7DRL challenges has taught me that development velocity is the most important thing to optimize for. It doesn't matter how perfect your code is if it doesn't make it into the hands of the players in time.
+
+
+
+
+A few weeks ago I wrote the first part of our little expedition, which explored the various memory safety approaches. Today, let's talk about how they might help or harm development velocity!
+
+
+
+
+You might learn something new, like:
+
+
+
+Modern non-memory-safe languages can use recent techniques to zero in on memory errors so quickly, that they can be fast to develop in.
+
+
+Reference counting has a hidden superpower that can help track down logic problems.
+
+
+Borrow checking can sometimes help and sometimes hurt development velocity, even after the initial learning curve.
+
+
+
+
+
+ Why it's important
+
+
+
+Developer velocity is important. Not just for delivering a complete game in 7 days, but in a lot of every day software engineering situations too:
+
+
+
+A startup needs to get a working product into the hands of its users before the investment money dries up.
+
+
+One needs developer velocity to be able to respond to unforeseeable events, such as market opportunities or new regulatory requirements. 1
+
+
+A company needs to reduce costs to stay in business, including reducing development costs.
+
+
+
+
+
+Some napkin math to illustrate that last one:
+
+
+
+Google used 15.5 terawatt hours of electricity in 2020, most which went to data centers. We'll conservatively assume rather expensive electricity ($0.199/kwh for CA). That comes out to $3.085 billion. 
+
+
+Google has 27,169 software engineers. Some are higher, but let's conservatively use the entry level average yearly compensation which is currently $178,751. That comes out to $4.856 billion. 2
+
+
+
+As you can see, software development can be much more expensive than power usage, so it makes sense to primarily optimize for development velocity. 3
+
+
+
+
+ The Language Factor
+
+The choice of language, and its memory safety approaches, is a big factor in development velocity.
+
+
+
+
+There are generally four approaches to memory safety:
+
+
+
+Manual memory management (MMM), like in C, Ada, Zig, Odin, etc.
+
+
+Borrow checking, like in Rust, Cone, Cyclone, etc.
+
+
+Garbage collection (GC), like in Java, Go, Python, Javascript, etc. 4
+
+
+Reference counting (RC), like in Swift, Nim, Lobster, etc.
+
+
+
+
+
+There's also a fifth approach, generational references with regions which we'll talk about elsewhere; this series is comparing the more traditional approaches.
+
+
+
+
+But by the end of this, you'll have a much better idea of which is best for a particular situation, whether it be a game development challenge, web server, or anything else.
+
+
+
+
+ What Actually Is Developer Velocity?
+
+
+
+Development velocity is a nebulous concept, but I would say it's how fast we can expand, modify, and maintain our codebase to deliver value to the user and not cause too much collateral damage.
+
+
+
+
+The ""deliver value to the user"" is very important here. It means doing something that will help the user in a specific way. Without that clear goal, we can get caught up in making our features absolutely perfect according to some arbitrary artistic criteria. As anyone who has launched a product can tell you, it's better to have two solid, tested, flexible features instead of one absolutely perfect one.
+
+
+
+
+The ""too much"" is also important. There is often a tradeoff between moving fast and keeping things absolutely correct. A big part of software engineering is weighing the value of new features against the risk and relative severity of any bugs that might slip into production for a while.
+
+
+
+
+With that in mind, let's see how the various approaches do!
+
+
+
+
+ Manual Memory Management (MMM) can be slow
+
+
+
+People that come to C from higher-level languages often think that they should code like Java but manually inserting malloc and free calls. Let's call this style ""naive C"".
+
+
+
+
+One can become pretty skilled in mentally tracking where these calls should go, but the approach tends to fall apart after a while: it isn't resilient to changes and refactoring. It's common to accidentally change the code and break some previous assumptions, resulting in a memory bug.
+
+
+
+
+Memory bugs are notoriously difficult to solve. Naive C doesn't have great development velocity.
+
+
+
+
+ It can also be fast
+
+...and that's why experienced C developers don't really use this ""naive C"" style of coding.
+
+
+
+
+Instead, they:
+
+
+
+Use safer practices which drastically reduce memory problems, such as Architected MMM where we use arrays and arenas instead of malloc and free, always copying in/out of tagged unions instead of pointing into them, and so on.
+
+
+Use static analysis to enforce safer practices, such as SPARK.
+
+
+Use things like Address Sanitizer and Valgrind to detect buffer overflows, dangling pointers, memory leaks, and double-frees.
+
+
+Use special allocators that don't reuse memory, to better detect problems.
+
+
+If using C++, using RAII to automatically prevent double-free and memory leaks at compile-time.
+
+
+
+
+
+With these, developer velocity can be stellar even with an MMM language. Modern MMM languages even include these kinds of mechanisms, such as Zig's Release-Safe mode.
+
+
+
+
+There is a slight cost to these memory approaches. Address Sanitizer increases run-time by 73%. This makes it almost as slow as garbage collection. 5
+
+
+
+
+However, that doesn't matter if we can just enable it in debug mode to get the error detection improvements for developer velocity and turn them off in release mode, just like assertions. As we talked about in Part 1, we wouldn't want this for a public-facing server, but it's a great tradeoff for many games and settings like webapps and mobile apps where any security issues can be sandboxed away. 6
+
+
+
+
+Google Earth proved that this strategy can work well. In an average Google Earth quarter, only 3-5% of bug reports were traceable to memory safety problems, and Address Sanitizer made them trivial to reproduce in development mode.
+
+
+
+
+Another developer velocity benefit from MMM languages is that they aim to be as simple as possible to keep compile times low. Languages like C, Zig, and Odin tend to compile much faster than more complex languages like Scala and Rust. This greatly helps developer velocity. 7 On top of that, Zig's simplicity helps its ability to hot-reload code changes which could make it one of the fastest native languages to develop in.
+
+
+
+
+
+How Memory Safety Approaches Speed Up and Slow Down Development Velocity
+
+
+ Why it's important
+
+
+ The Language Factor
+
+
+ What Actually Is Developer Velocity?
+
+
+ Manual Memory Management (MMM) can be slow
+
+
+ It can also be fast
+
+
+ Future MMM Improvements
+
+
+ Borrow Checking
+
+
+
+
+ Drawback: Prototyping and Iterating
+
+
+ Benefit: Concurrency
+
+
+ Drawback: Unsupported Patterns
+
+
+ Benefit: Top-Down, Flattened Architectures
+
+
+ Drawback: Leaky Abstractions and API Stability
+
+
+
+
+ Borrow Checking and Beyond
+
+
+ Garbage Collection
+
+
+ GC'd code can be more correct
+
+
+ GC can be slow in specific domains
+
+
+ Garbage Collection's Future
+
+
+ Reference Counting
+
+
+ Conclusions
+
+
+
+
+Side Notes
+(interesting tangential thoughts)
+
+
+
+
+Notes [–]
+Notes [+]
+0
+1
+2
+3
+4
+5
+6
+7
+
+
+
+0
+
+
+By this I mean, most people don't have a finished game by the end. But they still celebrate with the rest of us, after an honorable struggle!
+
+
+
+
+1
+
+
+We also need developer velocity to develop fast enough to compensate for product managers that wildly underestimate how long it will take to make something.
+
+
+
+
+2
+
+
+Just to keep it simple, let's not include benefits or bonuses, which make it even higher.
+
+
+
+
+3
+
+
+This of course varies by company and team; a startup will have much higher development costs, and a company like Oracle would probably have more server costs.
+
+
+
+
+4
+
+
+By ""garbage collection"" I'm specifically referring to tracing garbage collection.
+
+
+
+
+5
+
+
+ From TheNewStack:
+
+
+
+Java: 1.85x run time
+
+
+Go: 2.83x run time
+
+
+Haskell: 3.55x run time
+
+
+
+
+
+
+
+6
+
+
+This works particularly well for apps that only talk to a trusted first-party server, which includes most apps. It doesn't work as well for programs where clients indirectly send each other data, such as multiplayer first person shooter games.
+
+
+
+
+7
+
+
+I can speak from experience; every time I have a project that takes more than five seconds to compile, I tend to get distracted by Reddit or something shiny.
+
+
+
+
+
+
+
+
+
+
+
+ Future MMM Improvements
+
+There are a few approaches on the horizon that improve upon MMM even more.
+
+
+
+
+To address more of the memory unsafety in MMM languages, CHERI detects any memory safety problems at run-time using capabilities.
+
+
+
+
+From Microsoft Security Response Center:
+
+
+We’ve assessed the theoretical impact of CHERI on all the memory safety vulnerabilities we received in 2019, and concluded that in its current state, and combined with other mitigations, it would have deterministically mitigated at least two thirds of all those issues.
+
+
+
+
+In other words, CHERI can reduce memory-unsafety related slowdowns by two thirds, which is pretty incredible. AMD CPUs are even starting to have hardware support for it, bringing its run-time overhead down to 6.8%.
+
+
+
+
+That remaining one third is solved by Vale which takes this approach even further in the form of its generational references. By building it into the language itself, it can know exactly when it does or doesnt need to perform a check, and by adding native region support it can theoretically skip the vast majority of them, bringing its run-time overhead even closer to zero, within the noise of any C or C++ program. With that kind of speed, we can leave the protections enabled even in release mode.
+
+
+
+
+
+
+
+
+
+
+ Borrow Checking
+
+Borrow checking is another mechanism that can be added to a low-level language to protect against memory problems, similar to SPARK. Rust is the main language with borrow checkers, though there are some newer languages that are designing borrow checkers with better development velocity.
+
+
+
+
+Its main advantages are that:
+
+
+
+It detects memory safety bugs, like the aforementioned 3-5% of Google Earth bugs, at compile time. That means that instead of getting 80 bug reports, they might have only 77 if they used Rust.
+
+
+The borrow checker saves time when using concurrency.
+
+
+It tends to default us into architectures that, in certain situations, help us develop faster.
+
+
+
+
+
+We know that Rust often has better developer velocity than naive C, but that's not surprising. Naive C is an easy comparison, since it doesn't have the strong static type system or generics that almost every modern GC'd and MMM 8 language has. So how does borrow checking fare against more modern languages and practices?
+
+
+
+
+Unfortunately, borrow checking has some considerable developer velocity drawbacks which make it much slower than languages with garbage collection, and sometimes even slower than MMM. 9
+
+
+
+
+I'll link to some quotes and examples (green to emphasize that they're just anecdotes) to complete the picture. Note that these aren't data, just everyday people's experiences. 10 Keep in mind that these are mostly comparing borrow checking to garbage collection.
+
+
+
+
+From Matt Welsh:
+
+
+Rust has made the decision that safety is more important than developer productivity. This is the right tradeoff to make in many situations — like building code in an OS kernel, or for memory-constrained embedded systems — but I don’t think it’s the right tradeoff in all cases, especially not in startups where velocity is crucial.
+
+
+
+
+In the words of another software architect:
+
+
+It gives me such a great feeling of safety and control over your process, but at the end of the day it can be very tedious. The real killer is when I'm trying to prototype. If I don't already know what my interfaces are going to look like, Rust really slows me down. Compile times don't help here either.
+
+
+
+
+We often write it off as just a learning curve problem, but it's apparently true even for more experienced rustaceans.
+
+
+
+
+These weaknesses are can be subtle, and often don't appear in small projects when it's still easy to change a program's architecture. They start to reveal themselves more in larger projects, as a project starts scaling across multiple developers. As one user says, ""Six weeks into the whole thing and people spend more time un-breaking builds than writing code.""
+
+
+
+
+Note that this doesn't mean borrow checking is a bad thing. It just means that to get its benefits, you'll have to pay some development velocity costs.
+
+
+
+
+We don't often hear about the underlying reasons, 11 but knowledge of language design and software architecture helps us identify some of the root causes:
+
+
+
+The borrow checker adds extra constraints that are usually unnecessary in other paradigms 12 which causes artificial complexity and extra refactoring, which slows developer velocity.
+
+
+Forced coupling, which means that refactors and changes in one area will unnecessarily cause refactors and changes in neighboring code.
+
+
+It doesn't support a lot of the patterns which enable better decoupling and looser architectures.
+
+
+The borrow checker makes mutability inherently leaky, causing it to leak through abstractions.
+
+
+
+
+
+These are rather tricky concepts to grasp, so let's explore these a little more.
+
+
+
+
+
+
+
+Notes [–]
+Notes [+]
+8
+9
+10
+11
+12
+
+
+
+8
+
+
+Zig has comptime and Odin has parametric polymorphism.
+
+
+
+
+9
+
+
+Keep in mind that a lot of Rust's developer velocity (especially compared to C) doesn't come from borrow checking, but from having a much stronger static type system and generics, which GC languages and most newer MMM languages also have nowadays.
+
+
+
+
+10
+
+
+I would love to see an actual experiment measuring the actual developer velocity between different languages. I'm not sure how they would factor out the learning curve costs, but it's probably possible.
+
+
+
+
+11
+
+
+And there's a surprising lack of articles covering the tradeoffs of Rust online. I'm not sure why this is the case.
+
+
+
+
+12
+
+
+ Some folks think that the borrow checker's rules are inherent to programming and should be followed in any paradigm. This is false. Aliasability-xor-mutability is just a rough approximation of the real rule, dereference-xor-destroyed. Shared mutability doesn't always cause memory unsafety; dereferencing destroyed data is the real danger.
+
+
+
+
+
+
+
+
+
+
+
+
+ Drawback: Prototyping and Iterating
+
+
+
+Some say that Rust is terrible language for prototyping, it makes draft coding very difficult, and that other languages are much faster to change.
+
+
+
+
+This is largely because it imposes extra constraints compared to other paradigms. Universally, the more constraints and rules you add to a problem, the more rigid the solution space is. When you want to make a change, you can't just do the simplest change, you need to find a change that also satisfies the extra constraints of the borrow checker.
+
+
+
+
+One user says, ""Rust’s complexity regularly slows things down when you’re working on system design/architecture, and regularly makes things faster when you’re implementing pieces within a solid design (but if it’s not solid, it may just grind you to a total halt).""
+
+
+
+
+Borrow checking tends to make refactoring more extensive because of the borrow checker's forced coupling: as a codebase's components become more interconnected and coupled, then changes in one will require changes in another. In borrow checking, every function is much more coupled to its callers and callees by mutability constraints.
+
+
+
+
+From Using Rust at a startup: A cautionary tale: 13
+
+
+What really bites is when you need to change the type signature of a load-bearing interface and find yourself spending hours changing every place where the type is used only to see if your initial stab at something is feasible. And then redoing all of that work when you realize you need to change it again.
+
+
+
+
+Another user says, ""In general I find refactoring to be a far more excruciating process in Rust than in other languages."" 14
+
+
+
+
+It's also a little worse because borrow checker also requires you to satisfy its constraints up-front for every single iteration of your code, long before it actually matters. In the words of one user, it ""forces me to put the cart before the horse"". Most code goes through multiple iterations before it's complete, 15 so we're paying this cost more often than other paradigms.
+
+
+
+
+Once you're done prototyping, it can be difficult to change your program, like moving through molasses. Refactoring can be a massive pain, especially if you change the way you store some data.
+
+
+
+
+And as one user says, ""In theory ... it's possible to avoid the escape hatches if you are careful to structure access to your data juuuuust right. That works out fine if you're the only person working on an infrequently-changing program with a small model that you understand very well. If everyone needs to hook into the first two or three function call levels of the main loop, and if your model is anything but small, that doesn't work out anymore.""
+
+
+
+
+Of course, these users' experiences aren't universal, it might depend greatly on the domain. Stateless programs like command line tools or low-abstraction domains like embedded programming will have less friction with the borrow checker than domains with a lot of interconnected state like apps, stateful programs, or complex turn-based games. This is probably why some people find the borrow checker to be slower to work with, while some people think it's just fine.
+
+
+
+
+
+
+
+Notes [–]
+Notes [+]
+13
+14
+15
+
+
+
+13
+
+
+Some interesting discussion on this quote.
+
+
+
+
+14
+
+
+The user continues on to say ""It is also far more satisfying."" There's nothing quite like the feeling of being done with a refactor, especially when it improves one's code.
+
+
+
+
+15
+
+
+Some people are brilliant and can get everything completely right on the first try, but alas, I am not one of them, and I haven't met one either.
+
+
+
+
+
+
+
+
+
+
+
+ Benefit: Concurrency
+
+The borrow checker may cause slower development velocity when prototyping and iteration, but it also helps in some ways if our program is using concurrency.
+
+
+
+
+The borrow checker helps protect against data races. A data race is when: 16
+
+
+
+Two or more threads [or async tasks] concurrently accessing a location of memory.
+
+
+One or more of them is a write.
+
+
+One or more of them is unsynchronized.
+
+
+
+
+
+The reading CPU will get a partial, inconsistent view of the data because the writing CPU hasn't finished writing to it yet. These bugs are very difficult to detect, because they depend on the scheduling of the threads, which is effectively random.
+
+
+
+
+These bugs can take days to track down, slowing developer velocity for programs that use concurrency.
+
+
+
+
+Most languages, including C, Java, and Swift, offer no protections against data races. Go offers partial protection against data races by encouraging and defaulting to message passing, but one can still suffer the occasional data race.
+
+
+
+
+Rust uses the borrow checker to protects us from data races at compile time, by isolating one thread's memory from another thread's memory, and offering standard library tools that let us safely share data between threads, such as Mutex<T>.
+
+
+
+
+Not all programs use (or should use) concurrency, but if your program does, the borrow checker may improve your developer velocity in these areas of your program.
+
+
+
+
+
+
+
+Notes [–]
+Notes [+]
+16
+
+
+
+16
+
+
+From The Rustonomicon.
+
+
+
+
+
+
+
+
+
+
+
+ Drawback: Unsupported Patterns
+
+
+
+The borrow checker is a very effective static analysis mechanism, but it still tends to be incompatible with a lot of simple, useful, and safe patterns:
+
+
+
+Graphs; it generally only thrives with a strict tree hierarchy of data.
+
+
+It has a lot of trouble with observers and any callback-based code.
+
+
+Back-references; you cannot get from a child to a parent.
+
+
+Dependency references, such as a HomeViewController's reference to a NetworkRequester.
+
+
+Intrusive data structures.
+
+
+Many forms of RAII 17 plus higher RAII.
+
+
+Delegates, like in iOS GUI widgets.
+
+
+
+
+
+All of these are generally impossible within the rules of borrow checker. There are workarounds for some, but they have their own complexities and limitations.
+
+
+
+
+When the easiest solution is one of these, then one has to spend extra time to find workarounds or an entire different approach that satisfies the borrow checker. This is artificial complexity, and can slow down development velocity. For example, I once saw someone who brought in an entire Rust framework (Yew) as a dependency because they couldn't make an observer work within the borrow checker.
+
+
+
+
+Luckily, one can avoid some of these problems by leaning more heavily on workarounds like Rc or RefCell, though many in the Rust community say that these are a last resort, avoided, and should be refactored out whenever possible, but these workarounds can help avoid forced coupling and help improve developer velocity if used well.
+
+
+
+
+
+
+
+Notes [–]
+Notes [+]
+17
+
+
+
+17
+
+
+RAII is about automatically affecting the world outside our object. To do that, the borrow checker often requires us to take a &mut parameter or return a value, but we can't change drop's signature. To see this in action, try to make a handle that automatically removes something from a central collection.
+
+
+
+
+
+
+
+
+
+
+
+ Benefit: Top-Down, Flattened Architectures
+
+The borrow checker often influences us into a top-down architecture, which can help us maintain assumptions and invariants in our programs.
+
+
+
+
+In short, a top-down architecture is where you organize your program's functions into a tree (or a directed acyclic graph), such that a parent can call a child, but a child cannot call a parent.
+
+
+
+
+This is a very subtle but powerful effect for your program. Explaining it would take an entire three articles on its own, but check out this video by Brian Will where he talks about the benefits of this kind of ""procedural"" style. 18
+
+
+
+
+GC'd languages like Pony, and functional languages like Haskell and Clojure also have this benefit. In Rust it's a natural side-effect of (or rather, requirement for) its memory safety approach.
+
+
+
+
+The borrow checker also influences us toward a ""flatter"" organization, where all of our program's long-term state is held in central collections, reminiscent of a relational database. This leads naturally into certain architectures like ECS. This architecture works pretty well for a lot of programs.
+
+
+
+
+Note that it can also be a bad fit for some programs. More complex turn-based games, such as roguelikes, are better with other architectures. ECS isn't as flexible or extensible in those situations.
+
+
+
+
+ Drawback: Leaky Abstractions and API Stability
+
+There are occasional features in programming languages that are inherently leaky, in that they tend to leak through abstractions.
+
+
+
+
+An example that illustrates the concept, unrelated to memory safety, is async/await.
+
+
+If foo() calls an async function bar(), then we need to make foo itself async as well, and a lot of foo's callers as well. It's usually doable... unless we need to change a function signature that overrides a method on an trait. When a feature forces us to change a trait method's signature, it is an inherently leaky feature.
+
+
+Leakiness can make refactors much more widespread, and can even lead to an architectural deadlock when we run into an trait method we can't change, such as one in a public API.
+
+
+
+
+In a similar way, the borrow checker is also inherently leaky. For example, when our method expects a &mut reference to some data, it imposes a global constraint that nobody else has a shared reference to that data. 19 This often manifests as a &mut in our callers and all of their callers. This ""caller-infectious requirement"" makes borrow checking inherently leaky, and can be a particularly thorny problem when it runs into classes that have fixed interfaces, where there is no way to pass extra data through them.
+
+
+
+
+I'll repeat Matt Welsh's quote, since it applies here as well:
+
+
+What really bites is when you need to change the type signature of a load-bearing interface and find yourself spending hours changing every place where the type is used only to see if your initial stab at something is feasible. And then redoing all of that work when you realize you need to change it again.
+
+
+
+
+When this occurs, one user says you can do ""one of three things: 1) Refactor into an unrecognizable mess. 2) Add a lot of RwLock or RefCell. 3) Abandon the project. The issue is that to maintain the same interface, it gets to be so hacky that maintence becomes borderline impossible.""
+
+
+
+
+Leaky features directly conflict with the main benefits of decoupling and abstraction, which help isolate changes in one area from affecting another. Maintaining decoupling is a very important principle for development velocity, no matter what paradigm you're using.
+
+
+
+
+Some people say that ""abstractions are bad anyway"". I'll take this opportunity to point out some of the most successful and beneficial abstractions in programming history, such as file descriptors, the UDP protocol, and the Linux operating system. 20
+
+
+
+
+To sum up, the constraints we add for memory safety are sometimes in conflict with the necessary constraints of API stability and beneficial abstraction, and there's sometimes a limit to how many constraints you can add to a problem before it becomes impossible to satisfy them all. 21
+
+
+
+
+Don't get me wrong, one can get sufficient developer velocity in Rust, especially compared to naive C or C++. These drawbacks are real, but they aren't crippling. Plenty of projects have been completed in a reasonable time with Rust... it's just often slower than other approaches.
+
+
+
+
+
+
+
+Notes [–]
+Notes [+]
+18
+19
+20
+21
+
+
+
+18
+
+
+It's a great video, explaining a good architecture, though I would disagree with his conclusion that object-oriented coding is therefore bad. One can easily use a top-down object-oriented architecture. In an iOS app, simply never do any mutation if calling a delegate method, only when called from above. Many React apps are architected this way, and so is Google Earth.
+
+
+
+
+19
+
+
+This is also true of the converse; a & reference puts a constraint on all other code that they don't have any &mut references.
+
+
+
+
+20
+
+
+ More good programming abstractions:
+
+
+
+If statements
+
+
+Docker
+
+
+JVM bytecode
+
+
+
+And some from real life:
+
+
+
+Amazon.com
+
+
+Driving
+
+
+Spoken language!
+
+
+
+
+
+
+
+21
+
+
+A quote from Harry Potter and the Methods of Rationality. Shout-out to my fellow Ravenclaws!
+
+
+
+
+
+
+
+
+
+
+
+ Borrow Checking and Beyond
+
+A lot of languages are working on borrow checking blends that are better for development velocity.
+
+
+
+
+Some languages are using it under the hood:
+
+
+
+Lobster is using borrowing and other static analysis techniques under the hood to eliminate a lot of reference counting overhead.
+
+
+Kind is using a blend of borrowing and cloning to fuel a purely functional language.
+
+
+
+
+
+Vale is building something similar to borrow checking but at the regions level, to largely eliminate memory safety overhead without introducing aliasing restrictions. Its opt-in nature means the user can use it where it makes sense and doesn't hinder development velocity.
+
+
+
+
+Verona and Forty2 are experimenting with mixing regions and garbage collection.
+
+
+
+
+Some languages are also putting borrow checkers on top of simpler and more flexible foundations:
+
+
+
+Austral is building one on top of linear types.
+
+
+Val is working on one built on top of Mutable Value Semantics.
+
+
+
+
+
+Cone is particularly interesting because it builds a borrow checker on top of any user-specified memory management strategy.
+
+
+
+
+ Garbage Collection
+
+
+
+Garbage collection is probably the best approach for developer velocity. It completely decouples your goals from the constraints of memory management. You are free to solve your problem without tracking extra requirements, such as C++'s single ownership or Rust's borrow checking.
+
+
+
+
+This is a good thing, because most of your code doesn't need to care about memory management. In most programs, profiling shows only a small portion of code that's performance sensitive, requiring more precise control of memory. 22
+
+
+
+
+I particularly liked this quote from the Garbage Collection Handbook:
+
+
+Above all, memory management is a software engineering issue. Well-designed programs are built from components [...] that are highly cohesive and loosely coupled. [...] modules should not have to know the rules of the memory management game played by other modules. [...] GC uncouples the problem of memory management from interfaces.
+
+
+
+
+In garbage collection, we don't have to satisfy the move-to-move constraint, or borrow-to-borrow constraint. We dont have to worry about matching pointers versus values. There's just one kind of reference, rather than Rust's 5 or C++'s 7. 23
+
+
+
+
+GC also doesn't cause any refactoring to satisfy single ownership (like C++'s unique_ptr) or mutability requirements (like in Rust), because those concepts never existed to begin with. 24
+
+
+
+
+ GC'd code can be more correct
+
+
+
+There are certain errors that arise in borrow checked and MMM languages, which don't happen in GC languages.
+
+
+
+
+Often, instead of holding a reference to an object like in a GC'd language, the borrow checker will force us to hold a key into a central collection, such as an ID into a hash map. If we try to ""dereference"" 25 the ID of an object that no longer exists, we often get a run-time error (a None or Err usually) that we have to handle or propagate.
+
+
+
+
+Pony is a great example of how a garbage collected language can reach further towards correctness than other languages. Pony is one of the only languages that literally cannot cause a run-time error. Like Erlang, it is incredibly resilient. 26
+
+
+
+
+Garbage collection can also be better with privacy, since objects are never accidentally reused or mixed up with each other. For example, the borrow checker can turn memory safety problems into privacy problems if one's not careful.
+
+
+
+
+ GC can be slow in specific domains
+
+If one has unusually constrained latency requirements, such as in high frequency trading or a real-time first-person shooter game, it can take quite some time to refactor and tune the program to not have unwelcome latency spikes.
+
+
+
+
+For example, to avoid the Java garbage collector firing in a specific scope, one has to completely avoid the new keyword in that scope, and avoid calling any functions that might sneakily use new. Coding without new in Java is a particularly arcane challenge.
+
+
+
+
+It's a little easier in C#, where we can use the struct keyword to make a class without any heap allocation. High-performance Unity games sometimes use this style, but it's still rather difficult.
+
+
+
+
+ Garbage Collection's Future
+
+Garbage collection is more than fast enough for most situations. And even for those situations where it's latency spikes are too burdensome, there are solutions on the horizon.
+
+
+
+
+Cone and Verona will allow us to explicitly separate GC regions from each other, such that we can create and destroy a temporary short-lived region before its first collection even needs to happen. By using regions wisely, one can probably avoid the vast majority of collections. 27
+
+
+
+
+Cone aims to take that even further by blending in a borrow checker, plus allowing more allocation strategies such as arenas, reference counting, or even custom ones from the users themselves.
+
+
+
+
+With these advances, we might be able to get GC's development velocity advantages without the usual performance drawbacks.
+
+
+
+
+ Reference Counting
+
+
+
+Reference counting, like in Swift, generally has the benefits that garbage collection does.
+
+
+
+
+It does have one drawback: any cycle of references pointing at each other could cause a memory leak, wasting the available memory. This can be largely mitigated with good tooling that detects these cycles in development.
+
+
+
+
+However, reference counting has three nice benefits: weak references, deterministic destruction, and the ability to make constraint references.
+
+
+
+
+A weak reference is a mechanism for determining if the pointed-at object is still alive. This can be useful for a program's logic. For example, a Rocket might check if the target Spaceship has already been destroyed, to know whether it should safely fall into the planet's ocean.
+
+
+
+
+Reference-counted objects are destroyed deterministically, which helps us have finer control over our program's performance.
+
+
+
+
+One can also specify where they expect a reference-counted object to be destroyed, simply by asserting that they have the last reference (in other words, asserting the reference count is 1 at the end of the scope). I call this a constraint reference 28 and it can help us detect our program's logic bugs in a way that no other paradigm can.
+
+
+
+
+ Conclusions
+
+MMM, borrow checking, GC, and RC each have their strengths and weaknesses. However, in the dimension of development velocity, my general conclusions would be:
+
+
+
+Garbage collection is often the best, since it decouples memory concerns from the actual problem at hand.
+
+
+Reference counting is almost as good as garbage collection, and possibly even better if one uses its specific unique abilities.
+
+
+MMM can be pretty good, as long as one uses proper architectures and tools to detect memory problems.
+
+
+Borrow checking is almost as good as the others, if we augment it with Rust's other aspects like RefCell.
+
+
+
+
+
+But that's too general! Here's some rough guidelines to help with more specific situations:
+
+
+
+When making a game, default to something GC or RC, like Swift or C#. They offer great development velocity, plus value types (struct) for the more performance-sensitive areas. If one need even more performance, then:
+
+
+
+If working on a single player game, an MMM language with proper architecture and memory safety mitigations is a stellar option.
+
+
+If working on a multiplayer game that has particular security risks, then Rust is a good option.
+
+
+
+When making a web server, default to a memory-safe language with RC or GC and good concurrency support like Pony or Go.
+
+
+
+If working on something extremely latency-sensitive, Rust could be better. MMM isn't really advisable for something exposed to the network.
+
+
+
+When making a mobile app, stick to Swift, Kotlin, or Typescript. GC is particularly good here because its pauses can happen in between user actions.
+
+
+If working on something that needs high reliability and correctness, look into something like Pony. It's run-time is guaranteed to never cause a run-time error that's not explicitly created by the user.
+
+
+
+
+
+There are also a lot of other languages improving, blending, and even creating new memory safety paradigms.
+
+
+
+
+Of course, one should consider all this in context. Developer velocity is one of the most important factors in language choice, but not the only factor:
+
+
+
+An open-source project might want a language that encourages simplicity more, for a healthier community of contributors.
+
+
+A real-time first-person shooter game would still want an approach with more predictable performance, even if it takes longer to code.
+
+
+A safety critical application would still want an approach that encourages more correctness, even at the cost of developer velocity.
+
+
+
+
+
+I hope this post has given you a broader perspective on how various memory safety approaches affect development velocity!
+
+
+
+
+If you're interested in this kind of thing, then check out Part 1 which talks about memory safety in unsafe languages, and keep an eye out for the next parts on our RSS feed, twitter, discord server, or subreddit!
+
+
+
+
+If you found this interesting or entertaining, please consider sponsoring me:
+
+
+
+
+
+
+
+     Sponsor me on GitHub!
+  
+
+
+
+With your help, I can write this kind of nonsense more often!
+
+
+
+
+Cheers,
+
+
+- Evan Ovadia
+
+
+
+
+
+
+
+
+
+Notes [–]
+Notes [+]
+22
+23
+24
+25
+26
+27
+28
+
+
+
+22
+
+
+This is also why C# offers value types (struct) for more precise control over memory.
+
+
+
+
+23
+
+
+In C++, there's Ship, Ship&, Ship*, const Ship*, const Ship&, unique_ptr<Ship>, shared_ptr<Ship>. In Rust, there's Ship, &Ship, &mut Ship, Box<Ship>, Rc<Ship>. Cell<T> and RefCell<T> might also count, bringing Rust to 7 too, perhaps.
+
+
+
+
+24
+
+
+Though I wouldn't turn down some sort of single ownership / RAII being added to a GC'd language. It would prevent us ever forgetting to call .dispose() on a class's child.
+
+
+
+
+25
+
+
+By this I mean use the index or ID to look up an object in the central hash map.
+
+
+
+
+26
+
+
+Note that not all garbage collected languages strive for correctness... most of them have some flavor of null or nil.
+
+
+
+
+27
+
+
+I suspected Pony could do something similar, but after a quick discussion with one of the developers, it turns out not to be the case.
+
+
+
+
+28
+
+
+Vale used to be based on these constraint references, check out this article from long ago for more.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        Copyright © 2022 Evan Ovadia  
+      
+
+
+
+
+"
+https://news.ycombinator.com/rss,Louis Le Prince,https://en.wikipedia.org/wiki/Louis_Le_Prince,Comments,"
+
+
+
+Louis Le Prince - Wikipedia
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Louis Le Prince
+
+From Wikipedia, the free encyclopedia
+
+
+
+Jump to navigation
+Jump to search
+French inventor and Father Of Cinematography
+For the composer, see Louis Le Prince (composer).
+
+
+Louis Le PrinceLe Prince c. 1885BornLouis Aimé Augustin Le Prince(1841-08-28)28 August 1841Metz, FranceDisappeared16 September 1890Dijon, FranceStatusDeclared dead on
+                       16 September 1897 (aged 56)Occupation(s)Artist, art teacher, inventorSpouseElizabeth Le Prince-Whitley
+​ ​(m. 1869)​
+Louis Aimé Augustin Le Prince (28 August 1841 – disappeared 16 September 1890, declared dead 16 September 1897) was a French artist and the inventor of an early motion-picture camera, possibly the first person to shoot a moving picture sequence using a single lens camera and a strip of (paper) film.[1][2] He has been credited as the ""Father of Cinematography"",[3] but his work did not influence the commercial development of cinema—owing at least in part to the great secrecy surrounding it.[4][5]
+A Frenchman who also worked in the United Kingdom and the United States, Le Prince's motion-picture experiments culminated in 1888 in Leeds, England.[6] In October of that year, he filmed moving-picture sequences of family members in Roundhay Garden and his son playing the accordion, using his single-lens camera and Eastman's paper negative film.[7] At some point in the following eighteen months he also made a film of Leeds Bridge. This work may have been slightly in advance of the inventions of contemporaneous moving-picture pioneers, such as the British inventors William Friese-Greene and Wordsworth Donisthorpe, and was years in advance of that of Auguste and Louis Lumière and William Kennedy Dickson (who did the moving image work for Thomas Edison).
+Le Prince was never able to perform a planned public demonstration of his camera in the US because he mysteriously vanished; he was last known to be boarding a train on 16 September 1890.[1] Multiple conspiracy theories have emerged about the reason for his disappearance, including: a murder set up by Edison, secret homosexuality, disappearance in order to start a new life, suicide because of heavy debts and failing experiments, and a murder by his brother over their mother's will. No conclusive evidence exists for any of these theories. In 2004, a police archive in Paris was found to contain a photograph of a drowned man bearing a strong resemblance to Le Prince who was discovered in the Seine just after the time of his disappearance,[7] but it has been claimed that the body was too short to be Le Prince.[8]
+In early 1890, Edison workers had begun experimenting with using a strip of celluloid film to capture moving images. The first public results of these experiments were shown in May 1891.[9] However, Le Prince's widow and son Adolphe were keen to advance Louis's cause as the inventor of cinematography. In 1898, Adolphe appeared as a witness for the defence in a court case brought by Edison against the American Mutoscope Company. This suit claimed that Edison was the first and sole inventor of cinematography, and thus entitled to royalties for the use of the process. Adolphe was involved in the case but was not allowed to present his father's two cameras as evidence, although films shot with cameras built according to his father's patent were presented. Eventually the court ruled in favour of Edison. A year later that ruling was overturned,[9] but Edison then reissued his patents and succeeded in controlling the US film industry for many years.[9]
+
+Contents
+
+1 Early life and education
+2 Career
+3 Disappearance
+4 Patents and cameras
+5 Later recognition
+
+5.1 Le Prince Cine Camera-Projector types
+
+
+6 Legacy
+
+6.1 Remaining material and production
+6.2 Man Walking Around a Corner (16-Lens Camera)
+6.3 Roundhay Garden Scene (Single-Lens Camera MkII)
+6.4 Traffic Crossing Leeds Bridge (Single-Lens Camera MkII)
+6.5 Accordion Player (Single-Lens Camera MkII)
+
+
+7 See also
+8 References
+9 Sources
+10 External links
+
+
+Early life and education[edit]
+Le Prince was born on 28 August 1841 in Metz.[10][11] His family referred to him as ""Augustin"" and English-speaking friends would later call him ""Gus"".[12] Le Prince's father was a major of artillery in the French Army[13] and an officer of the Légion d'honneur. When growing up, he reportedly spent time in the studio of his father's friend, the pioneer of photography Louis Daguerre,[13] from whom Le Prince may have received some lessons on photography and chemistry before he was 10 years old. His education went on to include the study of painting in Paris and post-graduate chemistry at Leipzig University,[13] which provided him with the academic knowledge he was to utilise in the future.
+
+Career[edit]
+ Le Prince in the 1880s
+In conclusion, I would say that Mr. Le Prince was in many ways a very extraordinary man, apart from his inventive genius, which was undoubtedly great. He stood 6ft. 3in. or 4in. (190cm) in his stockings, well built in proportion, and he was most gentle and considerate and, though an inventor, of an extremely placid disposition which nothing appeared to ruffle.— Declaration of Frederic Mason (wood-worker and assistant of Le Prince, April 21, 1931, American consulate of Bradford, England)
+Le Prince moved to Leeds, England in 1866, after being invited to join John Whitley,[1] a friend from college, in Whitley Partners of Hunslet, a firm of brass founders making valves and components.[14][15] In 1869 he married Elizabeth Whitley, John's sister[1] and a talented artist. When in Paris during their honeymoon, Le Prince repeatedly visited a magic show, fascinated by an illusion with moving transparent figures, presumably a dancing skeleton projection at the Théâtre Robert-Houdin with multiple reflections of mirrors focused on one point or a variation of Pepper's Ghost.[16]
+Le Prince and his wife started a school of applied art, the Leeds Technical School of Art,[17] and became well renowned for their work in fixing coloured photographs on to metal and pottery, leading to them being commissioned for portraits of Queen Victoria and the long-serving Prime Minister William Gladstone produced in this way; these were included alongside other mementos of the time in a time capsule—manufactured by Whitley Partners of Hunslet—which was placed in the foundations of Cleopatra's Needle on the embankment of the River Thames.[citation needed]
+In 1881, Le Prince went to the United States[13] as an agent for Lincrusta Walton, staying in the country along with his family once his contract had ended.[citation needed] He became the manager for a small group of French artists who produced large panoramas, usually of famous battles, that were exhibited in New York City, Washington, D.C. and Chicago.[13][14]
+During this time he began experiments relating to the production of 'moving' photographs, designing a camera that utilised sixteen lenses,[14] which was the first invention he patented. Although the camera was capable of 'capturing' motion, it wasn't a complete success because each lens photographed the subject from a slightly different viewpoint and thus the image would have jumped about, if he had been able to project it (which is unknown).
+
+ Plaque on Leeds Bridge
+After his return to Leeds in May 1887,[14] Le Prince built a single-lens camera in mid-late 1888. An experimental model was developed in a workshop at 160 Woodhouse Lane, Leeds and used to shoot his motion-picture films. It was first used on 14 October 1888 to shoot what would become known as Roundhay Garden Scene and a sequence of his son Adolphe playing the accordion. Le Prince later used it to film road traffic and pedestrians crossing Leeds Bridge. The film was shot from Hicks the Ironmongers, now the British Waterways building on the south east side of the bridge,[1] now marked with a commemorative Blue plaque.
+
+Disappearance[edit]
+In September 1890, Le Prince was preparing for a trip to the United States, supposedly to publicly premiere his work and join his wife and children. Before this journey, he decided to return to France to visit his brother in Dijon. Then, on 16 September, he took a train to Paris but, having taken a later train than planned, his friends missed him in Paris. He was never seen again by his family or friends.[1] The last person to see Le Prince at the Dijon station was his brother.[18]  The French police, Scotland Yard and the family undertook exhaustive searches, but never found him.
+Le Prince was officially declared dead in 1897.[19]
+A number of wild and mostly unsubstantiated theories were proposed, including:
+
+Patent Wars assassination, ""Equity 6928""
+Christopher Rawlence pursues the assassination theory, along with other theories, and discusses the Le Prince family's suspicions of Edison over patents (the Equity 6928) in his 1990 book and documentary The Missing Reel. Rawlence claims that at the time that he vanished, Le Prince was about to patent his 1889 projector in the UK and then leave Europe for his scheduled New York official exhibition. His widow assumed foul play though no concrete evidence has ever emerged and Rawlence prefers the suicide theory. In 1898, Le Prince's elder son Adolphe, who had assisted his father in many of his experiments, was called as a witness for the American Mutoscope Company in their litigation with Edison [Equity 6928]. By citing Le Prince's achievements, Mutoscope hoped to annul Edison's subsequent claims to have invented the moving-picture camera. Le Prince's widow Lizzie and Adolphe hoped that this would gain recognition for Le Prince's achievement, but when the case went against Mutoscope their hopes were dashed. Two years later Adolphe Le Prince was found dead on Fire Island near New York.[20]
+Disappearance ordered by the family
+In 1966, Jacques Deslandes proposed a theory in Histoire comparée du cinéma (The Comparative History of Cinema), claiming that Le Prince voluntarily disappeared due to financial reasons and ""familial conveniences"". Journalist Léo Sauvage quotes a note shown to him by Pierre Gras, director of the Dijon municipal library, in 1977, that claimed Le Prince died in Chicago in 1898, having moved there at the family's request because he was homosexual; but he rejects that assertion.[21] There is no evidence to suggest that Le Prince was gay.[22]
+Fratricide, murder for money
+In 1967, Jean Mitry proposed, in Histoire du cinéma, that Le Prince was killed. Mitry notes that if Le Prince truly wanted to disappear, he could have done so at any time prior to that. Thus, he most likely never boarded the train in Dijon. He also wonders why, if his brother, who was confirmed as the last person to have seen Le Prince alive, knew Le Prince was suicidal, he didn't try to stop Le Prince, and why he didn't report Le Prince's mental state to the police before it was too late.[23]
+Suicide by drowning
+A photograph of a drowned man pulled from the Seine in 1890, strongly resembling Le Prince, was discovered in 2003 during research in the Paris police archives.[13][24] This somehow led to the conclusion that he must have failed to get his moving picture to work, had heavy debts, and thus chose to take his own life.[18] It has been claimed that the found body was too short to be Le Prince.[8]
+Patents and cameras[edit]
+On 10 January 1888 Le Prince was granted an American patent on a 16-lens device that he claimed could serve as both motion picture camera (which he termed ""the receiver or photo-camera"") and a projector (which he called "" the deliverer or stereopticon"").[25] That same day he took out a near-identical provisional patent for the same devices in Great Britain, proposing ""a system of preferably 3, 4, 8, 9, 16 or more lenses"". Shortly before the final version was submitted he added a sentence which described a single-lens system, but this was neither fully explained nor illustrated, unlike the several pages of description of the multi-lens system,[26] meaning the single-lens camera was not legally covered by patent.
+
+ 60mm spools used for developing film shot in single-lens camera. Each section would carry 4 frames of negative (1930 Science Museum, London)
+This addendum was submitted on 10 October 1888[27] and, on 14 October, Le Prince used his single-lens camera to film Roundhay Garden Scene. During the period 1889-1890 he worked with the mechanic James Longley on various ""deliverers"" (projectors) with one, two, three and sixteen lenses.  The images were to be separated, printed and mounted individually, sometimes on a flexible band, moved by metal eyelets. The single lens projector used individual pictures mounted in wooden frames.[27] His assistant, James Longley, claimed the three-lens version was the most successful.[27] Those close to Le Prince have testified to him projecting his first films in his workshop as tests, but they were never presented to anyone outside his immediate circle of family and associates and the nature of the projector is unknown.
+In 1889 he took French-American dual citizenship in order to establish himself with his family in New York City and to follow up his research. However, he was never able to perform his planned public exhibition at Morris–Jumel Mansion in Manhattan, in September 1890, due to his disappearance.
+
+Later recognition[edit]
+This section needs additional citations for verification. Please help improve this article by adding citations to reliable sources. Unsourced material may be challenged and removed.Find sources: ""Louis Le Prince"" – news · newspapers · books · scholar · JSTOR (October 2017) (Learn how and when to remove this template message)
+Even though Le Prince's achievement is remarkable, with only William Friese-Greene and Wordsworth Donisthorpe achieving anything comparable in the period 1888-1890, his work was largely forgotten until the 1920s, as he disappeared before the first public demonstration of the result of his work, having never shown his invention to any photographic society or scientific institution or the general public.
+For the April 1894 commercial exploitation of his personal kinetoscope parlor, Thomas Edison is credited in the US as the inventor of cinema, while in France, the Lumière Brothers are hailed as inventors of the Cinématographe device and for the first commercial exhibition of motion-picture films, in Paris in 1895.
+However, in Leeds, Le Prince is celebrated as a local hero. On 12 December 1930, the Lord Mayor of Leeds unveiled a bronze memorial tablet at 160 Woodhouse Lane, Le Prince's former workshop. In 2003, the University's Centre for Cinema, Photography and Television was named in his honour. Le Prince's workshop in Woodhouse Lane was until recently the site of the BBC in Leeds, and is now part of the Leeds Beckett University Broadcasting Place complex, where a blue plaque commemorates his work. (coordinates: 53°48′20.58″N 1°32′56.74″W﻿ / ﻿53.8057167°N 1.5490944°W﻿ / 53.8057167; -1.5490944). Reconstructions of his film strips are shown in the cinema of the Armley Mills Industrial Museum, Leeds.
+In France, an appreciation society was created as L'Association des Amis de Le Prince (Association of Le Prince's Friends), which still exists in Lyon.
+In 1990, Christopher Rawlence wrote The Missing Reel, The Untold Story of the Lost inventor of Moving Pictures and produced the TV programme The Missing Reel (1989) for Channel Four, a dramatised feature on the life of Le Prince.
+In 1992, the Japanese filmmaker Mamoru Oshii (Ghost in the Shell) directed Talking Head, an avant-garde feature film paying tribute to the cinematography history's tragic ending figures such as George Eastman, Georges Méliès and Louis Le Prince who is credited as ""the true inventor of eiga"", 映画, Japanese for ""motion picture film"".
+In 2013, a feature documentary, The First Film was produced, with new research material and documentation on the life of Le Prince and his patents. Produced and directed by Leeds-born David Nicholas Wilkinson with research by Irfan Shah, it was filmed in England, France and the United States by Guerilla Films.[28] The First Film features several film historians to tell the story, including Michael Harvey, Irfan Shah, Stephen Herbert, Mark Rance, Daniel Martin, Jacques Pfend, Adrian Wootton, Tony North, Mick McCann, Tony Earnshaw, Carol S Ward, Liz Rymer, and twice Oscar-nominated cinematographer Tony Pierce-Roberts. Le Prince's great-great-granddaughter Laurie Snyder also makes an appearance. It had its world première in June 2015 at the Edinburgh Film Festival and opened in UK cinemas on 3 July 2015. The film also played in festivals in the US, Canada, Russia, Ireland and Belgium. On 8 September 2016 it played at the Morris-Jumel Mansion in New York, where 126 years earlier Le Prince planned to show his films.
+
+Le Prince Cine Camera-Projector types[edit]
+
+
+Model
+Specs
+Design
+Manufacture
+Patents
+
+
+16-lens camera and projector
+Patent: ""Method of and apparatus for producing animated pictures. of natural scenery and life"" (USA) and in all later foreign patents.Designation: LePrince 16-lens camera/projector Framerate: 16 frames per second (according to patent)Medium: Glass plates and Eastman paper film
+1886, New York
+Made in Paris, 1887
+US Patent No.376,247/217,809IssuedWashington2 November 1886Accepted10 January 1888
+FR Patent No.188,089IssuedParis11 January 1888AcceptedJune 1890
+(and BR patent 423 - see below)
+
+
+
+Single-lens camera
+Patent: Mentioned but not described or illustrated in ""Improvements in the Method of and Apparatus for Producing Animated Photographic Pictures""Designation: Le Prince single-lens ""receiver"" (camera) Mk2Framerate: 5-7 frames per secondLenses: Viewfinder (upper) & Photograph (lower)Film: sensitised paper film & gelatin stripping film (60mm)Focus: lever (backward/forward)
+Leeds
+1888
+
+
+*Frederic Mason(body/ wooden parts)*James William Longley (design and working parts)Made in Leeds, 1888
+BR Patent no 423
+IssuedLondon10 January 1888Accepted16 November 1888 [Mentioned but not described]
+
+
+
+
+
+Single-Lens
+Projector
+
+
+Single-lens ""deliverer"" (projector). Each frame was printed on glass and mounted in a mahogany frame. These were moved before the lens in a continuous spiral. The heat of the lamp and the movement of the frames often caused the glass to break. Top framerate: 7fps.
+
+Leeds
+1889
+
+
+Made in Leeds, 1889
+
+Never patented
+
+
+3-Lens Projector
+3-lens ""deliverer"" (projector), used frames mounted individually in three flexible strips of Willesden paper with brass eyelets to move them. Projection presumably alternated 1-2-3 between the three strips/lenses and each strip moved when the light was cut off.
+Leeds
+1889/ 1890
+
+
+Made in Leeds 1889 or 1890
+
+Never patented
+
+Legacy[edit]
+Remaining material and production[edit]
+ Back view of Le Prince's single-lens Cine Camera-Projector MkII opened (Science Museum, London, 1930).
+Le Prince developed a single-lens camera in his workshop at 160 Woodhouse Lane, Leeds, which was used to shoot his motion-picture films. Remaining surviving production consists of two scenes in the garden at Oakwood Grange (his wife's family home, in Roundhay) and another of Leeds Bridge.
+Forty years later, Le Prince's daughter, Marie, gave the remaining apparatus to the  Science Museum, London (later transferred to the National Museum of Photography, Film and Television (NMPFT), Bradford, which opened in 1983 and is now the National Science and Media Museum). In May 1931, photographic plates were produced by workers of the Science Museum from paper print copies provided by Marie Le Prince.[2] In 1999, these were re-animated to produce digital versions. Roundhay Garden was alleged by the Le Prince family to have been shot at 12 frame/s and Leeds Bridge at 20 frame/s, although this is not borne out by the NMPFT versions (see below) or motion analysis, with both films being estimated at a consistent 7 frames a second.[29]
+All available versions of these sequences are derived from materials held by the National Science and Media Museum.
+
+Man Walking Around a Corner (16-Lens Camera)[edit]
+Main article: Man Walking Around A Corner
+
+
+
+
+Sequence of 12 complete frames + 4 partial frames, from National Science Museum, London circa 1931. (Courtesy NMPFT, Bradford) NMPFT. Filmed in Paris before 18.08.1887.
+
+
+
+
+The only existing images from Le Prince's 16-lens camera are a sequence of 16 frames of a man walking around a corner. This appears to have been shot onto a single glass plate (which has since broken), rather than the twin strips of Eastman paper film envisaged in his patent. Jacques Pfend, a French cinema-historian and Le Prince specialist, confirms that these images were shot in Paris, at the corner of Rue Bochart-de-Saron (where Le Prince was living) and Avenue Trudaine. Le Prince sent 8 images of his mechanic running (which may be from this sequence) to his wife in New York City in a letter dated 18 August 1887,[30] which suggests it represented a significant camera test. Exposure is very irregular from lens to lens with some of the images almost completely bleached out, which Le Prince later on fixed.
+
+Roundhay Garden Scene (Single-Lens Camera MkII)[edit]
+Main article: Roundhay Garden Scene
+
+
+
+
+Roundhay, 1888 original 20 frames by National Science Museum, London 1931 (Courtesy of NMPFT, Bradford).
+
+
+
+
+
+
+Animation of Roundhay frames with image stabilised NMPFT, Bradford 1999.
+
+
+
+
+The 1931 National Science Museum copy of what remains of a sequence shot in Roundhay Garden features 20 frames. The frames appear to have been printed in reverse from the negative, but this is corrected in the video. The film's damaged edge results in distortion and deformation on the right side of the stabilised digital movie. The scene was shot in Le Prince's father-in-law's garden at Oakwood Grange, Roundhay on 14 October 1888. The NMPFT animation lasts two seconds at 24fps (frames per second), meaning the original footage is playing at 10fps. In this version, the action is speeded up - the original footage was probably shot at 7fps.
+
+Traffic Crossing Leeds Bridge (Single-Lens Camera MkII)[edit]
+ Video clip, 2 seconds
+Louis Le Prince filmed traffic crossing Leeds Bridge from Hicks the Ironmongers[1] at the following coordinates: 53°47′37.70″N 1°32′29.18″W﻿ / ﻿53.7938056°N 1.5414389°W﻿ / 53.7938056; -1.5414389.[31]
+
+
+
+
+
+6-frame sequence (118-120 & 122–124) of Leeds Bridge (National Science Museum, London 1923)
+
+
+
+
+
+
+20-frame sequence of Leeds Bridge (National Science Museum)(Courtesy NMPFT, Bradford)
+
+
+
+
+The earliest copy belongs to the 1923 NMPFT inventory (frames 118–120 and 122–124), though this longer sequence comes from the 1931 inventory (frames 110–129). According to Adolphe Le Prince who assisted his father when this film was shot in late October 1888, it was taken at 20fps. However, the digitally stabilised sequence produced by the NMPFT lasts two seconds, meaning the footage is playing here at 10fps. As with the Roundhay Garden sequence, its appearance is sped up, suggesting the original footage was probably shot at 7fps. This would fit with what we know of the projection experiments, where James Longley reported a top speed of 7fps.[32]
+
+Accordion Player (Single-Lens Camera MkII)[edit]
+ 2 frames per second amateur remastering of all 19 frames; 10 frames per second version
+
+
+
+
+
+
+
+
+
+Copy of original 19 frames (numbered 41–59) by National Science Museum, London 1931 (Courtesy of NMPFT, Bradford).
+
+
+
+
+The last remaining film of Le Prince's single-lens camera is a sequence of frames of Adolphe Le Prince playing a diatonic button accordion. It was recorded on the steps of the house of Joseph Whitley, Louis's father-in-law.[2] The recording date may be the same as Roundhay Garden as the camera is in a similar position and Adolphe is dressed the same. The NMPFT has not remastered this film. An amateur animation of the first 17 frames is here on YouTube. The running speed appears to be 5-6fps
+
+See also[edit]
+List of people who disappeared
+Roundhay Garden Scene
+References[edit]
+
+
+^ a b c d e f g ""BBC Education – Local Heroes Le Prince Biography"". Archived from the original on 28 November 1999. Retrieved 27 May 2008.{{cite web}}:  CS1 maint: bot: original URL status unknown (link), BBC, archived on 28 November 1999
+
+^ a b c Howells, Richard (Summer 2006). ""Louis Le Prince: the body of evidence"". Screen. Oxford, UK: Oxford Journals. 47 (2): 179–200. doi:10.1093/screen/hjl015.
+
+^ The ""Father"" Of Kinematography: Leeds Memorial Pioneer Work In England. The Manchester Guardian (1901–1959), Manchester, England 13 December 1930: 19.
+
+^ Fischer, Paul (April 2022). The Man who Invented Motion Pictures: A True Tale of Obsession, Murder, and the Movies. Simon & Schuster. ISBN 9781982114824.
+
+^ Greenblatt, Leah (14 April 2022). ""He Created the First Known Movie. Then He Vanished. In his new book, ""The Man Who Invented Motion Pictures,"" Paul Fischer investigates the life — and mysterious disappearance — of Louis Le Prince"". The New York Times. Retrieved 17 April 2022.
+
+^ ""Louis Le Prince, who shot the world's first film in Leeds"". BBC. 24 August 2016.
+
+^ a b ""Pioneers of Early Cinema: 1, Louis Aimé Augustin Le Prince (1841–1890?)"" (PDF). www.nationalmediamuseum.org.uk. p. 2. Retrieved 25 November 2012. he developed a single-lens camera which he used to make moving picture sequences at the Whitley family home in Roundhay and of Leeds Bridge in October 1888. ... it has been claimed that a photograph of a drowned man in the Paris police archives is that of Le Prince.
+
+^ a b ""The tragedy of Louis Le Prince"". www.acmi.net.au. Retrieved 20 June 2022.
+
+^ a b c Spehr, Paul (2008). The Man Who Made Movies: W.K.L. Dickson. United Kingdom: John Libbey Publishing Ltd.
+
+^ ""Archives Municipales de Metz - Visualiseur"". Retrieved 9 May 2020.
+
+^ Aulas, Jean-Jacques; Pfend, Jacques (1 December 2000). ""Louis Aimé Augustin Leprince, inventeur et artiste, précurseur du cinéma"". 1895. Mille Huit Cent Quatre-vingt-quinze (in French) (32): Footnote 4. doi:10.4000/1895.110. ISSN 0769-0959. The birth certificate mentions ""born August on the 28th, 1841 at 5am. The common mistake of making him born in 1842 comes from an article of Ernest Kilburn Scott, mistake made since then in numerous articles, including the one by Simon Popple
+
+^ Aulas, Jean-Jacques; Pfend, Jacques (1 December 2000). ""Louis Aimé Augustin Leprince, inventeur et artiste, précurseur du cinéma"". 1895. Mille Huit Cent Quatre-vingt-quinze (in French) (32): 9–74. doi:10.4000/1895.110. ISSN 0769-0959.
+
+^ a b c d e f Herbert, Stephen. ""Louis Aimé Augustin Le Prince"". Who's Who of Victorian Cinema. Archived from the original on 21 July 2006. Retrieved 26 August 2006.
+
+^ a b c d Adventures in CyberSound: Le Prince, Louis Aimé Augustin, Dr Russell Naughton (using source: Michael Harvey, NMPFT Pioneers of Early Cinema: 1. Louis Aimé Augustin Le Prince)
+
+^ ""Pioneers of Early Cinema: Louis Aimé Augustin Le Prince (1841-1890?)"" (PDF). National Media Museum. June 2011.
+
+^ ""Louis Le Prince – New Thinking: Part 1"". The Optilogue. 21 November 2022. Retrieved 23 November 2022.
+
+^ Thomas Deane Tucker (2020). Peripatetic Frame: Images of Walking in Film. Edinburgh University Press. p. 18.
+
+^ a b ""The Shadow Traps"". www.stitcher.com. Retrieved 4 November 2019.
+
+^ Hannavy, John, ed. (2000). Encyclopedia of nineteenth-century photography. Vol. 1. CRC Press. p. 837. ISBN 978-0-415-97235-2.
+
+^ Burns, Paul. ""The History of the Discovery of Cinematography"". – ""After his disappearance, the Le Prince family led by his wife and son went to court against Edison in what became known as Equity 6928. The famous Patent Wars ensued and by 1908 Thomas Edison was regarded as sole inventor of motion pictures, in the US at least. However, in 1902, two years after Le Prince's son Adolphe had testified in the suit, he was found shot dead on Fire Island, New York.""
+
+^ Léo Sauvage, ""Un épisode mystérieux de l'histoire du cinéma : La disparition de Le Prince"", Historia, n° 430 bis, sept. 1982, p. 45-51: ""une telle affirmation (...) est totalement dépourvue de vraisemblance"".
+
+^ Dembowski (1995): ""Pierre Gras, conservateur en chef de la Bibliothèque publique de Dijon, en 1977, montra à Léo Sauvage une note (il la cite dans son ouvrage), prise lors de la visite d'un historien connu (il a tu son nom) qui avait déclaré : – Le Prince est mort à Chicago en 1898, disparition volontaire exigée par la famille. Homosexualité. Disons clairement qu'il n'y a pas l'ombre d'une preuve à l'appui d'une telle assertion.""
+
+^ Dembowski (1995): ""S'il en était ainsi, pourquoi n'a-t-il rien fait pour l'empêcher de réaliser son funeste projet, pourquoi n'a-t-il pas averti la police à temps?""
+
+^ ""The mystery of Leeds's long-lost movie pioneer"". The Telegraph. 23 June 2015. Retrieved 9 May 2020 – via www.telegraph.co.uk.
+
+^ ""Method of and apparatus for producing animated pictures of natural scenery and life"". 10 January 1888. Retrieved 29 December 2017.
+
+^ ""Patents Completed"". British Journal of Photography. 35: 793.
+
+^ a b c Aulas & Pfend, Jean-Jacques & Jacques (1 December 2000). ""Louis Aimé Augustin Leprince, inventeur et artiste, précurseur du cinéma"". 1895. Revue de l'association française de recherche sur l'histoire du cinéma. 32.
+
+^ ""The First Film"". Guerilla Group. Retrieved 16 June 2018.
+
+^ ""Cinematography"". National Museum of Photography, Film and Television. Archived from the original on 11 July 2006. Retrieved 16 April 2009.
+
+^ Letter dated 18 August 1887 in Louis Le Prince Collection at Leeds University Library
+
+^ ""Google Earth Community: First Moving Pictures"". Retrieved 9 May 2020.
+
+^ Letter from James Longley to Louis le Prince 8 August 1889. ""The best result that I got was 426 per minute"" - From Le Prince Collection in Leeds University Library.
+
+
+Sources[edit]
+
+Insight Collections and Research Centre
+Guinness Book of Movie Facts and Feats
+Who's Who of Victorian Cinema
+The Career of Louis Aimée Augustin Le Prince by E. Kilburn Scott (July 1931)
+""La naissance du cinéma : cent sept ans et un crime..."" by Irénée Dembowski (in Kino 1989, translated from Polish to French in Cahiers de l'AFIS, numéro 182, nov.–déc. by Michel Rouzé, quoted by Alliage numéro 22 1995)
+The Missing Reel, by Christopher Rawlence (Athenum Publishers, New York, 1990)
+""Le Prince's Early Film Cameras"", by Simon Popple (in Photographica World, September 1993)
+""Le Prince and the Lumières"", by Rod Varley (in Making of the Modern World, Science Museum, UK, 1992)
+""Career of Louis Aimée Augustin Le Prince"", by E. Kilburn Scott, (in Journal of the Society of Motion Picture Engineers, US, July 1931)
+Burns, Paul The History of the Discovery of Cinematography An Illustrated Chronology
+""The Pioneer Work of Le Prince in Kinematography"", by E. Kilburn Scott (in The Photographic Journal #63, August 1923, pp. 373–378)
+""Louis Aimée Augustin Le Prince"" by Merritt Crawford (in Cinema, 1 December 1930, pp. 28–31)
+L'affaire Lumière. Du mythe à l'histoire, enquête sur les origines du cinéma by Léo Sauvage, 1985 ISBN 2-86244-045-0
+Ingenious Le Prince 16-lens camera
+""Louis Le Prince: the body of evidence"" by Richard Howells (in Screen vol.47 #2, Oxford University Press, 2006)
+""Le Prince, inventeur et artiste, précurseur du cinema"" by Jean-Jacques Aulas and Jacques Pfend (in Revue d'Histoire du Cinéma N°32, December 2000, p. 9) ISSN 0769-0959
+New research centre honours father of film
+Essential Films, chapter 2, Culture Wars by Ion Martea
+Roundhay Garden Scene (1888), Culture Wars by Ion Martea
+Traffic Crossing Leeds Bridge (1888), Culture Wars by Ion Martea
+The Indispensable Murder Book, edited by Joseph Henry Jackson (New York: The Book Society, 1951), pp. 437–464, ""The Red and White Girdle"" by Christopher Morley.  This deals with the murder of Gouffe, and shows the intense study of that trunk murder in 1889–90.
+
+The facts concerning the life and death of LOUIS AIME AUGUSTIN LEPRINCE, pioneer of the moving pîcture and his family, by Jacques Pfend (Sarreguemines/57200/France) 2014.ISBN 9782954244198.
+Why Leeds was the birthplace of film
+External links[edit]
+
+
+
+Wikimedia Commons has media related to Louis Le Prince.
+
+
+Louis Le Prince at IMDb
+Traffic Crossing Leeds Bridge at IMDb
+L'EMPREINTE DE LOUIS AIME AUGUSTIN LEPRINCE DANS L'HISTOIRE DU CINEMA.(Université Paris Ouest, par Marie Crémaschi. sep. 2013.
+Jean-Jacques Aulas et Jacques Pfend, Louis Aimé Augustin Leprince, inventeur et artiste, précurseur du cinéma
+Adventures In Cybersound – extended biography by Dr Russell Naughton, RMIT University, Melbourne. Retrieved 2008-09-26
+Roundhay Garden Scene on YouTube
+Leeds Bridge on YouTube
+Accordion Player by Louis Le Prince on YouTube a rough video from the first 17 frames
+Louis Le Prince Centre for Cinema, Photography, and Television. University of Leeds. Retrieved 2008-09-26
+The Legend of Louis Le Prince
+Leodis – a photographic archive of Leeds. Leeds Library & Information Service. Allows search for key terms such as Louis Le Prince or Leeds Bridge or Bridge End or Hick Brothers or Auto Express (workshop site), etc.
+Science Museum, London
+National Science and Media Museum, Bradford
+Armley Mills- Leeds Industrial Museum
+Le Prince single-lens camera 1888, Science & Society Picture Library
+Chronomedia year 1888 (Terramedia)
+Burns, Paul The History of the Discovery of Cinematography 1885–1889 An Illustrated Chronological History
+Local films for local people (BBC Bradford & West Yorkshire)
+www.louisleprince.net Authority control General
+ISNI
+1
+VIAF
+1
+WorldCat
+National libraries
+Spain
+France (data)
+Germany
+United States
+Japan
+Netherlands
+Other
+FAST
+National Archives (US)
+Social Networks and Archival Context
+SUDOC (France)
+1
+
+
+
+
+
+Retrieved from ""https://en.wikipedia.org/w/index.php?title=Louis_Le_Prince&oldid=1134021110""
+Categories: 1841 births1890s missing person cases19th-century French peopleCinema pioneersDiscovery and invention controversiesFrench cinematographersFrench cinema pioneersFrench expatriates in the United KingdomFrench expatriates in the United StatesFrench film directorsMissing person cases in FrancePeople from MetzSilent film directorsLeeds Blue PlaquesLouis Le PrinceLeipzig University alumniHidden categories: CS1 maint: bot: original URL status unknownCS1 French-language sources (fr)Articles containing French-language textCS1: Julian–Gregorian uncertaintyArticles with short descriptionShort description is different from WikidataUse dmy dates from March 2021Articles with hCardsAll articles with unsourced statementsArticles with unsourced statements from May 2008Articles needing additional references from October 2017All articles needing additional referencesCommons category link is on WikidataIMDb ID different from WikidataArticles with ISNI identifiersArticles with VIAF identifiersArticles with WorldCat identifiersArticles with BNE identifiersArticles with BNF identifiersArticles with GND identifiersArticles with LCCN identifiersArticles with NDL identifiersArticles with NTA identifiersArticles with FAST identifiersArticles with NARA identifiersArticles with SNAC-ID identifiersArticles with SUDOC identifiersArticles containing video clipsYear of death unknown
+
+
+
+Navigation menu
+
+
+
+Personal tools
+
+
+Not logged inTalkContributionsCreate accountLog in
+
+
+
+
+
+Namespaces
+
+
+ArticleTalk
+
+
+
+
+
+English
+
+
+
+
+
+
+
+
+
+Views
+
+
+ReadEditView history
+
+
+
+
+
+More
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Navigation
+
+
+Main pageContentsCurrent eventsRandom articleAbout WikipediaContact usDonate
+
+
+
+
+Contribute
+
+
+HelpLearn to editCommunity portalRecent changesUpload file
+
+
+
+
+Tools
+
+
+What links hereRelated changesUpload fileSpecial pagesPermanent linkPage informationCite this pageWikidata item
+
+
+
+
+Print/export
+
+
+Download as PDFPrintable version
+
+
+
+
+In other projects
+
+
+Wikimedia Commons
+
+
+
+
+Languages
+
+
+العربيةCatalàČeštinaDeutschEestiΕλληνικάEspañolفارسیFrançaisBahasa IndonesiaItalianoMalagasyمصرىNederlands日本語Norsk bokmålPolskiPortuguêsRomânăРусскийSimple EnglishSrpskohrvatski / српскохрватскиSuomiSvenskaУкраїнська中文
+Edit links
+
+
+
+
+
+
+ This page was last edited on 16 January 2023, at 16:51 (UTC).
+Text is available under the Creative Commons Attribution-ShareAlike License 3.0;
+additional terms may apply.  By using this site, you agree to the Terms of Use and Privacy Policy. Wikipedia® is a registered trademark of the Wikimedia Foundation, Inc., a non-profit organization.
+
+
+Privacy policy
+About Wikipedia
+Disclaimers
+Contact Wikipedia
+Mobile view
+Developers
+Statistics
+Cookie statement
+
+
+
+
+
+
+
+
+
+
+"
+https://news.ycombinator.com/rss,Building a 100% New Commodore 64 [video],https://www.youtube.com/watch?v=Qhdc-jgwqVQ,Comments,THIS CENTURY’S FIRST 100% NEW COMMODORE 64! - YouTubeAboutPressCopyrightContact usCreatorsAdvertiseDevelopersTermsPrivacyPolicy & SafetyHow YouTube worksTest new features© 2023 Google LLC
+https://news.ycombinator.com/rss,Using jlink to cross-compile minimal JREs,https://jakewharton.com/using-jlink-to-cross-compile-minimal-jres/,Comments,"
+
+
+
+
+
+Using jlink to cross-compile minimal JREs - Jake Wharton
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Jake Wharton
+
+
+Using jlink to cross-compile minimal JREs
+16 January 2023
+jlink is a JDK tool to create bespoke, minimal JREs for your applications.
+Let’s try it with a “Hello, world!” program:
+class Main {
+  public static void main(String... args) {
+    System.out.println(""Hello, world!"");
+  }
+}
+
+My laptop is an M1 Mac and I have downloaded the Azul Zulu JDK 19 build for it.
+With the JDK I can both compile Java and then run the resulting program.
+$ mkdir out
+$ zulu19.30.11-ca-jdk19.0.1-macosx_aarch64/bin/javac -d out in/Main.java
+$ zulu19.30.11-ca-jdk19.0.1-macosx_aarch64/bin/java -cp out Main
+Hello, world!
+
+Azul Zulu also provides a JRE that I can use to run compiled programs.
+$ zulu19.30.11-ca-jre19.0.1-macosx_aarch64/bin/java -cp out Main
+Hello, world!
+
+Note the slight change in folder name (“jdk” → “jre”).
+If we were shipping this to end-users it would be an easy win for binary size.
+$ du -hs zulu*
+329M    zulu19.30.11-ca-jdk19.0.1-macosx_aarch64
+136M    zulu19.30.11-ca-jre19.0.1-macosx_aarch64
+
+But 136MiB just for “Hello, world”? Don’t tell Reddit or Hacker News!
+Thankfully, jlink is here to help us build a minimal JRE with only what we need.
+Given our program, a sibling tool, jdeps, lists the Java modules which are required.
+$ zulu19.30.11-ca-jdk19.0.1-macosx_aarch64/bin/jdeps \
+      --print-module-deps \
+      out/Main.class
+java.base
+
+Our program is so simple that it only needs the “base” module.
+Now with jlink we can produce a minimal JRE.
+$ zulu19.30.11-ca-jdk19.0.1-macosx_aarch64/bin/jlink \
+      --compress 2 \
+      --strip-debug \
+      --no-header-files \
+      --no-man-pages \
+      --output zulu-hello-jre \
+      --add-modules java.base
+
+$ du -hs zulu*
+ 28M    zulu-hello-jre
+329M    zulu19.30.11-ca-jdk19.0.1-macosx_aarch64
+136M    zulu19.30.11-ca-jre19.0.1-macosx_aarch64
+
+28MiB won’t win any language wars, but it’s a massive 80% savings over the full JRE.
+$ zulu-hello-jre/bin/java -cp out Main
+Hello, world!
+
+We can ship it to our client and call it a day, right?
+$ tar -czf hello.tgz zulu-hello-jre out
+
+$ scp hello.tgz jw@server:
+hello.tgz            100%   14MB   2.0MB/s   00:07
+
+$ ssh jw@server ""tar xzf hello.tgz && zulu-hello-jre/bin/java -cp out Main""
+bash: zulu-hello-jre/bin/java: cannot execute binary file: Exec format error
+
+Nope!
+While the Java bytecode we compiled is platform independent, the JRE is specific to each platform and my server runs Linux x64.
+Thankfully, jlink can operate on JDKs for different platforms.
+Let’s download the Linux x64 JDK and point jlink at its Java modules using --module-path.
+$ zulu19.30.11-ca-jdk19.0.1-macosx_aarch64/bin/jlink \
+      --compress 2 \
+      --strip-debug \
+      --no-header-files \
+      --no-man-pages \
+      --output zulu-hello-jre-linux-x64 \
+      --module-path zulu19.30.11-ca-jdk19.0.1-linux_x64/jmods
+      --add-modules java.base
+
+$ du -hs zulu*
+ 28M    zulu-hello-jre
+ 36M    zulu-hello-jre-linux-x64
+338M    zulu19.30.11-ca-jdk19.0.1-linux_x64
+329M    zulu19.30.11-ca-jdk19.0.1-macosx_aarch64
+136M    zulu19.30.11-ca-jre19.0.1-macosx_aarch64
+
+The Linux x64 JRE is a little larger than the one for my ARM Mac, but it’s still small compared to the full-size JRE.
+Does it work on the client?
+$ tar -czf hello-linux.tgz zulu-hello-jre-linux-x64 out
+
+$ scp hello-linux.tgz jw@server:
+hello.tgz            100%   16MB   2.1MB/s   00:08
+
+$ ssh jw@server ""tar xzf hello-linux.tgz && zulu-hello-jre-linux-x64/bin/java -cp out Main""
+Hello, world!
+
+It works! Now we can grab JDKs for any architecture for any platform and use our host jlink to effectively cross-compile minimal JREs for each target.
+This is a great solution for multi-architecture Docker containers, desktop clients like JetBrains Compose UI, shipping to devices where you can’t fit a full JDK, and more.
+Be sure to explore all the options on jdeps and jlink for ways to keep your runtimes small.
+— Jake Wharton
+
+
+
+
+"
+https://news.ycombinator.com/rss,Programmer salaries in the age of LLMs,https://milkyeggs.com/?p=303,Comments,"
+
+
+
+Milky Eggs  » Blog Archive   » Programmer salaries in the age of LLMs
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+Milky Eggs
+
+
+
+
+
+
+Home
+About
+All Posts
+Links
+
+
+
+
+Programmer salaries in the age of LLMs
+
+What happens to the distribution of programmer salaries in the age of LLMs? I argue they will separate bimodally, much like what happened to lawyers’ salaries in the 1990s due to the rise of the Internet.
+Dan Luu has previously written about lawyers’ salaries. I will paste some graphs from his article. First, lawyers in 1991:
+
+
+Next, lawyers in 2000:
+
+
+What happened? Well, if you’re an elite lawyer in the modern age, you probably command a large team of lower-tier lawyers, cheap paralegals, and so on, who are very good at using the Internet to look up case law and draft your opinions and so on. In contrast, if you’re an elite lawyer in the year 1990, it’s much more valuable for you specifically to have an encyclopedic knowledge of all the relevant case law, and it’s much harder for you to delegate modular pieces of work off to less competent people.
+Indeed Cowen makes a similar point about lawyers in Who gains and loses from the new AI? where he writes:
+
+The returns to factual knowledge are falling, continuing a trend that started with databases, search engines and Wikipedia. It is no longer so profitable to be a lawyer who knows a large amount of accumulated case law. Instead, the skills of synthesis and persuasion are more critical for success.
+
+I claim that the trend which AI/ML continues for lawyers is one that it starts for programmers. Just like how a partner at Cravath likely sketches an outline of how they want to approach a particular case and swarms of largely replaceable lawyers fill in the details, we are perhaps converging to a future where a FAANG L7 can just sketch out architectural details and the programmer equivalent of paralegals will simply query the latest LLM and clean up the output. Note that querying LLMs and making the outputted code conform to specifications is probably a lot easier than writing the code yourself ー and other LLMs can also help you fix up the code and integrate the different modules together!
+More generally, the farther such technologies advance, the more existing technical professions will undergo a sort of “paralegalization” and bifurcation of the talent distribution.
+Somewhat-above-average programmers (including myself) had a decent run of it, but it may be over for us before too long.
+
+January 16th, 2023  | Posted in Technology
+
+
+3 Responses to “Programmer salaries in the age of LLMs”
+
+
+Monday assorted links - Marginal REVOLUTION Says:
+						
+January 16th, 2023 at 7:58 pm 
+[…] Programmer salaries in an age of LLMs.  And cybercriminals starting to use […]
+
+
+ Milkman Says:
+						
+January 17th, 2023 at 4:27 am 
+This model for programmers isn’t new, it was already in place 20 years ago at least as early as the dot com bubble. Even then there was an small group of “architectss” and countless nameless “coders”, often in least/best cost countries. This trend is likely to continue.
+Another example of this trend is the medical professions with physician assistants, nurse practitioners, and a slew of other para-medical personnel coming to the fore.
+
+
+Programmer salaries in the age of LLMs by Michelangelo11 - HackTech Says:
+						
+January 17th, 2023 at 7:44 am 
+[…] Programmer salaries in the age of LLMs […]
+
+
+Leave a Reply
+
+
+Name (required)
+
+Mail (will not be published) (required)
+
+Website
+
+
+
+
+
+Δ
+
+
+
+
+
+
+
+
+
+
+
+
+			 Subscribe to Milky Eggs via RSS here.
+		
+
+
+
+
+"
+https://news.ycombinator.com/rss,Intel Core i9-13900T CPU benchmarks show faster than 12900K 125W performance,https://wccftech.com/intel-core-i9-13900t-cpu-benchmarks-show-faster-than-12900k-125w-performance-at-35w/,Comments,"
+
+HardwareReport
+Intel Core i9-13900T CPU Benchmarks Show Faster Than 12900K 125W Performance at 35W
+
+Hassan Mujtaba •
+Jan 14, 2023 02:44 PM EST
+
+•
+Copy Shortlink
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Intel recently introduced brand new 13th Gen T-series chips which feature the Core i9-13900T that operates at a 35W TDP. The new chip has been benchmarked within Geekbench 5 and showcases impressive performance given its limited power budget.
+Intel's 13th Gen Core i9-13900T 35W CPU Beats The 125W Core i9-12900K In Geekbench 5 Benchmark
+Starting with the specifications, the Intel Core i9-13900T is a variation of the Core i9-13900 series that comes with a limited TDP design. While the standard chips boast 125W TDP in the unlocked and 65W TDP on the Non-K SKUs, the T-series chip is limited to a 35W TDP.  The Unlocked CPU is rated at up to 253W, the Non-K is rated at up to 219W while the T-series chip is rated at up to 106 Watts which is less than half the power budget of its higher-end siblings.
+Related StoryHassan MujtabaIntel Core i9-13900KS, World’s First 6 GHz CPU, Now Available For $699 USThe Intel Core i9-13900T retains the same core configuration with 24 cores that are made up of 8 P-Cores and 16 E-Cores with 32 threads, a base clock of 1.10 GHz, a boost of up to 5.30 GHz & 68 MB of cache (L2+L3). The CPU also comes at a slightly lower price point of $549.00 US. Now the CPU is tested within the Geekbench 5 benchmark using an ASUS TUF Gaming B660M-PLUS WIFI board and coupled with 64 GB of DDR5 memory.
+
+The CPU scored 2178 points in the single-core and 17339 points in the multi-core tests. We used the Intel Core i9-12900K for comparison which scores 1901 points in single-core and 17272 points in multi-core tests. This puts the Intel Core i9-13900T up to 15% faster in single-core and slightly faster in multi-threaded tests which is very impressive considering the Core i9-12900K also has a higher 125W base TDP (3.58x higher) and a peak TDP rating of 241W (2.27x higher).
+
+Intel Core i9-13900KS Single-Thread CPU Benchmark (Geekbench 5)
+
+Single-Core
+
+
+050010001500200025003000
+
+
+
+
+050010001500200025003000
+
+
+
+
+
+Core i9-13900KS
+
+2.3k
+
+
+Core i9-13900K
+
+2.2k
+
+
+Ryzen 9 7900X
+
+2.2k
+
+
+Ryzen 9 7950X
+
+2.2k
+
+
+Ryzen 7 7700X
+
+2.2k
+
+
+Core i9-13900T
+
+2.2k
+
+
+Ryzen 5 7600X
+
+2.2k
+
+
+Ryzen 9 7900
+
+2.1k
+
+
+Core i9-13900
+
+2.1k
+
+
+Ryzen 7 7700
+
+2.1k
+
+
+Core i9-12900KS
+
+2.1k
+
+
+Core i9-13900HX
+
+2k
+
+
+Ryzen 5 7600
+
+2k
+
+
+Core i7-13700K
+
+2k
+
+
+Core i5-13600K
+
+1.9k
+
+
+Core i9-12900K
+
+1.9k
+
+
+Core i7-12700K
+
+1.9k
+
+
+M2 Max
+
+1.9k
+
+
+M1 Max
+
+1.8k
+
+
+Core i5-12600K
+
+1.7k
+
+
+Ryzen 9 5950X
+
+1.7k
+
+
+Ryzen 7 5800X
+
+1.7k
+
+
+Ryzen 9 5900X
+
+1.7k
+
+
+Ryzen 5 5600X
+
+1.6k
+
+
+
+
+
+
+
+Intel Core i9-13900KS Multi-Thread CPU Benchmark (Geekbench 5)
+
+Multi-Core
+
+
+050001000015000200002500030000
+
+
+
+
+050001000015000200002500030000
+
+
+
+
+
+Core i9-13900KS
+
+26.8k
+
+
+Core i9-13900K
+
+24.3k
+
+
+Ryzen 9 7950X
+
+24.4k
+
+
+Core i9-13900HX
+
+20.9k
+
+
+Core i9-13900
+
+20.1k
+
+
+Core i7-13700K
+
+19.8k
+
+
+Ryzen 9 7900X
+
+19.3k
+
+
+Core i9-12900KS
+
+19k
+
+
+Ryzen 9 7900
+
+18.6k
+
+
+Core i9-13900T
+
+17.3k
+
+
+Core i9-12900K
+
+17.3k
+
+
+Ryzen 9 5950X
+
+16.5k
+
+
+Core i5-13600K
+
+16.1k
+
+
+M2 Max
+
+14.6k
+
+
+Core i7-12700K
+
+14.1k
+
+
+Ryzen 7 7700X
+
+14.1k
+
+
+Ryzen 9 5900X
+
+14k
+
+
+Ryzen 7 7700
+
+12.7k
+
+
+M1 Max
+
+12.3k
+
+
+Core i5-12600K
+
+11.6k
+
+
+Ryzen 5 7600X
+
+11.4k
+
+
+Ryzen 5 7600
+
+11.3k
+
+
+Ryzen 7 5800X
+
+10.3k
+
+
+Ryzen 5 5600X
+
+8.2k
+
+
+
+
+
+
+This goes off to show the immense efficiency that Intel's 10nm ESF process node and the new hybrid architecture packs and we will also get to see some similar results with the mobility lineup, especially the 13th Gen HX parts which are going to ship in enthusiast-grade gaming laptops in the coming months. AMD also introduced its brand new 65W Ryzen 7000 Non-X CPUs which have been showcasing some impressive efficiency feats on their own with the Zen 4 core architecture.
+News Source: Benchleaks
+				
+				Share this story
+				 Facebook
+ Twitter
+
+
+
+
+
+
+Deal of the Day
+
+
+
+
+
+
+
+
+
+
+
+Further Reading
+
+
+
+
+ AMD Ryzen 9 7950X3D CPU Shown To Beat Intel Core i9-13900K In Games With Up To 24% Lead
+
+
+ Intel Core i9-13980HX CPU Powered MSI Raider GE78HX Laptop Matches High-End Desktop CPUs In Performance
+
+
+ Intel Core i9-13980HX Flagship Raptor Lake-HX CPU Spotted In ASUS’s Next-Gen ROG STRIX Laptop
+
+
+ It’s Over 9000! Intel Core i9-13900KS Becomes The First CPU To Achieve 9 GHz Frequency World Record
+
+
+
+
+
+
+
+
+
+
+
+
+
+Comments
+
+
+
+
+Please enable JavaScript to view the comments.
+
+
+
+
+
+
+
+
+
+
+Trending Stories
+
+
+NASA Captures Star Eaten By Black Hole 300 Million Light Years Away
+
+
+
+				43 Active Readers
+
+
+
+SpaceX’s Rockets Split Up In Mid Air For Rare & Stunning Views At 5,000 Km/h+
+
+
+
+				38 Active Readers
+
+
+
+Intel Core i9-13900T CPU Benchmarks Show Faster Than 12900K 125W Performance at 35W
+
+
+
+				24 Active Readers
+
+
+
+JEDEC Plans To Ditch SO-DIMM & Embrace CAMM As The Next Memory Standard For Laptops
+
+
+
+				24 Active Readers
+
+
+
+Intel’s Core i9-13980HX CPU Makes Laptops Faster Than AMD’s HEDT Threadripper 32-Core Chips
+
+
+
+				23 Active Readers
+
+
+
+
+
+
+
+
+Popular Discussions
+
+
+AMD Radeon RX 7900 XTX Failure Rates Reportedly At 11%, RMA’s Piling Up But Users Not Receiving Cards
+
+
+
+				3100 Comments
+
+
+
+Intel Lunar Lake To Feature A Brand New CPU Architecture Built From The Ground-Up, Perf/Watt Focused at Mobile
+
+
+
+				2757 Comments
+
+
+
+AMD To Give The Love of 3D V-Cache This Valentines With Its Ryzen 7000 X3D CPUs Launch
+
+
+
+				2021 Comments
+
+
+
+Intel Arc A770 Performs Above AMD & NVIDIA In DirectStorage 1.1 Performance Benchmark
+
+
+
+				1803 Comments
+
+
+
+AMD Radeon RX 6000 GPUs Mysteriously Start Dying, German Repair Shop Receives 48 Cards With Cracked Chips
+
+
+
+				1701 Comments
+
+
+
+
+
+
+
+
+	 
+
+
+
+
+
+
+
+"
+https://news.ycombinator.com/rss,Will Floating Point 8 Solve AI/ML Overhead?,https://semiengineering.com/will-floating-point-8-solve-ai-ml-overhead/,Comments,"
+
+
+
+
+
+
+
+
+
+
+
+
+Will Floating Point 8 Solve AI/ML Overhead?
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+ 
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+Search for:
+
+
+
+ Subscribe
+
+中文 English 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Home
+Systems & Design
+Low Power - High Performance
+Manufacturing, Packaging & Materials
+Test, Measurement & Analytics
+Auto, Security & Pervasive Computing
+
+
+
+
+Special Reports
+
+Business & Startups
+Jobs
+Knowledge Center
+Technical Papers 
+
+Home';
+				AI/ML/DLArchitecturesAutomotiveCommunication/Data MovementDesign & VerificationLithographyManufacturingMaterialsMemoryOptoelectronics / PhotonicsPackagingPower & PerformanceQuantumSecurityTest & AnalyticsTransistorsZ-End Applications
+
+
+Events & Webinars 
+
+Events
+Webinars
+
+
+
+Videos & Research
+
+Videos
+Industry Research
+
+
+
+Newsletters
+
+
+
+
+
+MENU 
+
+Home
+Special Reports
+Systems & Design
+Low Power-High Performance
+Manufacturing, Packaging & Materials
+Test, Measurement & Analytics
+Auto, Security & Pervasive Computing
+Knowledge Center
+Videos
+Startup Corner
+Business & Startups
+Jobs
+Technical Papers 
+Events
+Webinars
+Industry Research
+Special Reports
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Home >
+                                                                    Low Power-High Performance >
+                                                                Will Floating Point 8 Solve AI/ML Overhead?                                                    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Low Power-High Performance
+
+Will Floating Point 8 Solve AI/ML Overhead?
+
+
+
+
+
+
+
+
+
+Less precision equals lower power, but standards are required to make this work.
+
+
+
+
+
+								January 12th, 2023 - 
+
+								By: Karen Heyman
+
+
+
+
+
+
+
+
+While the media buzzes about the Turing Test-busting results of ChatGPT, engineers are focused on the hardware challenges of running large language models and other deep learning networks. High on the ML punch list is how to run models more efficiently using less power, especially in critical applications like self-driving vehicles where latency becomes a matter of life or death.
+AI already has led to a rethinking of computer architectures, in which the conventional von Neumann structure is replaced by near-compute and at-memory floorplans. But novel layouts aren’t enough to achieve the power reductions and speed increases required for deep learning networks. The industry also is updating the standards for floating-point (FP) arithmetic.
+“There is a great deal of research and study on new data types in AI, as it is an area of rapid innovation,” said David Bell, product marketing director, Tensilica IP at Cadence. “Eight-bit floating-point (FP8) data types are being explored as a means to minimize hardware — both compute resources and memory — while preserving accuracy for network models as their complexities grow.”
+As part of that effort, researchers at Arm, Intel, and Nvidia published a white paper proposing “FP8 Formats for Deep Learning.” [1]
+“Bit precision has been a very active topic of debate in machine learning for several years,” said Steve Roddy, chief marketing officer at Quadric. “Six or eight years ago when models began to explode in size (parameter count), the sheer volume of shuffling weight data into and out of training compute (either CPU or GPU) became the performance limiting bottleneck in large training runs. Faced with a choice of ever more expensive memory interfaces, such as HBM, or cutting bit precision in training, a number of companies experimented successfully with lower-precision floats. Now that networks have continued to grow exponentially in size, the exploration of FP8 is the next logical step in reducing training bandwidth demands.”
+How we got here
+Floating-point arithmetic is a kind of scientific notation, which condenses the number of digits needed to represent a number. This trick is pulled off by an arithmetic expression first codified by IEEE working group 754 in 1986, when floating-point operations generally were performed on a co-processor.
+IEEE 754 describes how the radix point (more commonly known in English as the “decimal” point) doesn’t have a fixed position, but rather “floats” where needed in the expression. It allows numbers with extremely long streams of digits (whether originally to the left or right of a fixed point) to fit into the limited bit-space of computers. It works in either base 10 or base 2, and it’s essential for computing, given that binary numbers extend to many more digits than decimal numbers (100 = 1100100).
+ 
+
+Fig. 1: 12.345 as a base-10 floating-point number. Source: Wikipedia
+ 
+While this is both an elegant solution and the bane of computer science students worldwide, its terms are key to understanding how precision is achieved in AI. The statement has three parts:
+
+A sign bit, which determines whether the number is positive (0) or negative (1);
+An exponent, which determines the position of the radix point, and
+A mantissa, or significand, which represents the most significant digits of the number.
+
+
+Fig. 2: IEEE 754 floating-point scheme. Source: WikiHow
+As shown in figure 2, while the exponent gains 3 bits in a 64-bit representation, the mantissa jumps from 32 bits to 52 bits. Its length is key to precision.
+IEEE 754, which defines FP32 bit and FP64, was designed for scientific computing, in which precision was the ultimate consideration. Currently, IEEE working group P3109 is developing a new standard for machine learning, aligned with the current (2019) version of 754. P3109 aims to create a floating-point 8 standard.
+Precision tradeoffs
+Machine learning often needs less precision than a 32-bit scheme. The white paper proposes two different flavors of FP8: E4M3 (4-bit exponent and 3-bit mantissa) and E5M2 (5-bit exponent and 2-bit mantissa).
+“Neural networks are a bit strange in that they are actually remarkably tolerant to relatively low precision,” said Richard Grisenthwaite, executive vice president and chief architect at Arm. “In our paper, we showed you don’t need 32 bits of mantissa for precision. You can use only two or three bits, and four or five bits of exponent will give you sufficient dynamic range. You really don’t need the massive precision that was defined in 754, which was designed for finite element analysis and other highly precise arithmetic tasks.”
+Consider a real-world example: A weather forecast needs the extreme ranges of 754, but a self-driving car doesn’t need the fine-grained recognition of image search. The salient point is not whether it’s a boy or girl in the middle of the road. It’s just that the vehicle must immediately stop, with no time to waste on calculating additional details. So it’s fine to use a floating point with a smaller exponent and much smaller mantissa, especially for edge devices, which need to optimize energy usage.
+“Energy is a fundamental quantity and no one’s going to make it go away as an issue,” said Martin Snelgrove, CTO of Untether AI. “And it’s also not a narrow one. Worrying about energy means you can’t afford to be sloppy in your software or your arithmetic. If doing a 32-bit floating point makes everything easier, but massively more power consuming, you just can’t do it. Throwing an extra 1,000 layers at something makes it slightly more accurate, but the value for power isn’t there. There’s an overall discipline about energy — the physics says you’re going to pay attention to this, whether you like it or not.”
+In fact, to save energy and performance overhead, many deep learning networks had already shifted to an IEEE-approved 16-bit floating point and other formats, including mantissa-less integers. [2]
+“Because compute energy and storage is at a premium in devices, nearly all high-performance device/edge deployments of ML always have been in INT8,” Quadric’s Roddy said. “Nearly all NPUs and accelerators are INT-8 optimized. An FP32 multiply-accumulate calculation takes nearly 10X the energy of an INT8 MAC, so the rationale is obvious.”
+Why FP8 is necessary
+The problem starts with the basic design of a deep learning network. In the early days of AI, there were simple, one-layer models that only operated in a feedforward manner. In 1986, David Rumelart, Geoffrey Hinton, and Ronald Williams published a breakthrough paper on back-propagation [3] that kicked off the modern era of AI. As their abstract describes, “The procedure repeatedly adjusts the weights of the connections in the network so as to minimize a measure of the difference between the actual output vector of the net and the desired output vector. As a result of the weight adjustments, internal ‘hidden’ units, which are not part of the input or output, come to represent important features of the task domain, and the regularities in the task are captured by the interactions of these units.”
+In other words, they created a system in which better results could be achieved by adding more and more layers into a model, which would be improved by incorporating “learned” adjustments. Decades later, their ideas so vastly improved machine translation and transcription that college professors remain unsure whether undergraduates’ essays have been written by bots.
+But additional layers require additional processing power. “Larger networks with more and more layers were found to be progressively more successful at neural networks tasks, but in certain applications this success came with an ultimately unmanageable increase in memory footprint, power consumption, and compute resources. It became imperative to reduce the size of the data elements (activations, weights, gradients) from 32 bits, and so the industry started using 16-bit formats, such as Bfloat16 and IEEE FP16,” according to the paper jointly written by Arm/Intel/Nvidia.
+“The tradeoff fundamentally is with an 8-bit floating-point number compared to a 32-bit one,” said Grisenthwaite. “I can have four times the number of weights and activations in the same amount of memory, and I can get far more computational throughput as well. All of that means I can get much higher performance. I can make the models more involved. I can have more weights and activations at each of the layers. And that’s proved to be more useful than each of the individual points being hyper-accurate.”
+Behind these issues are the two basic functions in machine learning, training and inference. Training is the first step in which, for example, the AI learns to classify features in an image by reviewing a dataset. With inference, the AI is given novel images outside of the training set and asked to classify them. If all goes as it should, the AI should distinguish that tails and wings are not human features, and at finer levels, that airplanes do not have feathers and a tube with a tail and wings is not a bird.
+“If you’re doing training or inference, the math is identical,” said Ron Lowman, strategic marketing manager for IoT at Synopsys. “The difference is you do training over a known data set thousands of times, maybe even millions of times, to train what the results will be. Once that’s done, then you take an unknown picture and it will tell you what it should be. From a math perspective, a hardware perspective, that’s the big difference. So when you do training, you want to do that in parallel, rather than doing it in a single hardware implementation, because the time it takes to do training is very costly. It could take weeks or months, or even years in some cases, and that just costs too much.”
+In industry, training and inference have become separate specialties, each with its own dedicated teams.
+“Most companies that are deploying AI have a team of data scientists that create neural network architectures and train the networks using their datasets,” said Bob Beachler, vice president of product at Untether AI. “Most of the autonomous vehicle companies have their own data sets, and they use that as a differentiating factor. They train using their data sets on these novel network architectures that they come up with, which they feel gives them better accuracy. Then that gets taken to a different team, which does the actual implementation in the car. That is the inference portion of it.”
+Training requires a wide dynamic range for the continual adjustment of coefficients that is the hallmark of backpropagation. The inference phase is computing on the inputs, rather than learning, so it needs much less dynamic range. “Once you’ve trained the network, you’re not tweaking the coefficients, and the dynamic range required is dramatically reduced,” explained Beachler.
+For inference, continuing operations in FP32 or FP16 is just unnecessary overhead, so there’s a quantization step to shift the network down to FP8 or Integer 8 (Int8), which has become something of a de facto standard for inference, driven largely by TensorFlow.
+“The idea of quantization is you’re taking all the floating point 32 bits of your model and you’re essentially cramming it into an eight-bit format,” said Gordon Cooper, product manager for Synopsys’ Vision and AI Processor IP. “We’ve done accuracy tests and for almost every neural network-based object detection. We can go from 32-bit floating point to Integer 8 with less than 1% accuracy loss.”
+For quality/assurance, there’s often post-quantization retraining to see how converting the floating-point value has affected the network, which could iterate through several passes.
+This is why training and inference can be performed using different hardware. “For example, a common pattern we’ve seen is accelerators using NVIDIA GPUs, which then end up running the inference on general purpose CPUs,” said Grisenthwaite.
+The other approach is chips purpose-built for inference.
+“We’re an inference accelerator. We don’t do training at all,” says Untether AI’s Beachler. “We place the entire neural network on our chip, every layer and every node, feed data at high bandwidth into our chip, resulting in each and every layer of the network computed inside our chip. It’s massively parallelized multiprocessing. Our chip has 511 processors, each of them with single instruction multiple data (SIMD) processing. The processing elements are essentially multiply/accumulate functions, directly attached to memory. We call this the Energy Centric AI computing architecture. This Energy Centric AI Computing architecture results in a very short distance for the coefficients of a matrix vector to travel, and the activations come in through each processing element in a row-based approach. So the activation comes in, we load the coefficients, do the matrix mathematics, do the multiply/accumulate, store the value, move the activation to the next row, and move on. Short distances of data movement equates to low power consumption.”
+In broad outline, AI development started with CPUs, often with FP co-processors, then moved to GPUs, and now is splitting into a two-step process of GPUs (although some still use CPUs) for training and CPUs or dedicated chips for inference.
+The creators of general-purpose CPU architectures and dedicated inference solutions may disagree on which approach will dominate. But they all agree that the key to a successful handoff between training and inference is a floating-point standard that minimizes the performance overhead and risk of errors during quantization and transferring operations between chips. Several companies, including NVIDIA, Intel, and Untether, have brought out FP8-based chips.
+“It’s an interesting paper,” said Cooper. “8-bit floating point, or FP8, is more important on the training side. But the benefits they’re talking about with FP8 on the inference side is that you possibly can skip the quantization. And you get to match the format of what you’ve done between training and inference.”
+Nevertheless, as always, there are still many challenges still to consider.
+“The cost is one of model conversion — FP32 trained model converted to INT8. And that conversion cost is significant and labor intensive,” said Roddy. “But if FP8 becomes real, and if the popular training tools begin to develop ML models with FP8 as the native format, it could be a huge boon to embedded inference deployments. Eight-bit weights take the same storage space, whether they are INT8 or FP8. The energy cost of moving 8 bits (DDR to NPU, etc.) is the same, regardless of format. And a Float8 multiply-accumulate is not significantly more power consumptive than an INT8 MAC. FP8 would rapidly be adopted across the silicon landscape.  But the key is not whether processor licensors would rapidly adopt FP8. It’s whether the mathematicians building training tools can and will make the switch.”
+Conclusion
+As the quest for lower power continues, there’s debate about whether there might even be a FP4 standard, in which only 4 bits carry a sign, an exponent, and mantissa. People who follow a strict neuromorphic interpretation have even discussed binary neural networks, in which the input functions like an axon spike, just 0 or 1.
+“Our sparsity level is going to go up,” said Untether’s Snelgrove. “There are hundreds of papers a day on new neural net techniques. Any one of them could completely revolutionize the field. If you talk to me in a year, all of these words could mean different things.”
+At least at the moment, it’s hard to imagine that lower FPs or integer schemes could contain enough information for practical purposes. Right now, various flavors of FP8 are undergoing the slow grind towards standardization. For example, Graphcore, AMD, and Qualcomm have also brought a detailed FP8 proposal to the IEEE. [4]
+“The advent of 8-bit floating point offers tremendous performance and efficiency benefits for AI compute,” said Simon Knowles, CTO and co-founder of Graphcore. “It is also an opportunity for the industry to settle on a single, open standard, rather than ushering in a confusing mix of competing formats.”
+Indeed, everyone is optimistic there will be a standard — eventually. “We’re involved in IEEE P3109, as are many, many companies in this industry,” said Arm’s Grisenthwaite. “The committee has looked at all sorts of different formats. There are some really interesting ones out there. Some of them will stand the test of time, and some of them will fall by the wayside. We all want to make sure we’ve got complete compatibility and don’t just say, ‘Well, we’ve got six different competing formats and it’s all a mess, but we’ll call it a standard.”
+References 
+
+Micikevicius, P., et al. FP8 Formats for Deep Learning. Last revised Sep 29 2022 arXiv:2209.05433v2. https://doi.org/10.48550/arXiv.2209.05433
+Sapunov, G. FP64, FP32, FP16, BFLOAT16, TF32, and other members of the ZOO. Medium. May 16, 2020. https://moocaholic.medium.com/fp64-fp32-fp16-bfloat16-tf32-and-other-members-of-the-zoo-a1ca7897d407
+Rumelhart, D., Hinton, G. & Williams, R. Learning representations by back-propagating errors. Nature 323, 533–536 (1986). https://doi.org/10.1038/323533a0
+Noune, B. 8-bit Numerical Formats for Deep Neural Networks. Submitted June 6 2022 arXiv:2206.02915 https://doi.org/10.48550/arXiv.2206.02915
+
+Additional Reading:
+How to convert a number from decimal to IEEE 754 Floating Point Representation.
+Number Representation and Computer Arithmetic
+https://web.ece.ucsb.edu/~parhami/pubs_folder/parh02-arith-encycl-infosys.pdf
+Computer Representation of Numbers and Computer Arithmetic
+https://people.cs.vt.edu/~asandu/Courses/CS3414/comp_arithm.pdf
+
+
+
+
+
+
+
+
+
+
+
+ Tags: 8-bit floating point AI AI models AI/ML/DL AMD ARM base 10 base 2 BFLOAT16 Cadence Cadence Design Systems ChatGPT deep learning E4M3 E5M2 edge inference floating point FP16 FP32 FP64 FP8 Graphcore IEEE 754 inference INT8 Integer 8 Intel machine learning mantissa ML training neural network Nvidia P3109 Quadric Quadric.io Qualcomm Synopsys training Untether AI
+
+
+
+
+
+Karen Heyman   (all posts)
+
+
+							Karen Heyman is a technology editor at Semiconductor Engineering.
+						
+
+
+
+
+
+Leave a Reply Cancel replyComment * Name*(Note: This name will be displayed publicly)
+Email*(This will not be displayed publicly) 
+ 
+
+Δ 
+
+
+
+
+ Knowledge Centers Blogs 
+Spiking Neural Network (SNN)
+
+Published on June 23, 2021
+
+
+
+Recurrent Neural Network (RNN)
+
+Published on June 25, 2019
+
+
+
+Edge Computing
+
+Published on April 4, 2019
+
+
+
+Neural Networks
+
+Published on July 25, 2017
+
+
+
+Architectures
+
+Published on 
+
+
+
+Machine Learning (ML)
+
+Published on May 10, 2017
+
+
+
+Convolutional Neural Network (CNN)
+
+Published on 
+
+
+
+Artificial Intelligence (AI)
+
+Published on 
+
+
+
+
+Technical Papers
+Manycore-FPGA Architecture Employing Novel Duet Adapters To Integrate eFPGAs in a Scalable, Non-Intrusive, Cache-Coherent Manner (Princeton) January 16, 2023 by Technical Paper LinkHardware Trojan Detection Case Study Based on 4 Different ICs Manufactured in Progressively Smaller CMOS Process Technologies January 11, 2023 by Technical Paper LinkQuantum Computing Architecture Enabling  Communication Between Superconducting Quantum Processors (MIT) January 11, 2023 by Technical Paper LinkArbitrary Precision DNN Accelerator Controlled by a RISC-V CPU (Ecole Polytechnique Montreal, IBM, Mila, CMC) January 10, 2023 by Technical Paper LinkTechnique For Printing Electronic Circuits Onto Curved & Corrugated Surfaces Using Metal Nanowires (NC State) January 10, 2023 by Technical Paper Link 
+
+  Trending Articles
+
+RISC-V Pushes Into The Mainstream
+
+Open-source processor cores are beginning to show up in heterogeneous SoCs and packages.
+
+
+by Marie C. Baca and Ed Sperling
+
+
+
+Will Floating Point 8 Solve AI/ML Overhead?
+
+Less precision equals lower power, but standards are required to make this work.
+
+
+by Karen Heyman
+
+
+
+How Secure Are RISC-V Chips?
+
+Open source by itself doesn’t guarantee security. It still comes down to the fundamentals of design.
+
+
+by Jeff Goldman
+
+
+
+RISC-V decoupled Vector Processing Unit (VPU) For HPC
+
+
+
+by Technical Paper Link
+
+
+
+Startup Funding: December 2022
+
+Wafer manufacturing and GPUs draw investment; 106 companies raise $2.8B.
+
+
+by Jesse Allen
+
+
+
+
+
+
+Knowledge Centers Entities, people and technologies explored
+Learn More
+
+
+
+Related Articles
+
+Foundational Changes In Chip Architectures
+
+New memory approaches and challenges in scaling CMOS point to radical changes — and potentially huge improvements — in semiconductor designs. 
+
+
+by Brian Bailey
+
+
+
+Will Floating Point 8 Solve AI/ML Overhead?
+
+Less precision equals lower power, but standards are required to make this work.
+
+
+by Karen Heyman
+
+
+
+How Memory Design Optimizes System Performance
+
+Changes are steady in the memory hierarchy, but how and where that memory is accessed is having a big impact.
+
+
+by John Koon
+
+
+
+Startup Funding: October 2022
+
+113 startups raise $3.5B; batteries, AI, and new architectures top the list.
+
+
+by Jesse Allen
+
+
+
+Startup Funding: November 2022
+
+127 startups raise $2.6B; data center connectivity, quantum computing, and batteries draw big funding.
+
+
+by Jesse Allen
+
+
+
+IC Stresses Affect Reliability At Advanced Nodes
+
+Thermal mismatch in heterogeneous designs, different use cases, can impact everything from accelerated aging to warpage and system failures.
+
+
+by Ann Mutschler
+
+
+
+3D-IC Reliability Degrades With Increasing Temperature
+
+Electromigration and other aging factors become more complicated along the z axis.
+
+
+by Ann Mutschler
+
+
+
+On-Chip Power Distribution Modeling Becomes Essential Below 7nm
+
+Why and when it’s needed, and what tools and technologies are required.
+
+
+by Ann Mutschler
+
+
+
+
+
+
+
+
+
+
+
+Sponsors
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Advertise with us
+
+
+
+
+
+Advertise with us
+
+
+
+
+
+Advertise with us
+
+
+
+
+
+Newsletter Signup
+
+
+
+Popular Tags2.5D
+5G
+7nm
+advanced packaging
+AI
+ANSYS
+Apple
+Applied Materials
+ARM
+Atrenta
+automotive
+business
+Cadence
+EDA
+eSilicon
+EUV
+finFETs
+GlobalFoundries
+Google
+IBM
+imec
+Intel
+IoT
+IP
+Lam Research
+machine learning
+memory
+Mentor
+Mentor Graphics
+MIT
+Moore's Law
+Nvidia
+NXP
+Qualcomm
+Rambus
+Samsung
+security
+SEMI
+Siemens
+Siemens EDA
+software
+Sonics
+Synopsys
+TSMC
+verification
+Recent CommentsWZIS on Arbitrary Precision DNN Accelerator Controlled by a RISC-V CPU (Ecole Polytechnique Montreal, IBM, Mila, CMC)Rama Chaganti on Growing System Complexity Drives More IP ReuseTL on How Secure Are RISC-V Chips?Frank on The Good And Bad Of Bi-Directional ChargingSandeep Dixit on The Good And Bad Of Bi-Directional ChargingHertz on How Secure Are RISC-V Chips?Andrew on How Software Utilizes CoresAsaf Jivilik on Cybord: Electronic Component TraceabilitySantosh Kurinec on Where All The Semiconductor Investments Are Goingdick freebird on Designing And Securing Chips For Outer SpaceAkshay on Designing And Securing Chips For Outer SpaceRaj on Is UCIe Really Universal?Andrew TAM on How Software Utilizes CoresRiko R on Designing For Multiple DieDan Ganousis on RISC-V Pushes Into The MainstreamIvan Batinic on IC Stresses Affect Reliability At Advanced NodesGiovanni Lostumbo on A Power-First ApproachMohammed Zakir Hussain on Embracing the Challenges Of Cybersecurity In Automotive ApplicationsLaura Peters on Week In Review: Manufacturing, TestAiv on Week In Review: Manufacturing, TestRoss Youngblood on High Voltage Testing Races AheadMark Olivas on Cybord: Electronic Component TraceabilityKarl Stevens on The Drive Toward Virtual PrototypesRon Lavallee on The Politics Of StandardsDenis McCarthy on Hot Trends In Semiconductor Thermal ManagementTom Smith on Are We Too Hard On Artificial Intelligence For Autonomous Driving?Maya F on Where All The Semiconductor Investments Are GoingSaikatm on Balancing Power And Heat In Advanced Chip DesignsDoug L. on Holistic 3D-IC Interposer Analysis In Product DesignsAndy Deng on Post-Quantum And Pre-Quantum Security Issues GrowJohn Dunn on Post-Quantum And Pre-Quantum Security Issues Growmadmax2069 on Chip Design Shifts As Fundamental Laws Run Out Of SteamMatthew Slyman on Chip Design Shifts As Fundamental Laws Run Out Of SteamDouglas MacIntyre on Chip Design Shifts As Fundamental Laws Run Out Of SteamJose on Universal Verification Methodology Running Out Of SteamZhengji Lu on Moving From AMBA ACE to CHI For CoherencyJohn Bennice on A Power-First Approach[email protected] on Chip Design Shifts As Fundamental Laws Run Out Of SteamMatthew on Chip Design Shifts As Fundamental Laws Run Out Of SteamKarthik Krishnamoorthy on AI-Powered VerificationCPlusPlus4Ever on Chip Design Shifts As Fundamental Laws Run Out Of SteamDouglas on Chip Design Shifts As Fundamental Laws Run Out Of SteamBowie Poag on Chip Design Shifts As Fundamental Laws Run Out Of SteamEugene on Startup Funding: October 2022Wesley Sung on Fan-Out And Packaging ChallengesHong Xiao on Chip Design Shifts As Fundamental Laws Run Out Of SteamRobert Anderson on Chip Design Shifts As Fundamental Laws Run Out Of SteamMike Frank on A Power-First ApproachWilliam Ruby on A Power-First ApproachPeter C Salmon on A Power-First ApproachDr. Dev Gupta on Which Foundry Is In The Lead? It Depends.Steve Hoover on A Power-First ApproachDylanP on Which Foundry Is In The Lead? It Depends.Asaf Jivilik on Cybord: Electronic Component TraceabilityChris @ crossPORt on Foundational Changes In Chip ArchitecturesMark Olivas on Cybord: Electronic Component TraceabilityAri ben David on Constraints On The Electricity GridJeff Zika on Auto Safety Tech Adds New IC Design ChallengesJung Yoon on Foundational Changes In Chip ArchitecturesSchrodinger's Cat's Advocate on Foundational Changes In Chip ArchitecturesRigTig on Foundational Changes In Chip ArchitecturesSteve on Foundational Changes In Chip ArchitecturesPrashant Purwar on Why Mask Blanks Are CriticalMostafa Abdelgawwad on Radar For Automotive: How Far Can A Radar See?yieldWerx on Managing Wafer RetestJohn Horner on A Brief History of TestLakshm J on ESD Requirements Are ChangingDr. Dev Gupta on Improving Redistribution Layers for Fan-out Packages And SiPsAkarsh on Better PMIC Design Using Multi-Physics SimulationTodd Bermensolo on Reducing Schedule Slips With Automated Post-Route Verification Of SerDes High Speed Serial LinksLaur Rizzatti on Why Geofencing Will Enable L5Raj Raghuram on The Complex Art Of Handling S-ParametersStevo on CHIPS Act: U.S. Releases New Implementation StrategySantosh Kurinec on Quantum Research Bits: Sept. 12Lewis Sternberg on ML And UVM Share Same FlawsRoger Stierman on L5 Adoption Hinges on 5G/6GMarcel on MicroLEDs Move Toward CommercializationRagu Athreya on Is There A Limit To The Number of Layers In 3D-NAND?Brian Bailey on AI Power Consumption ExplodingDavid S on AI Power Consumption ExplodingMike Cormack on Cryogenic CMOS Becomes CoolLance Harvie on New Uses For AI In ChipsDoc R on Electronics And Its Role In Climate ChangeMagdy Abadir on Is Standardization Required For Security?guest on How Overlay Keeps Pace With EUV PatterningSantosh Kurinec on Week In Review, Manufacturing, Testsravani on Timing Library LVF Validation For Production Design FlowsDr. F on A Sputnik Moment For ChipsGary Dagastine on A Sputnik Moment For ChipsMike Sottak on A Sputnik Moment For ChipsRobert Pearson on A Sputnik Moment For ChipsRaye E. Ward on A Sputnik Moment For ChipsMichael Williams on A Look Inside RF DesignSURESHBABU CHILUGODU on Week In Review: Manufacturing, TestJC Bouzigues, Menta on Customizing ProcessorsSteve Swendrowski on IC Package Illustrations, From 2D To 3DEMV on Hybrid Bonding Moves Into The Fast LaneDr. Appo van der Wiel on Variation Making Trouble In Advanced Packageswang yu on Verification Of Functional SafetyFrederick Chen on High-NA EUV May Be Closer Than It AppearsFact Cheq on The Week In Review: DesignShiwen Huang on E-beam’s Role Grows For Detecting IC DefectsAdele Hars on Wafer Shortage Improvement In Sight For 300mm, But Not 200mmDavid A. Humphreys on IMS2022 Booth Tour: EDA And Measurement Science ConvergeMerritt on Can Analog Make A Comeback?subra ganesan on Meeting Processor Performance And Safety Requirements For New ADAS & Autonomous Vehicle SystemsGeorge on Building A More Secure SoCAmit Garg on A New Breed Of EDA RequiredKarl Stevens on A Minimal RISC-VKarl Stevens on EDA Gaps At The Leading EdgeMicah Forstein MS. on Risks Rise As Robotic Surgery Goes MainstreamDr. Punam Raskar on Who Does Processor Validation?Dr. Dev Gupta on Variation Making Trouble In Advanced PackagesCox on DRAM Thermal Issues Reach Crisis PointDavid Leary on DRAM Thermal Issues Reach Crisis PointGeeeeeee on DRAM Thermal Issues Reach Crisis PointPedro Ferro Laks on SOT-MRAM To Challenge SRAMObviously silly on DRAM Thermal Issues Reach Crisis PointSimon on DRAM Thermal Issues Reach Crisis PointGareth on Energy Harvesting Starting To Gain Traction
+
+ 
+
+
+
+
+
+Research Bits: Jan. 17 Jesse AllenChip Industry’s Technical Pape... Linda Christensen 
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+About
+
+About us
+Contact us
+Advertising on SemiEng
+Newsletter SignUp
+
+
+
+Navigation
+
+
+
+Homepage
+Special Reports
+Systems & Design
+Low Power-High Perf
+Manufacturing, Packaging & Materials
+Test, Measurement & Analytics
+Auto, Security & Pervasive Computing
+
+
+
+
+Videos
+Jobs
+Technical Papers
+Events
+Webinars
+Knowledge Centers
+
+Industry Research
+Business & Startups
+Newsletters
+
+
+
+
+
+Connect With Us
+
+Facebook
+Twitter  @semiEngineering
+LinkedIn
+YouTube
+
+
+
+
+Copyright ©2013-2023 SMG   |  Terms of Service  |  Privacy Policy
+
+
+
+
+
+This site uses cookies. By continuing to use our website, you consent to our Cookies PolicyACCEPT Manage consent
+
+
+
+
+Close
+
+
+
+
+
+
+Privacy Overview 
+This website uses cookies to improve your experience while you navigate through the website. The cookies that are categorized as necessary are stored on your browser as they are essential for the working of basic functionalities of the website. We also use third-party cookies that help us analyze and understand how you use this website. We do not sell any personal information.
+
+By continuing to use our website, you consent to our Privacy Policy. If you access other websites using the links provided, please be aware they may have their own privacy policies, and we do not accept any responsibility or liability for these policies or for any personal data which may be collected through these sites. Please check these policies before you submit any personal information to these sites.
+
+ 
+
+
+
+
+
+								Necessary							
+
+
+Necessary
+
+Always Enabled
+
+
+
+
+									Necessary cookies are absolutely essential for the website to function properly. This category only includes cookies that ensures basic functionalities and security features of the website. These cookies do not store any personal information.								
+
+
+
+
+
+
+								Non-necessary							
+
+
+Non-necessary
+
+
+
+
+
+									Any cookies that may not be particularly necessary for the website to function and is used specifically to collect user personal data via analytics, ads, other embedded contents are termed as non-necessary cookies. It is mandatory to procure user consent prior to running these cookies on your website.								
+
+
+
+
+
+
+
+
+
+
+
+
+SAVE & ACCEPT
+
+
+
+
+
+
+
+
+
+
+ 
+
+ 
+ 
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+"
